@@ -1,3 +1,3 @@
 export default function Header() {
-  return <div>Header</div>;
+  return <div className="absolute z-10">Header</div>;
 }

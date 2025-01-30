@@ -6,7 +6,7 @@ import Footer from '@/app/(home)/components/footer';
 
 export default function Page() {
   return (
-    <div>
+    <div className="relative">
       <Header />
       <Hero />
       <Featured />
