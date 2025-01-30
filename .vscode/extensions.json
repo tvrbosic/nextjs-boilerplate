@@ -6,6 +6,8 @@
         "esbenp.prettier-vscode",
         "eamodio.gitlens",
         "mhutchie.git-graph",
+        "csstools.postcss",
+        "bradlc.vscode-tailwindcss",
         "formulahendry.auto-close-tag",
         "formulahendry.auto-complete-tag",
         "formulahendry.auto-rename-tag",

@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-deepRuby: #774069;
+  --color-englishViolet: #4c3a69;
+  --color-purpleLavander: #9c84bf;
+  --color-darkStone: #2c2a32;
+}
