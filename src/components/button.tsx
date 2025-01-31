@@ -3,13 +3,10 @@ interface IButtonProps {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'solid' | 'outline';
   children: React.ReactNode;
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => unknown;
+  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 
 const variantClasses = {
-  // 'bg-blue-700 text-gray-100 hover:bg-blue-800 focus:ring-blue-300
-  //  dark:bg-teal-500 dark:hover:bg-teal-600 dark:focus:ring-teal-700 duration-300',
-  // dark:bg-teal-500 dark:hover:bg-teal-600 dark:focus:ring-teal-700 duration-300
   solid:
     'text-stone-100 bg-teal-500 hover:bg-teal-600 focus:ring-teal-700     dark:text-stone-100 dark:bg-teal-500 dark:hover:bg-teal-600 dark:focus:ring-teal-700 duration-300',
   outline:

@@ -18,16 +18,16 @@ export default function Featured() {
         <div className="w-md border-gray-800 border-1 rounded-lg">
           <div className="flex flex-col h-full justify-between px-[40px] py-[20px] border-t-[10px] border-blue-300 rounded-t-md">
             <div className="flex justify-around items-center mb-3">
-              <span className="text-stone-200 underline text-2xl">
+              <h2 className="text-stone-200 text-2xl underline underline-offset-4">
                 Project structure
-              </span>
+              </h2>
 
               <span className="text-stone-200 text-5xl">
                 <PiTreeStructureBold />
               </span>
             </div>
 
-            <p className="text-teal-100 ">
+            <p className="text-teal-100">
               Explore the foundational setup of the project, including file
               organization, folder structure, and the best practices followed
               for clean, scalable, and maintainable architecture.
@@ -45,16 +45,16 @@ export default function Featured() {
         <div className="w-md border-gray-800 border-1 rounded-lg">
           <div className="flex flex-col h-full justify-between px-[40px] py-[20px] border-t-[10px] border-orange-300 rounded-t-md">
             <div className="flex justify-around items-center mb-3">
-              <span className="text-stone-200 underline text-2xl">
+              <h2 className="text-stone-200 text-2xl underline underline-offset-4">
                 Custom components
-              </span>
+              </h2>
 
               <span className="text-stone-200 text-5xl">
                 <BiSolidComponent />
               </span>
             </div>
 
-            <p className="text-teal-100 ">
+            <p className="text-teal-100">
               Check out a showcase of reusable components built with Next.js and
               Tailwind CSS, designed to accelerate development and maintain
               consistency across your application.
@@ -72,16 +72,16 @@ export default function Featured() {
         <div className="w-md border-gray-800 border-1 rounded-lg">
           <div className="flex flex-col h-full justify-between px-[40px] py-[20px] border-t-[10px] border-green-300 rounded-t-md">
             <div className="flex justify-around items-center mb-3">
-              <span className="text-stone-200 underline text-2xl">
+              <h2 className="text-stone-200 text-2xl underline underline-offset-4">
                 Features and mechanisms
-              </span>
+              </h2>
 
               <span className="text-stone-200 text-5xl">
                 <FaGears />
               </span>
             </div>
 
-            <p className="text-teal-100 ">
+            <p className="text-teal-100">
               Learn about the key features and advanced mechanisms implemented
               in the project, such as soft delete, audit logs, error handling
               middleware, JWT authentication and more...

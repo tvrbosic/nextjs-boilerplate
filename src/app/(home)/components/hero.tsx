@@ -23,9 +23,9 @@ export default function Hero() {
           </div>
 
           <div className="w-3/6 flex flex-col gap-6">
-            <p className="text-7xl text-stone-100">
+            <h1 className="text-7xl text-stone-100">
               Next.js boilerplate project
-            </p>
+            </h1>
 
             <p className="text-xl text-teal-100">
               Full-stack app starter built on Next.js 15, React 19, and Tailwind
