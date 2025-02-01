@@ -49,6 +49,14 @@ export default function Footer() {
       </div>
 
       <div className="text-center text-stone-200 pt-3 pb-6">Ipsum, @2025</div>
+      <div className="text-center text-stone-200 pt-3 pb-6">
+        <a
+          className="hover:underline hover:cursor-pointer hover:text-teal-200"
+          href="https://www.freepik.com/free-vector/hand-drawn-flat-design-sql-illustration_22112356.htm#fromView=search&page=2&position=20&uuid=7ee20737-851d-471a-905b-42acb9df1aaf&new_detail=true&query=laptop+programming"
+        >
+          Hero image by freepik
+        </a>
+      </div>
     </div>
   );
 }

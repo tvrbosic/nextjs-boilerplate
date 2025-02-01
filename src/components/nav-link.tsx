@@ -8,7 +8,7 @@ export default function NavLink({ children, ...props }: INavLinkProps) {
   return (
     <Link
       {...props}
-      className="text-stone-100 text-lg hover:text-teal-100 hover:underline underline-offset-4 duration-300"
+      className="text-stone-100 text-lg hover:text-teal-200 hover:underline underline-offset-4 duration-300"
     >
       {children}
     </Link>

@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
+import { Aldrich } from 'next/font/google';
 
 // These styles apply to every route in the application
 import '@/styles/global.css';
 
+// EXTEND METADATA: https://nextjs.org/docs/app/api-reference/functions/generate-metadata
 export const metadata: Metadata = {
   title: 'Next.js boilerplate',
   description: 'Next.js boilerplate starter project',
 };
-
-import { Aldrich } from 'next/font/google';
 
 const aldrich = Aldrich({
   weight: '400',
