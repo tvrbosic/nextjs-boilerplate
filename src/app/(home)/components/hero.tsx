@@ -1,5 +1,7 @@
+// LIBRARY
 import Image from 'next/image';
 
+// ASSETS
 import CodingConceptPng from '@/app/(home)/assets/coding-concept.png';
 
 export default function Hero() {

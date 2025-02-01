@@ -1,4 +1,4 @@
-interface IActionButtonInputProps {
+interface IActionInputProps {
   inputLabel?: string | undefined;
   actionButtonLabel: string;
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
@@ -6,11 +6,11 @@ interface IActionButtonInputProps {
 
 //  dark:text-stone-100 dark:bg-teal-500 dark:hover:bg-teal-600 dark:focus:ring-teal-700 duration-300',
 
-export default function ActionButtonInput({
+export default function ActionInput({
   inputLabel,
   actionButtonLabel,
   onClick,
-}: IActionButtonInputProps) {
+}: IActionInputProps) {
   return (
     <div className="flex">
       {inputLabel && (
