@@ -4,39 +4,44 @@ export const usePopulateBaseFields = Prisma.defineExtension({
   query: {
     $allModels: {
       $allOperations({ model, operation, args, query }) {
-        const hardcodedUserId = 'some-user-id'; // Replace with dynamic value later
-
-        if (typeof args !== 'object' || args === null) {
-          return query(args); // Ensure args is valid before proceeding
-        }
-
         // CREATE OPERATIONS
-        if (operation === 'create' || operation === 'createMany') {
+        if (
+          operation === 'create' ||
+          operation === 'createMany' ||
+          operation === 'createManyAndReturn'
+        ) {
           if ('data' in args) {
             if (Array.isArray(args.data)) {
               args.data = args.data.map((entry) => ({
                 ...entry,
-                createdById: entry.createdById ?? hardcodedUserId,
+                createdById: entry.createdById,
               }));
             } else if (typeof args.data === 'object' && args.data !== null) {
               args.data = {
                 ...args.data,
-                createdById: args.data.createdById ?? hardcodedUserId,
+                createdById: args.data.createdById,
               };
             }
           }
         }
 
         // UPDATE OPERATIONS
-        else if (operation === 'update' || operation === 'updateMany') {
-          if (
-            'data' in args &&
-            typeof args.data === 'object' &&
-            args.data !== null
-          ) {
+        else if (
+          operation === 'update' ||
+          operation === 'updateMany' ||
+          operation === 'updateManyAndReturn'
+        ) {
+          if (Array.isArray(args.data)) {
+            args.data = args.data.map((entry) => ({
+              ...entry,
+              updatedAt: new Date(),
+              updatedById: entry.updatedById,
+            }));
+          } else if (typeof args.data === 'object' && args.data !== null) {
             args.data = {
               ...args.data,
-              updatedAt: new Date(), // Automatically update 'updatedAt' timestamp
+              updatedAt: new Date(),
+              updatedById: args.data.updatedById,
             };
           }
         }
@@ -45,6 +50,7 @@ export const usePopulateBaseFields = Prisma.defineExtension({
         else if (operation === 'delete' || operation === 'deleteMany') {
           if ('where' in args) {
             console.log(`Deleting record in model ${model}:`, args.where);
+            // TODO: Implement soft delete and (isDeleted, deletedBy, deletedAt)
           }
         }
 
