@@ -1,5 +1,18 @@
-// SOURCE: https://www.prisma.io/docs/orm/more/help-and-troubleshooting/nextjs-help#best-practices-for-using-prisma-client-in-development
+// LIBRARY
 import { PrismaClient } from '@prisma/client';
+
+// CUSTOM EXTENSIONS
+import { useAuditLog } from '@/prisma/extensions/audit-log';
+import { usePopulateBaseFields } from '@/prisma/extensions/populate-base-fields';
+
+// EXTENDED CLIENT
+function getExtendedClient() {
+  return new PrismaClient({
+    log: ['query', 'info', 'warn', 'error'], // OPTIONAL: Enable Prisma logging
+  })
+    .$extends(usePopulateBaseFields)
+    .$extends(useAuditLog);
+}
 
 /**
  * Create a globally accessible object where the PrismaClient instance will be stored.
@@ -8,7 +21,9 @@ import { PrismaClient } from '@prisma/client';
  *   modules are reloaded frequently, which could cause multiple instances of PrismaClient
  *   to be created if we don't store and reuse an existing instance.
  */
-const globalForPrisma = global as unknown as { prisma: PrismaClient };
+const globalForPrisma = global as unknown as {
+  prisma: ReturnType<typeof getExtendedClient>;
+};
 
 /**
  * Create a singleton Prisma client instance.
@@ -17,8 +32,7 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient };
  *   reuse that instance instead of creating a new one.
  * - Otherwise, create a new PrismaClient instance.
  */
-export const prisma = globalForPrisma.prisma || new PrismaClient();
-
+export const prisma = globalForPrisma.prisma || getExtendedClient();
 /**
  * Persist the Prisma instance in `globalForPrisma` in development mode.
  *
