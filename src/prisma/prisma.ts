@@ -17,7 +17,11 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient };
  *   reuse that instance instead of creating a new one.
  * - Otherwise, create a new PrismaClient instance.
  */
-export const prisma = globalForPrisma.prisma || new PrismaClient();
+export const prisma =
+  globalForPrisma.prisma ||
+  new PrismaClient({
+    log: ['query', 'info', 'warn', 'error'], // OPTIONAL: Enable Prisma logging
+  });
 
 /**
  * Persist the Prisma instance in `globalForPrisma` in development mode.

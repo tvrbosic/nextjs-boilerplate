@@ -1,0 +1,29 @@
+model User {
+  // -------------------< Base fields >------------------- //
+  guid String @id @default(uuid())
+
+  createdAt    DateTime @default(now()) @db.Timestamptz(6)
+  createdById  String
+  createdBy    User     @relation("createdBy_usersCreated", fields: [createdById], references: [guid])
+  usersCreated User[]   @relation("createdBy_usersCreated")
+
+  updatedAt    DateTime? @updatedAt
+  updatedById  String?
+  updatedBy    User?     @relation("updatedBy_usersUpdated", fields: [updatedById], references: [guid])
+  usersUpdated User[]    @relation("updatedBy_usersUpdated")
+
+  deletedAt    DateTime?
+  deletedById  String?
+  deletedBy    User?     @relation("deletedBy_usersDeleted", fields: [deletedById], references: [guid])
+  usersDeleted User[]    @relation("deletedBy_usersDeleted")
+
+  // -------------------< Model specific fields >------------------- //
+  email String  @unique
+  name  String?
+  role  Role    @default(USER)
+}
+
+enum Role {
+  USER
+  ADMIN
+}

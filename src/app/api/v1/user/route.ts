@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 
 // APP
-import { prisma } from '@/db/prisma';
+import { prisma } from '@/prisma/prisma';
 
 export async function GET(request) {
   // Do whatever you want

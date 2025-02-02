@@ -30,8 +30,8 @@
     "typescript": "5.7.3"
   },
   "prisma": {
-    "schema": "src/db/schema.prisma",
-    "migrateOutput": "src/db/migrations/"
+    "schema": "src/prisma/schema/schema.prisma",
+    "migrateOutput": "src/prisma/migrations/"
   },
   "husky": {
     "hooks": {
