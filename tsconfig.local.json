@@ -1,3 +1,4 @@
+// INFO: This config is duplicate of tsconfig except "module" is set to "CommonJS". It is used to run seed with ts-node (check seed command in package.json)
 {
   "compilerOptions": {
     "target": "ES2022",
@@ -11,7 +12,7 @@
     "strictNullChecks": true,
     "noEmit": true,
     "incremental": true,
-    "module": "nodenext",
+    "module": "CommonJS",
     "esModuleInterop": true,
     "moduleResolution": "nodenext",
     "resolveJsonModule": true,

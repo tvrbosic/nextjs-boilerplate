@@ -3,8 +3,8 @@ model User {
   guid String @id @default(uuid())
 
   createdAt    DateTime @default(now()) @db.Timestamptz(6)
-  createdById  String
-  createdBy    User     @relation("createdBy_usersCreated", fields: [createdById], references: [guid])
+  createdById  String?
+  createdBy    User?    @relation("createdBy_usersCreated", fields: [createdById], references: [guid])
   usersCreated User[]   @relation("createdBy_usersCreated")
 
   updatedAt    DateTime? @updatedAt
@@ -18,9 +18,10 @@ model User {
   usersDeleted User[]    @relation("deletedBy_usersDeleted")
 
   // -------------------< Model specific fields >------------------- //
-  email String  @unique
-  name  String?
-  role  Role    @default(USER)
+  email     String @unique
+  firstName String
+  lastName  String
+  role      Role   @default(USER)
 }
 
 enum Role {
