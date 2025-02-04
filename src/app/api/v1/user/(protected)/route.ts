@@ -4,17 +4,17 @@ import { NextResponse } from 'next/server';
 // APP
 import { prisma } from '@/prisma/prisma';
 
-export async function GET(request) {
+export async function GET(req: Request) {
   // Do whatever you want
   // ... you will write your Prisma Client queries here
   const allUsers = await prisma.user.findMany();
   return NextResponse.json({ message: 'Hello World' }, { status: 200 });
 }
 
-export async function POST(req) {
+export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { email, name, role, createdById } = body;
+    const { email, firstName, lastName, role, createdById, password } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -35,10 +35,14 @@ export async function POST(req) {
     //   );
     // }
 
+    // TODO: hash password
+
     const newUser = await prisma.user.create({
       data: {
         email,
-        name,
+        password,
+        firstName,
+        lastName,
         role: role || 'USER',
         createdBy: { connect: { guid: createdById } },
       },

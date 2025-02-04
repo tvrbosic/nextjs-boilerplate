@@ -4,10 +4,7 @@ export const useAuditLog = Prisma.defineExtension({
   query: {
     $allModels: {
       $allOperations({ model, operation, args, query }) {
-        console.log('Model', model);
-        console.log('Operation', operation);
-        console.log('Args', args);
-        console.log('Query', query);
+        // TODO
         return query(args);
       },
     },
