@@ -12,6 +12,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Smith',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
       {
         email: 'mary.jones@email.com',
@@ -19,6 +20,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Jones',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
       {
         email: 'david.wilson@email.com',
@@ -26,6 +28,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Wilson',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
       {
         email: 'laura.davis@email.com',
@@ -33,6 +36,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Davis',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
       {
         email: 'mark.thompson@email.com',
@@ -40,6 +44,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Thompson',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
       {
         email: 'susan.miller@email.com',
@@ -47,6 +52,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Miller',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
       {
         email: 'chris.roberts@email.com',
@@ -54,6 +60,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Roberts',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
       {
         email: 'emily.walker@email.com',
@@ -61,6 +68,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Walker',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
       {
         email: 'james.anderson@email.com',
@@ -68,6 +76,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Anderson',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
       {
         email: 'sarah.harris@email.com',
@@ -75,6 +84,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Harris',
         role: 'USER',
         createdById: superUser.guid,
+        password: 'Password1234',
       },
     ],
     skipDuplicates: true,

@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import seedSuperUser from '@/prisma/seed/0_superuser';
-import seedUsers from '@/prisma/seed/01_users';
+import seedSuperUser from '@/prisma/seed/0-superuser';
+import seedUsers from '@/prisma/seed/1-users';
 
 const prisma = new PrismaClient();
 

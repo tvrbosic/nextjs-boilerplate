@@ -8,7 +8,7 @@ import { verifyToken } from '@/utility/jwt/jwt';
 import {
   IProtectedRouteConfig,
   IRestrictedRouteConfig,
-} from '@/middlewares/authMiddleware/types';
+} from '@/middlewares/auth-middleware/types';
 import { TAuthenticatedRequest, THttpMethod } from '@/types/network';
 
 // ============================| CONFGURATION |============================ //

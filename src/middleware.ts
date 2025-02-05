@@ -7,7 +7,7 @@ import {
   isRestrictedRoute,
   authenticatedUser,
   restrictToRoles,
-} from '@/middlewares/authMiddleware/authMiddleware';
+} from '@/middlewares/auth-middleware/auth-middleware';
 
 // TYPES
 import { TAuthenticatedRequest, THttpMethod } from '@/types/network';
