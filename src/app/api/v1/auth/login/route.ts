@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import { prisma } from '@/prisma/prisma';
-import { generateToken } from '@/utility/jwt';
+import { generateToken } from '@/utility/jwt/jwt';
 
 export async function POST(req: Request) {
   try {
@@ -38,7 +38,10 @@ export async function POST(req: Request) {
     }
 
     // Generate JWT
-    const token = generateToken(user.guid);
+    const token = await generateToken({
+      userGuid: user.guid,
+      role: user.role,
+    });
 
     // Send response with token
     return NextResponse.json(

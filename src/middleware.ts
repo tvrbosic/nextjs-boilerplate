@@ -3,14 +3,19 @@ import { NextResponse } from 'next/server';
 
 // APP
 import {
+  isProtectedRoute,
+  isRestrictedRoute,
   authenticatedUser,
-  protectedRoutes,
-} from '@/middlewares/authMiddleware';
+  restrictToRoles,
+} from '@/middlewares/authMiddleware/authMiddleware';
 
-// ============================| MIDDLEWARE CHAIN HELPER |============================ //
-function stackMiddlewares(req: Request, middlewares: Function[]) {
+// TYPES
+import { TAuthenticatedRequest, THttpMethod } from '@/types/network';
+
+// ============================| CHAIN MIDDLEWARES HELPER |============================ //
+async function stackMiddlewares(req: Request, middlewares: Function[]) {
   for (const middleware of middlewares) {
-    const response = middleware(req);
+    const response = await middleware(req);
 
     // Stop if a middleware returns a response
     if (response) return response;
@@ -33,21 +38,26 @@ export const config = {
 };
 
 // ============================| MIDDLEWARES CONFIGURATION |============================ //
-export function middleware(req: Request) {
+export async function middleware(req: Request) {
   const { pathname } = new URL(req.url);
 
-  // Check if pathname includes any of defined protected routes
-  const isProtected = protectedRoutes.some((pr) => pathname.includes(pr));
+  // Define middleware stack
+  const middlewares: Function[] = [];
 
-  // -------------------< Middleware Rules >--------------------
-  if (isProtected) {
-    return stackMiddlewares(req, [authenticatedUser]);
+  // Check if request pathname includes any of the defined protected routes
+  if (isProtectedRoute(pathname, req.method as THttpMethod)) {
+    middlewares.push(authenticatedUser);
   }
 
-  // Extend middleware (for different routes and with different middleware stack)
-  // if (pathname.startsWith("/api/v1/admin")) {
-  //   return stackMiddlewares(req, [middlewareA, middlewareB]);
-  // }
+  // Check if request pathname includes any of the defined restricted routes
+  if (isRestrictedRoute(pathname, req.method as THttpMethod)) {
+    middlewares.push(restrictToRoles('ADMIN'));
+  }
+
+  // Run middlewares if any were added
+  if (middlewares.length > 0) {
+    return await stackMiddlewares(req, middlewares);
+  }
 
   return NextResponse.next(); // No middleware applied
 }
