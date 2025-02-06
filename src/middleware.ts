@@ -4,13 +4,16 @@ import { NextResponse } from 'next/server';
 // APP
 import {
   isProtectedRoute,
-  isRestrictedRoute,
   authenticatedUser,
+} from '@/middlewares/authentication-middleware/authentication-middleware';
+
+import {
+  isRestrictedRoute,
   restrictToRoles,
-} from '@/middlewares/auth-middleware/auth-middleware';
+} from '@/middlewares/authorization-middleware/authorization-middleware';
 
 // TYPES
-import { TAuthenticatedRequest, THttpMethod } from '@/types/network';
+import { THttpMethod } from '@/types/network';
 
 // ============================| CHAIN MIDDLEWARES HELPER |============================ //
 async function stackMiddlewares(req: Request, middlewares: Function[]) {

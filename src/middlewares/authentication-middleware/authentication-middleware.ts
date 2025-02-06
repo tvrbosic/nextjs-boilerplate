@@ -3,13 +3,12 @@ import { NextResponse } from 'next/server';
 
 // APP
 import { verifyToken } from '@/utility/jwt/jwt';
+import { authenticatedRequestALS } from '@/utility/async-local-storage/async-local-storage';
 
 // TYPES
-import {
-  IProtectedRouteConfig,
-  IRestrictedRouteConfig,
-} from '@/middlewares/auth-middleware/types';
-import { TAuthenticatedRequest, THttpMethod } from '@/types/network';
+import { IProtectedRouteConfig } from '@/middlewares/authentication-middleware/types';
+import { THttpMethod } from '@/types/network';
+import { TUserJwtClaims } from '@/utility/jwt/types';
 
 // ============================| CONFGURATION |============================ //
 /**
@@ -19,18 +18,7 @@ import { TAuthenticatedRequest, THttpMethod } from '@/types/network';
 const protectedRoutes: IProtectedRouteConfig[] = [
   {
     path: 'api/v1/user',
-    methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
-  },
-];
-
-/**
- * Configuration array for defining restricted routes (routes allowed only to users of specific role).
- * Array is used to check if a specific route and HTTP method combination should be allowed to user making request.
- */
-const restrictedRoutes: IRestrictedRouteConfig[] = [
-  {
-    path: 'api/v1/user',
-    methods: ['POST', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   },
 ];
 
@@ -45,17 +33,7 @@ export function isProtectedRoute(
   );
 }
 
-export function isRestrictedRoute(
-  requestPathname: string,
-  requestMethod: THttpMethod
-): boolean {
-  return restrictedRoutes.some(
-    (rr) =>
-      requestPathname.includes(rr.path) && rr.methods.includes(requestMethod)
-  );
-}
-
-// ============================| AUTHENTICATION AND AUTHORIZATION MIDDLEWARES |============================ //
+// ============================| AUTHENTICATION MIDDLEWARE |============================ //
 export async function authenticatedUser(req: Request) {
   const authHeader = req.headers.get('authorization');
 
@@ -75,8 +53,11 @@ export async function authenticatedUser(req: Request) {
       );
     }
 
-    // Attach user data to the request
+    // Attach user data to the request and to AsyncLocalStorage
     (req as any).user = decoded;
+    authenticatedRequestALS.run({ ...(decoded as TUserJwtClaims) }, () => {
+      console.log(`Stored user ${decoded.userGuid} in AsyncLocalStorage`);
+    });
 
     // Continue with the next middleware by returning null
     return null;
@@ -84,25 +65,4 @@ export async function authenticatedUser(req: Request) {
     console.error('Error in token verification:', error);
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
-}
-
-export function restrictToRoles(...roles: string[]) {
-  return (req: TAuthenticatedRequest) => {
-    if (!req.user || !req.user.role) {
-      return NextResponse.json(
-        { error: 'Unauthorized: No user information found' },
-        { status: 401 }
-      );
-    }
-
-    if (!roles.includes(req.user.role)) {
-      return NextResponse.json(
-        { error: 'You do not have permission to perform this action' },
-        { status: 403 }
-      );
-    }
-
-    // Continue if the role is allowed
-    return null;
-  };
 }

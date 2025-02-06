@@ -1,5 +1,6 @@
 // LIBRARY
 import { NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs';
 
 // APP
 import { prisma } from '@/prisma/prisma';
@@ -14,7 +15,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { email, firstName, lastName, role, createdById, password } = body;
+    const { email, firstName, lastName, role, password } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -23,28 +24,16 @@ export async function POST(req: Request) {
       );
     }
 
-    // TODO: Read logged in user from http context !!!!
-    // const createdByUser = await prisma.user.findUnique({
-    //   where: { guid: createdById },
-    // });
-
-    // if (!createdByUser) {
-    //   return NextResponse.json(
-    //     { error: "Invalid createdById. User not found." },
-    //     { status: 404 }
-    //   );
-    // }
-
-    // TODO: hash password
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const newUser = await prisma.user.create({
       data: {
         email,
-        password,
+        password: hashedPassword,
         firstName,
         lastName,
         role: role || 'USER',
-        createdBy: { connect: { guid: createdById } },
       },
     });
 

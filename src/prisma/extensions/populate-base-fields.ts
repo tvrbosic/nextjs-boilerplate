@@ -1,10 +1,15 @@
+// APP
 import { Prisma } from '@prisma/client';
+import { authenticatedRequestALS } from '@/utility/async-local-storage/async-local-storage';
 
 export const usePopulateBaseFields = Prisma.defineExtension({
   query: {
     $allModels: {
       $allOperations({ model, operation, args, query }) {
-        // TODO: Get user that triggered operation and use for createdById, updatedById and deletedById
+        // Get user that triggered operation and use for createdById, updatedById and deletedById
+        const store = authenticatedRequestALS.getStore();
+        console.log('aaaaaaaaaaaaaaaaaaaaaaaa: ');
+        console.log(store);
 
         // CREATE OPERATIONS (https://www.prisma.io/docs/orm/prisma-client/queries/crud#create)
         if (
@@ -16,12 +21,12 @@ export const usePopulateBaseFields = Prisma.defineExtension({
             if (Array.isArray(args.data)) {
               args.data = args.data.map((entry) => ({
                 ...entry,
-                createdById: entry.createdById,
+                createdById: store?.userGuid,
               }));
             } else if (typeof args.data === 'object' && args.data !== null) {
               args.data = {
                 ...args.data,
-                createdById: args.data.createdById,
+                createdById: store?.userGuid,
               };
             }
           }
@@ -37,7 +42,7 @@ export const usePopulateBaseFields = Prisma.defineExtension({
             args.data = {
               ...args.data,
               updatedAt: new Date(),
-              updatedById: args.data.updatedById,
+              updatedById: store?.userGuid,
             };
           }
         }
