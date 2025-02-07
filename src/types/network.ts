@@ -1,4 +1,4 @@
-import { TUserJwtClaims } from '@/utility/jwt/types';
+import { IUserJwtClaims } from '@/utility/jwt/types';
 
 export type THttpMethod =
   | 'GET'
@@ -9,4 +9,4 @@ export type THttpMethod =
   | 'HEAD'
   | 'OPTIONS';
 
-export type TAuthenticatedRequest = Request & { user?: TUserJwtClaims };
+export type TAuthenticatedRequest = Request & { user?: IUserJwtClaims };

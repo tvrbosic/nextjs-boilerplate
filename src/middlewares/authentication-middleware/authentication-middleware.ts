@@ -3,12 +3,10 @@ import { NextResponse } from 'next/server';
 
 // APP
 import { verifyToken } from '@/utility/jwt/jwt';
-import { authenticatedRequestALS } from '@/utility/async-local-storage/async-local-storage';
 
 // TYPES
 import { IProtectedRouteConfig } from '@/middlewares/authentication-middleware/types';
 import { THttpMethod } from '@/types/network';
-import { TUserJwtClaims } from '@/utility/jwt/types';
 
 // ============================| CONFGURATION |============================ //
 /**
@@ -53,11 +51,8 @@ export async function authenticatedUser(req: Request) {
       );
     }
 
-    // Attach user data to the request and to AsyncLocalStorage
+    // Attach user data to the request
     (req as any).user = decoded;
-    authenticatedRequestALS.run({ ...(decoded as TUserJwtClaims) }, () => {
-      console.log(`Stored user ${decoded.userGuid} in AsyncLocalStorage`);
-    });
 
     // Continue with the next middleware by returning null
     return null;
