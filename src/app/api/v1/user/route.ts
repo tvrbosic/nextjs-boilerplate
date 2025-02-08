@@ -4,6 +4,10 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import { prisma } from '@/prisma/prisma';
+import { getSession } from '@/utility/session/session';
+
+// TYPES
+import { IUserJwtClaims } from '@/utility/jwt/types';
 
 // TYPES
 import { TAuthenticatedRequest } from '@/types/network';
@@ -11,12 +15,13 @@ import { TAuthenticatedRequest } from '@/types/network';
 export async function GET(req: Request) {
   // Do whatever you want
   // ... you will write your Prisma Client queries here
-  const allUsers = await prisma.user.findMany();
-  return NextResponse.json({ message: 'Hello World' }, { status: 200 });
+  const users = await prisma.user.findMany();
+  return NextResponse.json({ users }, { status: 200 });
 }
 
-export async function POST(req: TAuthenticatedRequest) {
-  console.log(req.user);
+export async function POST(req: Request) {
+  const decodedToken = await getSession();
+
   try {
     const body = await req.json();
     const { email, firstName, lastName, role, password } = body;
@@ -42,7 +47,7 @@ export async function POST(req: TAuthenticatedRequest) {
         },
       },
       {
-        user: req.user!, // TODO: Modify types
+        user: decodedToken!, // TODO: Modify types
       }
     );
 

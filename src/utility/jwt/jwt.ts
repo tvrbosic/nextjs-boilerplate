@@ -17,7 +17,7 @@ export async function generateToken(userJwtClaims: IUserJwtClaims) {
     .sign(secretKey);
 }
 
-export async function verifyToken(token: string) {
+export async function verifyToken(token: string | undefined = '') {
   try {
     const { payload } = await jwtVerify(token, secretKey, {
       algorithms: ['HS256'],

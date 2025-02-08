@@ -1,9 +1,13 @@
 // LIBRARY
 import { NextResponse } from 'next/server';
 
+// APP
+import { getSession } from '@/utility/session/session';
+
 // TYPES
 import { IRestrictedRouteConfig } from '@/middlewares/authorization-middleware/types';
-import { TAuthenticatedRequest, THttpMethod } from '@/types/network';
+import { THttpMethod } from '@/types/network';
+import { IUserJwtClaims } from '@/utility/jwt/types';
 
 // ============================| CONFGURATION |============================ //
 /**
@@ -13,7 +17,7 @@ import { TAuthenticatedRequest, THttpMethod } from '@/types/network';
 const restrictedRoutes: IRestrictedRouteConfig[] = [
   {
     path: 'api/v1/user',
-    methods: ['GET', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   },
 ];
 
@@ -30,15 +34,16 @@ export function isRestrictedRoute(
 
 // ============================| AUTHORIZATION MIDDLEWARE |============================ //
 export function restrictToRoles(...roles: string[]) {
-  return (req: TAuthenticatedRequest) => {
-    if (!req.user || !req.user.role) {
+  return async (req: Request) => {
+    const decodedToken = await getSession();
+    if (!decodedToken || !decodedToken.role) {
       return NextResponse.json(
         { error: 'Unauthorized: No user information found' },
         { status: 401 }
       );
     }
 
-    if (!roles.includes(req.user.role)) {
+    if (!roles.includes(decodedToken.role as string)) {
       return NextResponse.json(
         { error: 'You do not have permission to perform this action' },
         { status: 403 }
