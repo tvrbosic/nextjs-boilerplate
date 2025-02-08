@@ -8,5 +8,3 @@ export type THttpMethod =
   | 'DELETE'
   | 'HEAD'
   | 'OPTIONS';
-
-export type TAuthenticatedRequest = Request & { user?: IUserJwtClaims };
