@@ -5,6 +5,7 @@ import bcrypt from 'bcryptjs';
 // APP
 import { prisma } from '@/prisma/prisma';
 import { generateToken } from '@/utility/jwt/jwt';
+import { createSession } from '@/utility/session/session';
 
 export async function POST(req: Request) {
   try {
@@ -37,17 +38,14 @@ export async function POST(req: Request) {
       );
     }
 
-    // Generate JWT
-    const token = await generateToken({
+    // Create JWT token and user session
+    const token = await createSession({
       userGuid: user.guid,
       role: user.role,
     });
 
-    // Send response with token
-    return NextResponse.json(
-      { message: 'Login successful', token },
-      { status: 200 }
-    );
+    // Send response with JWT token
+    return NextResponse.json({ message: 'Login successful' }, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(

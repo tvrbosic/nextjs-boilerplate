@@ -1,8 +1,14 @@
+// LIBRARY
+import bcrypt from 'bcryptjs';
+
+// TYPES
 import type { PrismaClient, User } from '@prisma/client';
 
 const seedUsers = async (prisma: PrismaClient, superUser: User) => {
   const start = Date.now();
   console.log('User seed started...');
+
+  const hashedMockPassword = await bcrypt.hash('Password1234', 10);
 
   const createManyUsers = await prisma.user.createMany({
     data: [
@@ -12,6 +18,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Smith',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
       {
         email: 'mary.jones@email.com',
@@ -19,6 +26,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Jones',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
       {
         email: 'david.wilson@email.com',
@@ -26,6 +34,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Wilson',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
       {
         email: 'laura.davis@email.com',
@@ -33,6 +42,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Davis',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
       {
         email: 'mark.thompson@email.com',
@@ -40,6 +50,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Thompson',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
       {
         email: 'susan.miller@email.com',
@@ -47,6 +58,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Miller',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
       {
         email: 'chris.roberts@email.com',
@@ -54,6 +66,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Roberts',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
       {
         email: 'emily.walker@email.com',
@@ -61,6 +74,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Walker',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
       {
         email: 'james.anderson@email.com',
@@ -68,6 +82,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Anderson',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
       {
         email: 'sarah.harris@email.com',
@@ -75,6 +90,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         lastName: 'Harris',
         role: 'USER',
         createdById: superUser.guid,
+        password: hashedMockPassword,
       },
     ],
     skipDuplicates: true,

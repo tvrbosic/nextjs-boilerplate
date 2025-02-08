@@ -1,20 +1,27 @@
 // LIBRARY
 import { NextResponse } from 'next/server';
+import bcrypt from 'bcryptjs';
 
 // APP
 import { prisma } from '@/prisma/prisma';
+import { getSession } from '@/utility/session/session';
+
+// TYPES
+import { IUserJwtClaims } from '@/utility/jwt/types';
 
 export async function GET(req: Request) {
   // Do whatever you want
   // ... you will write your Prisma Client queries here
-  const allUsers = await prisma.user.findMany();
-  return NextResponse.json({ message: 'Hello World' }, { status: 200 });
+  const users = await prisma.user.findMany();
+  return NextResponse.json({ users }, { status: 200 });
 }
 
 export async function POST(req: Request) {
+  const decodedToken = await getSession();
+
   try {
     const body = await req.json();
-    const { email, firstName, lastName, role, createdById, password } = body;
+    const { email, firstName, lastName, role, password } = body;
 
     if (!email) {
       return NextResponse.json(
@@ -23,30 +30,23 @@ export async function POST(req: Request) {
       );
     }
 
-    // TODO: Read logged in user from http context !!!!
-    // const createdByUser = await prisma.user.findUnique({
-    //   where: { guid: createdById },
-    // });
+    // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-    // if (!createdByUser) {
-    //   return NextResponse.json(
-    //     { error: "Invalid createdById. User not found." },
-    //     { status: 404 }
-    //   );
-    // }
-
-    // TODO: hash password
-
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        password,
-        firstName,
-        lastName,
-        role: role || 'USER',
-        createdBy: { connect: { guid: createdById } },
+    const newUser = await prisma.user.create(
+      {
+        data: {
+          email,
+          password: hashedPassword,
+          firstName,
+          lastName,
+          role: role || 'USER',
+        },
       },
-    });
+      {
+        user: decodedToken!, // TODO: Modify types
+      }
+    );
 
     return NextResponse.json(newUser, { status: 201 });
   } catch (error) {
