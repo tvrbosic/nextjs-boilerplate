@@ -1,5 +1,3 @@
-import { IUserJwtClaims } from '@/utility/jwt/types';
-
 export type THttpMethod =
   | 'GET'
   | 'POST'

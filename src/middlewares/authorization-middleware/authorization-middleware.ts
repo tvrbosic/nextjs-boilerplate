@@ -7,7 +7,6 @@ import { getSession } from '@/utility/session/session';
 // TYPES
 import { IRestrictedRouteConfig } from '@/middlewares/authorization-middleware/types';
 import { THttpMethod } from '@/types/network';
-import { IUserJwtClaims } from '@/utility/jwt/types';
 
 // ============================| CONFGURATION |============================ //
 /**

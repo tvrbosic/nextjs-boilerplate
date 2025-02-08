@@ -1,25 +1,64 @@
 // APP
 import { Prisma } from '@prisma/client';
-import { IUserJwtClaims } from '@/utility/jwt/types';
+import { getSession } from '@/utility/session/session';
 
 export const usePopulateBaseFields = Prisma.defineExtension({
-  model: {
+  query: {
     $allModels: {
-      async create<T, A>(
-        this: T,
-        args: Prisma.Args<T, 'create'>,
-        reqCtx: { user: IUserJwtClaims } // Custom parameter (request context)
-      ): Promise<Prisma.Result<T, A, 'create'>> {
-        // Retrieve the current model at runtime
-        const context = Prisma.getExtensionContext(this);
+      // ============================| CREATE |============================ //
+      async create({ model, operation, args, query }) {
+        const decodedToken = await getSession();
 
-        // Prisma Client query that retrieves data based
-        const result = await (context as any).create({
-          ...args,
-          createdById: reqCtx.user.userGuid,
-        });
+        // Use manually provided user guid (case whne seeding as superuser) or authenticated user guid
+        args.data.createdById = args.data.createdById || decodedToken?.userGuid;
 
-        return result;
+        return query(args);
+      },
+
+      async createMany({ args, query }) {
+        const decodedToken = await getSession();
+
+        if (Array.isArray(args.data)) {
+          args.data = args.data.map((item) => ({
+            ...item,
+            // Use manually provided user guid (case whne seeding as superuser) or authenticated user guid
+            createdById: item.createdById || decodedToken?.userGuid,
+          }));
+        }
+
+        return query(args);
+      },
+
+      // ============================| UPDATE |============================ //
+      async update({ model, operation, args, query }) {
+        const decodedToken = await getSession();
+
+        args.data.updatedById = args.data.updatedById || decodedToken?.userGuid;
+
+        return query(args);
+      },
+
+      async updateMany({ args, query }) {
+        const decodedToken = await getSession();
+
+        if (Array.isArray(args.data)) {
+          args.data = args.data.map((item) => ({
+            ...item,
+            // Use manually provided user guid (case whne seeding as superuser) or authenticated user guid
+            updatedById: item.updatedById || decodedToken?.userGuid,
+          }));
+        }
+
+        return query(args);
+      },
+
+      // ============================| DELETE |============================ //
+      async delete({ model, operation, args, query }) {
+        // const decodedToken = await getSession();
+
+        // TODO: Execute update operation, set isDeleted as true and set deletedById
+
+        return query(args);
       },
     },
   },

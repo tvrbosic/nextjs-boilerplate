@@ -2,16 +2,13 @@
 import { PrismaClient } from '@prisma/client';
 
 // CUSTOM EXTENSIONS
-import { useAuditLog } from '@/prisma/extensions/audit-log';
 import { usePopulateBaseFields } from '@/prisma/extensions/populate-base-fields';
 
 // EXTENDED CLIENT
 function getExtendedClient() {
   return new PrismaClient({
     log: ['query', 'info', 'warn', 'error'], // OPTIONAL: Enable Prisma logging
-  })
-    .$extends(usePopulateBaseFields)
-    .$extends(useAuditLog);
+  }).$extends(usePopulateBaseFields);
 }
 
 /**

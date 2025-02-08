@@ -44,7 +44,7 @@ export async function getSession(): Promise<IUserJwtClaims | null> {
     !decoded ||
     typeof decoded !== 'object' ||
     !decoded.userGuid ||
-    !decoded.roles
+    !decoded.role
   ) {
     return null; // Return null if required properties are missing
   }
