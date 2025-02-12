@@ -51,15 +51,6 @@ export const usePopulateBaseFields = Prisma.defineExtension({
 
         return query(args);
       },
-
-      // ============================| DELETE |============================ //
-      async delete({ model, operation, args, query }) {
-        // const decodedToken = await getSession();
-
-        // TODO: Execute update operation, set isDeleted as true and set deletedById
-
-        return query(args);
-      },
     },
   },
 });

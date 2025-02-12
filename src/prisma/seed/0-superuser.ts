@@ -1,6 +1,10 @@
-import { prisma } from '@/prisma/prisma';
+// LIBRARY
+import { PrismaClient } from '@prisma/client';
 
-const seedSuperUser = async () => {
+// TYPES
+import { User } from '@prisma/client';
+
+async function seedSuperUser(prisma: PrismaClient): Promise<User> {
   const superUserEmail = 'superuser@email.com';
 
   // Check if the superuser already exists
@@ -20,11 +24,11 @@ const seedSuperUser = async () => {
     });
 
     console.log('Superuser created:', superUser);
-    return superUser;
+    return superUser as User;
   } else {
     console.log('Superuser already exists:', existingUser);
     return existingUser;
   }
-};
+}
 
 export default seedSuperUser;

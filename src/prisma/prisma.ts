@@ -3,12 +3,15 @@ import { PrismaClient } from '@prisma/client';
 
 // CUSTOM EXTENSIONS
 import { usePopulateBaseFields } from '@/prisma/extensions/populate-base-fields';
+import { useSoftDelete } from '@/prisma/extensions/soft-delete';
 
 // EXTENDED CLIENT
 function getExtendedClient() {
   return new PrismaClient({
     log: ['query', 'info', 'warn', 'error'], // OPTIONAL: Enable Prisma logging
-  }).$extends(usePopulateBaseFields);
+  })
+    .$extends(usePopulateBaseFields)
+    .$extends(useSoftDelete);
 }
 
 /**
