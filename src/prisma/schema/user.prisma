@@ -7,11 +7,12 @@ model User {
   createdBy    User?    @relation("createdBy_usersCreated", fields: [createdById], references: [guid])
   usersCreated User[]   @relation("createdBy_usersCreated")
 
-  updatedAt    DateTime? @updatedAt
+  updatedAt    DateTime? 
   updatedById  String?
   updatedBy    User?     @relation("updatedBy_usersUpdated", fields: [updatedById], references: [guid])
   usersUpdated User[]    @relation("updatedBy_usersUpdated")
 
+  isDeleted    Boolean   @default(false)
   deletedAt    DateTime?
   deletedById  String?
   deletedBy    User?     @relation("deletedBy_usersDeleted", fields: [deletedById], references: [guid])

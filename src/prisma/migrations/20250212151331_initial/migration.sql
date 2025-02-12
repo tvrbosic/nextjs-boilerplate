@@ -8,6 +8,7 @@ CREATE TABLE "User" (
     "createdById" TEXT,
     "updatedAt" TIMESTAMP(3),
     "updatedById" TEXT,
+    "isDeleted" BOOLEAN NOT NULL DEFAULT false,
     "deletedAt" TIMESTAMP(3),
     "deletedById" TEXT,
     "email" TEXT NOT NULL,

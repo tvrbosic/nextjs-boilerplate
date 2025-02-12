@@ -2,13 +2,22 @@
 import { PrismaClient } from '@prisma/client';
 
 // CUSTOM EXTENSIONS
-import { usePopulateBaseFields } from '@/prisma/extensions/populate-base-fields';
+import { useAllModelsCreate } from '@/prisma/extensions/query/all-models-create';
+import { useAllModelsCreateMany } from '@/prisma/extensions/query/all-models-create-many';
+import { useAllModelsUpdate } from '@/prisma/extensions/query/all-models-update';
+import { useAllModelsUpdateMany } from '@/prisma/extensions/query/all-models-update-many';
+import { useSoftDelete } from '@/prisma/extensions/model/all-models-soft-delete';
 
 // EXTENDED CLIENT
 function getExtendedClient() {
   return new PrismaClient({
     log: ['query', 'info', 'warn', 'error'], // OPTIONAL: Enable Prisma logging
-  }).$extends(usePopulateBaseFields);
+  })
+    .$extends(useAllModelsCreate)
+    .$extends(useAllModelsCreateMany)
+    .$extends(useAllModelsUpdate)
+    .$extends(useAllModelsUpdateMany)
+    .$extends(useSoftDelete);
 }
 
 /**
