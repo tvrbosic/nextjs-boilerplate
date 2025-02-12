@@ -42,8 +42,9 @@ export const useSoftDelete = Prisma.defineExtension({
         return (context as any).updateMany({
           where,
           data: {
+            isDeleted: true,
             deletedAt: new Date(),
-            deletedBy: decodedToken?.userGuid,
+            deletedById: decodedToken?.userGuid,
           },
         });
       },
