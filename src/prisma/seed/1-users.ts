@@ -2,10 +2,6 @@
 import bcrypt from 'bcryptjs';
 import { PrismaClient, User } from '@prisma/client';
 
-const prisma = new PrismaClient({
-  log: ['query', 'info', 'warn', 'error'], // OPTIONAL: Enable Prisma logging
-});
-
 const seedUsers = async (prisma: PrismaClient, superUser: User) => {
   const start = Date.now();
   console.log('User seed started...');
