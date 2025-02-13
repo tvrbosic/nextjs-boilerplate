@@ -19,34 +19,31 @@ export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
           const dataArray = Array.isArray(args.data) ? args.data : [args.data];
 
           // Add the createdById if not present
-          const modifiedData = dataArray.map((item) => ({
+          const modifiedDataArray = dataArray.map((item) => ({
             ...item,
             createdById: item.createdById || decodedToken?.userGuid,
           }));
 
-          // Execute transaction: split createMany into individual create operations + bulk audit log insert
+          // Execute transactions: split createMany into individual create operations + bulk audit log insert
           return prisma.$transaction(async (tx) => {
             const results = [];
 
             // Loop through each item in modifiedData and execute create individually
-            for (const item of modifiedData) {
+            for (const item of modifiedDataArray) {
               // Perform the create operation for each item
               const createResult = await tx[model].create({
                 data: item,
               });
 
-              // Generate an audit log entry for each created record
-              const auditLog = {
-                targetTable: model,
-                targetGuid: createResult.guid, // Assuming `guid` is available
-                action: operation,
-                actionById: decodedToken?.userGuid,
-                payload: JSON.parse(JSON.stringify(item)), // Ensure JSON-safe format
-              };
-
-              // Create audit log for the current record
+              // Create audit log entry
               await tx.auditLog.create({
-                data: auditLog,
+                data: {
+                  targetTable: model,
+                  targetGuid: createResult.guid,
+                  action: operation,
+                  actionById: decodedToken?.userGuid,
+                  payload: JSON.parse(JSON.stringify(item)), // Ensure JSON-safe format
+                },
               });
 
               // Store the result of the create operation
