@@ -1,0 +1,10 @@
+model AuditLog {
+  id          Int      @id @default(autoincrement())
+  targetTable String
+  targetGuid  String?
+  date        DateTime @default(now())
+  action      String
+  actionById  String?
+  actionBy    User?    @relation("actionBy_actionsTaken", fields: [actionById], references: [guid])
+  payload     Json
+}

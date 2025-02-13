@@ -19,7 +19,7 @@ datasource db {
  * createdById  String
  * createdBy    User     @relation("createdBy_usersCreated", fields: [createdById], references: [guid])
  * usersCreated User[]   @relation("createdBy_usersCreated")
- * updatedAt    DateTime? 
+ * updatedAt    DateTime?
  * updatedById  String?
  * updatedBy    User?     @relation("updatedBy_usersUpdated", fields: [updatedById], references: [guid])
  * usersUpdated User[]    @relation("updatedBy_usersUpdated")
