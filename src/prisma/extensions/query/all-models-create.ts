@@ -6,19 +6,15 @@ export const useAllModelsCreate = Prisma.defineExtension((prisma) =>
   prisma.$extends({
     query: {
       $allModels: {
-        // ============================| BASE FIELD (CREATED BY ID) |============================ //
         async create({ model, operation, args, query }) {
-          // Handle create on AuditLog table without additional actions
+          // Handle insert into AuditLog table without additional actions
           if (model === 'AuditLog') {
             return query(args);
           }
 
-          // Get authenticated user
+          // Get authenticated user and assign to createdById
           const decodedToken = await getSession();
-
-          // Use manually provided user guid (case when seeding as superuser) or use authenticated user guid
-          args.data.createdById =
-            args.data.createdById || decodedToken!.userGuid;
+          args.data.createdById = decodedToken!.userGuid;
 
           // Create audit log entry
           const auditEntry = {
@@ -29,7 +25,7 @@ export const useAllModelsCreate = Prisma.defineExtension((prisma) =>
             payload: JSON.parse(JSON.stringify(args.data)),
           };
 
-          // Execute both the original query and audit log insert. Use guid of created entry in audit log entry
+          // Execute transaction: original query + audit log create
           const result = await prisma.$transaction(async (tx) => {
             const createResult = await query(args);
 

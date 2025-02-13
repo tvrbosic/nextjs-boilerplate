@@ -22,7 +22,7 @@ export const useAllModelsUpdateMany = Prisma.defineExtension({
           });
         }
 
-        // ============================| GLOBAL SOFT DELETE FILTER |============================ //
+        // Global soft delete filter
         args.where = {
           ...args.where,
           isDeleted: false,

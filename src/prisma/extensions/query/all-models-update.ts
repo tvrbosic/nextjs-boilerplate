@@ -6,7 +6,6 @@ export const useAllModelsUpdate = Prisma.defineExtension({
   query: {
     $allModels: {
       async update({ model, operation, args, query }) {
-        // ============================| BASE FIELD (UPDATED BY ID, UPDATED AT) |============================ //
         const decodedToken = await getSession();
         // Skip setting updatedById and updatedAt due to fact that update method was called as result of softDelete method
         if (!args.data.isDeleted) {
@@ -16,7 +15,7 @@ export const useAllModelsUpdate = Prisma.defineExtension({
           args.data.updatedAt = new Date();
         }
 
-        // ============================| GLOBAL SOFT DELETE FILTER |============================ //
+        // Global soft delete filter
         args.where = {
           ...args.where,
           isDeleted: false,
