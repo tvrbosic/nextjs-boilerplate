@@ -24,7 +24,7 @@ export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
             createdById: item.createdById || decodedToken?.userGuid,
           }));
 
-          // Execute transactions: split createMany into individual create operations + bulk audit log insert
+          // Execute transactions: split createMany into individual create operations
           return prisma.$transaction(async (tx) => {
             const results = [];
 
