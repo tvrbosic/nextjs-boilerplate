@@ -7,8 +7,8 @@ export const useAllModelsCreate = Prisma.defineExtension((prisma) =>
     query: {
       $allModels: {
         async create({ model, operation, args, query }) {
-          // Handle insert into AuditLog table without additional actions
           if (model === 'AuditLog') {
+            // Handle insert into AuditLog table without additional actions
             return query(args);
           }
 

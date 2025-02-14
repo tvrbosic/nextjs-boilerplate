@@ -7,8 +7,8 @@ export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
     query: {
       $allModels: {
         async createMany({ model, operation, args, query }) {
-          // Handle insert into table without additional actions
           if (model === 'AuditLog') {
+            // Handle insert into table without additional actions
             return query(args);
           }
 
@@ -30,8 +30,6 @@ export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
 
             // Loop through each item in modifiedData and execute create individually
             for (const item of modifiedDataArray) {
-              // Perform the create operation for each item
-
               /**
                * We ignore TS warning because:
                * We want to call create method for generic model (any model available in application).
@@ -47,8 +45,8 @@ export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
 
               /**
                * IMPORTANT:
-               * We are not creating audit logs manually here because calling create will trigger Prisma client extension for create which already does that.
-               * Manually calling audit log insertions here would result in duplicate entries.
+               * We are not creating audit logs manually here because calling create operation will trigger Prisma client extension
+               * for create which already does that. Manually calling audit log insertions here would result in duplicate entries.
                */
 
               // Store the result of the create operation
