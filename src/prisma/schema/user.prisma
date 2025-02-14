@@ -1,6 +1,6 @@
 model User {
   // -------------------< Base fields >------------------- //
-  guid String @id @default(uuid())
+  guid String @id @default(uuid()) @map("user_guid")
 
   createdAt    DateTime @default(now()) @db.Timestamptz(6)
   createdById  String?
@@ -26,6 +26,8 @@ model User {
   lastName  String
   role      Role   @default(USER)
   password  String
+
+  @@map("user")
 }
 
 enum Role {

@@ -1,5 +1,5 @@
 model AuditLog {
-  id          Int      @id @default(autoincrement())
+  id          Int      @id @default(autoincrement()) @map("audit_log_id")
   targetTable String
   targetGuid  String?
   date        DateTime @default(now())
@@ -7,4 +7,6 @@ model AuditLog {
   actionById  String?
   actionBy    User?    @relation("actionBy_actionsTaken", fields: [actionById], references: [guid])
   payload     Json
+
+  @@map("audit_log")
 }

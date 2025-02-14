@@ -27,14 +27,33 @@ export async function POST(req: Request) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const newUser = await prisma.user.create({
-      data: {
-        email,
-        password: hashedPassword,
-        firstName,
-        lastName,
-        role: role || 'USER',
-      },
+    // const newUser = await prisma.user.create({
+    //   data: {
+    //     email,
+    //     password: hashedPassword,
+    //     firstName,
+    //     lastName,
+    //     role: role || 'USER',
+    //   },
+    // });
+
+    const newUser = await prisma.user.createMany({
+      data: [
+        {
+          email,
+          password: hashedPassword,
+          firstName,
+          lastName,
+          role: role || 'USER',
+        },
+        {
+          email: 'blabla@blabla.com',
+          password: hashedPassword,
+          firstName,
+          lastName,
+          role: role || 'USER',
+        },
+      ],
     });
 
     return NextResponse.json(newUser, { status: 201 });
