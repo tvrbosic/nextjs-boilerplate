@@ -5,6 +5,11 @@ import bcrypt from 'bcryptjs';
 // APP
 import { prisma } from '@/prisma/prisma';
 import { createSession } from '@/utility/session/session';
+import {
+  ApiResponse,
+  ApiErrorResponse,
+  ApiInternalServerErrorResponse,
+} from '@/utility/response/response';
 
 export async function POST(req: Request) {
   try {
@@ -12,29 +17,29 @@ export async function POST(req: Request) {
 
     // Validate input
     if (!email || !password) {
-      return NextResponse.json(
-        { error: 'Email and password are required!' },
-        { status: 400 }
-      );
+      return ApiErrorResponse({
+        status: 400,
+        message: 'Email and password are required!',
+      });
     }
 
     // Find user by email
     const user = await prisma.user.findUnique({ where: { email } });
 
     if (!user) {
-      return NextResponse.json(
-        { error: 'Invalid credentials!' },
-        { status: 401 }
-      );
+      return ApiErrorResponse({
+        status: 401,
+        message: 'Invalid credentials!',
+      });
     }
 
     // Compare hashed password
     const passwordMatch = await bcrypt.compare(password, user.password);
     if (!passwordMatch) {
-      return NextResponse.json(
-        { error: 'Invalid credentials!' },
-        { status: 401 }
-      );
+      return ApiErrorResponse({
+        status: 401,
+        message: 'Invalid credentials!',
+      });
     }
 
     // Create JWT token and user session
@@ -44,12 +49,9 @@ export async function POST(req: Request) {
     });
 
     // Send response with JWT token
-    return NextResponse.json({ message: 'Login successful' }, { status: 200 });
+    return ApiResponse({ status: 200, message: 'Login successful' });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
+    return ApiInternalServerErrorResponse();
   }
 }

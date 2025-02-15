@@ -4,12 +4,19 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import { prisma } from '@/prisma/prisma';
+import {
+  ApiResponse,
+  ApiErrorResponse,
+  ApiInternalServerErrorResponse,
+} from '@/utility/response/response';
 
 export async function GET(req: Request) {
-  // Do whatever you want
-  // ... you will write your Prisma Client queries here
   const users = await prisma.user.findMany();
-  return NextResponse.json({ users }, { status: 200 });
+  return ApiResponse({
+    status: 200,
+    message: 'Users fetched successfully',
+    data: users,
+  });
 }
 
 export async function POST(req: Request) {
@@ -18,39 +25,32 @@ export async function POST(req: Request) {
     const { email, firstName, lastName, role, password } = body;
 
     if (!email) {
-      return NextResponse.json(
-        { error: 'Email and createdById are required.' },
-        { status: 400 }
-      );
+      return ApiErrorResponse({
+        status: 400,
+        message: 'Email is mandatory field',
+      });
     }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // const newUser = await prisma.user.create({
-    //   data: {
-    //     email,
-    //     password: hashedPassword,
-    //     firstName,
-    //     lastName,
-    //     role: role || 'USER',
-    //   },
-    // });
-    const newUser = await prisma.user.updateMany({
-      where: {
-        role: 'ADMIN',
-      },
+    const newUser = await prisma.user.create({
       data: {
-        role: 'USER',
+        email,
+        password: hashedPassword,
+        firstName,
+        lastName,
+        role: role || 'USER',
       },
     });
 
-    return NextResponse.json(newUser, { status: 201 });
+    return ApiResponse({
+      status: 201,
+      message: 'User created successfully',
+      data: newUser,
+    });
   } catch (error) {
     console.error('Error creating user:', error);
-    return NextResponse.json(
-      { error: 'Internal server error.' },
-      { status: 500 }
-    );
+    return ApiInternalServerErrorResponse();
   }
 }

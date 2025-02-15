@@ -3,6 +3,11 @@ import { NextResponse } from 'next/server';
 
 // APP
 import { prisma } from '@/prisma/prisma';
+import {
+  ApiResponse,
+  ApiErrorResponse,
+  ApiInternalServerErrorResponse,
+} from '@/utility/response/response';
 
 // TYPES
 import { IApiUserDeleteParams } from '@/app/api/v1/user/types';
@@ -15,18 +20,15 @@ export async function DELETE(
     const guid = (await params).guid;
 
     if (!guid) {
-      return NextResponse.json({ error: 'GUID is required' }, { status: 400 });
+      return ApiErrorResponse({ status: 400, message: 'GUID is required' });
     }
 
     const deleteUser = await prisma.user.softDelete({
       guid,
     });
 
-    return NextResponse.json({
-      message: 'User deleted successfully',
-      user: deleteUser,
-    });
+    return ApiResponse({ status: 204, message: 'User deleted successfully' });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return ApiInternalServerErrorResponse();
   }
 }
