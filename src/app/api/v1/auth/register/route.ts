@@ -4,6 +4,11 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import { prisma } from '@/prisma/prisma';
+import {
+  ApiResponse,
+  ApiErrorResponse,
+  ApiInternalServerErrorResponse,
+} from '@/utility/response/response';
 
 export async function POST(req: Request) {
   try {
@@ -11,19 +16,16 @@ export async function POST(req: Request) {
 
     // Validate input
     if (!email || !password || !firstName || !lastName) {
-      return NextResponse.json(
-        { error: 'All fields are required' },
-        { status: 400 }
-      );
+      return ApiErrorResponse({
+        status: 400,
+        message: 'All fields are required',
+      });
     }
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
-      return NextResponse.json(
-        { error: 'User already exists' },
-        { status: 400 }
-      );
+      return ApiErrorResponse({ status: 400, message: 'User already exists' });
     }
 
     // Hash password
@@ -34,15 +36,13 @@ export async function POST(req: Request) {
       data: { email, password: hashedPassword, firstName, lastName },
     });
 
-    return NextResponse.json(
-      { message: 'User registered successfully', user },
-      { status: 201 }
-    );
+    return ApiResponse({
+      status: 201,
+      message: 'User registered successfully',
+      data: user,
+    });
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    );
+    return ApiInternalServerErrorResponse();
   }
 }

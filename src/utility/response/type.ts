@@ -1,4 +1,5 @@
 export interface IApiResponseProps<T> {
+  status: number;
   message?: string;
   data?: T;
 }
@@ -10,6 +11,7 @@ export interface IApiResponse<T> {
 }
 
 export interface IApiErrorResponseProps {
+  status: number;
   message: string;
 }
 
