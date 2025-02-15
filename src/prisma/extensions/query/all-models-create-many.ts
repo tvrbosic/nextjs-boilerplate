@@ -8,11 +8,11 @@ export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
       $allModels: {
         async createMany({ model, operation, args, query }) {
           if (model === 'AuditLog') {
-            // Handle insert into table without additional actions
+            // Handle AuditLog table create without additional actions
             return query(args);
           }
 
-          // Get authenticated user and assign to createdById
+          // Get authenticated user
           const decodedToken = await getSession();
 
           // Ensure args.data is an array even if it's a single object
@@ -27,20 +27,20 @@ export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
           // Execute transactions: split createMany into individual create operations
           return prisma.$transaction(async (tx) => {
             const results = [];
+            const modelModifiedCase = model[0].toLowerCase() + model.slice(1);
 
             // Loop through each item in modifiedData and execute create individually
-            for (const item of modifiedDataArray) {
+            for (const entry of modifiedDataArray) {
               /**
                * We ignore TS warning because:
                * We want to call create method for generic model (any model available in application).
                * Prisma generated model types are PascalCase while tx properties we want want to access are camelCase.
                * For example: model = 'User' but we want to call tx.user.create which causes TypeScript error.
-               * Solution with my current understanindg of Prisma (possibly there are better ways).
+               * (Possibly there are better ways to do this).
                */
-              const modelModifiedCase = model[0].toLowerCase() + model.slice(1);
               // @ts-expect-error
               const createResult = await tx[modelModifiedCase].create({
-                data: item,
+                data: entry,
               });
 
               /**
@@ -49,7 +49,7 @@ export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
                * for create which already does that. Manually calling audit log insertions here would result in duplicate entries.
                */
 
-              // Store the result of the create operation
+              // Store the result of the operation
               results.push(createResult);
             }
 
