@@ -2,18 +2,44 @@
 import { Prisma } from '@prisma/client';
 import { getSession } from '@/utility/session/session';
 
-export const useAllModelsCreate = Prisma.defineExtension({
-  query: {
-    $allModels: {
-      // ============================| BASE FIELD (CREATED BY ID) |============================ //
-      async create({ model, operation, args, query }) {
-        const decodedToken = await getSession();
+export const useAllModelsCreate = Prisma.defineExtension((prisma) =>
+  prisma.$extends({
+    query: {
+      $allModels: {
+        async create({ model, operation, args, query }) {
+          if (model === 'AuditLog') {
+            // Handle AuditLog table create without additional actions
+            return query(args);
+          }
 
-        // Use manually provided user guid (case when seeding as superuser) or use authenticated user guid
-        args.data.createdById = args.data.createdById || decodedToken?.userGuid;
+          // Get authenticated user and assign to createdById
+          const decodedToken = await getSession();
+          args.data.createdById = decodedToken!.userGuid;
 
-        return query(args);
+          // Create audit log entry
+          const auditEntry = {
+            targetTable: model,
+            targetGuid: '',
+            action: operation,
+            actionById: decodedToken!.userGuid,
+            payload: JSON.parse(JSON.stringify(args.data)),
+          };
+
+          // Execute transaction: original query + audit log create
+          const result = await prisma.$transaction(async (tx) => {
+            const createResult = await query(args);
+
+            await prisma.auditLog.create({
+              data: { ...auditEntry, targetGuid: createResult.guid },
+            });
+
+            return createResult;
+          });
+
+          // Return operation result
+          return result;
+        },
       },
     },
-  },
-});
+  })
+);

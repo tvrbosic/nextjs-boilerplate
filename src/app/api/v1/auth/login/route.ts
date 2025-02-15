@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import { prisma } from '@/prisma/prisma';
-import { generateToken } from '@/utility/jwt/jwt';
 import { createSession } from '@/utility/session/session';
 
 export async function POST(req: Request) {

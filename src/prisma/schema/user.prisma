@@ -1,13 +1,13 @@
 model User {
   // -------------------< Base fields >------------------- //
-  guid String @id @default(uuid())
+  guid String @id @default(uuid()) @map("user_guid")
 
   createdAt    DateTime @default(now()) @db.Timestamptz(6)
   createdById  String?
   createdBy    User?    @relation("createdBy_usersCreated", fields: [createdById], references: [guid])
   usersCreated User[]   @relation("createdBy_usersCreated")
 
-  updatedAt    DateTime? 
+  updatedAt    DateTime?
   updatedById  String?
   updatedBy    User?     @relation("updatedBy_usersUpdated", fields: [updatedById], references: [guid])
   usersUpdated User[]    @relation("updatedBy_usersUpdated")
@@ -18,12 +18,16 @@ model User {
   deletedBy    User?     @relation("deletedBy_usersDeleted", fields: [deletedById], references: [guid])
   usersDeleted User[]    @relation("deletedBy_usersDeleted")
 
+  actionsTaken AuditLog[] @relation("actionBy_actionsTaken")
+
   // -------------------< Model specific fields >------------------- //
   email     String @unique
   firstName String
   lastName  String
   role      Role   @default(USER)
   password  String
+
+  @@map("user")
 }
 
 enum Role {

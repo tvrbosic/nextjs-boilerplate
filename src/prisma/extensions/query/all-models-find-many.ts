@@ -5,7 +5,7 @@ export const useAllModelsFindUnique = Prisma.defineExtension({
   query: {
     $allModels: {
       async findMany({ model, operation, args, query }) {
-        // ============================| GLOBAL SOFT DELETE FILTER |============================ //
+        // Global soft delete filter (ignore deleted entries)
         args.where = {
           ...args.where,
           isDeleted: false,
