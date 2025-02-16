@@ -11,12 +11,17 @@ import {
 } from '@/utility/response/response';
 
 export async function GET(req: Request) {
-  const users = await prisma.user.findMany();
-  return ApiResponse({
-    status: 200,
-    message: 'Users fetched successfully',
-    data: users,
-  });
+  try {
+    const users = await prisma.user.findMany();
+    return ApiResponse({
+      status: 200,
+      message: 'Users fetched successfully',
+      data: users,
+    });
+  } catch (error) {
+    console.error('Error fetcing users:', error);
+    return ApiInternalServerErrorResponse();
+  }
 }
 
 export async function POST(req: Request) {

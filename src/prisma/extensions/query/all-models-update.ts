@@ -15,23 +15,26 @@ export const useAllModelsUpdate = Prisma.defineExtension((prisma) =>
           // Get authenticated user
           const decodedToken = await getSession();
 
-          // Set updatedById and updatedAt but not in case when update was called as result of softDelete (converted delete to update operation)
-          if (!args.data.isDeleted) {
+          // Determine if update operation was called as result of softDelete (converted delete to update operation)
+          const isSoftDeleteOperation = args.data.isDeleted;
+
+          // Set updatedById and updatedAt but not in case isSoftDeleteOperation
+          if (!isSoftDeleteOperation) {
             args.data.updatedById = decodedToken?.userGuid;
             args.data.updatedAt = new Date();
-          }
 
-          // Global soft delete filter (do not update already deleted entries)
-          args.where = {
-            ...args.where,
-            isDeleted: false,
-          };
+            // Global soft delete filter (do not update already deleted entries)
+            args.where = {
+              ...args.where,
+              isDeleted: false,
+            };
+          }
 
           // Create audit log entry
           const auditEntry = {
             targetTable: model,
             targetGuid: '',
-            action: operation,
+            action: operation as string,
             actionById: decodedToken!.userGuid,
             payload: JSON.parse(JSON.stringify(args.data)),
           };
@@ -41,7 +44,11 @@ export const useAllModelsUpdate = Prisma.defineExtension((prisma) =>
             const updateResult = await query(args);
 
             await prisma.auditLog.create({
-              data: { ...auditEntry, targetGuid: updateResult.guid },
+              data: {
+                ...auditEntry,
+                targetGuid: updateResult.guid,
+                action: isSoftDeleteOperation ? 'delete' : 'update',
+              },
             });
 
             return updateResult;
