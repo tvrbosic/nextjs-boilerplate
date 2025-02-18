@@ -1,5 +1,4 @@
 // LIBRARY
-import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 
 // APP
