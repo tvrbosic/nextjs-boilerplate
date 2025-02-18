@@ -1,6 +1,3 @@
-// LIBRARY
-import { NextResponse } from 'next/server';
-
 // APP
 import { prisma } from '@/prisma/prisma';
 import {

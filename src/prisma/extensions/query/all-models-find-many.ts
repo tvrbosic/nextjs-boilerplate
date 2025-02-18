@@ -1,7 +1,7 @@
 // APP
 import { Prisma } from '@prisma/client';
 
-export const useAllModelsFindUnique = Prisma.defineExtension({
+export const useAllModelsFindMany = Prisma.defineExtension({
   query: {
     $allModels: {
       async findMany({ model, operation, args, query }) {

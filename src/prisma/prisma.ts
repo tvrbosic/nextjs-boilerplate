@@ -6,6 +6,8 @@ import { useAllModelsCreate } from '@/prisma/extensions/query/all-models-create'
 import { useAllModelsCreateMany } from '@/prisma/extensions/query/all-models-create-many';
 import { useAllModelsUpdate } from '@/prisma/extensions/query/all-models-update';
 import { useAllModelsUpdateMany } from '@/prisma/extensions/query/all-models-update-many';
+import { useAllModelsFindUnique } from '@/prisma/extensions/query/all-models-find-unique';
+import { useAllModelsFindMany } from '@/prisma/extensions/query/all-models-find-many';
 import { useSoftDelete } from '@/prisma/extensions/model/all-models-soft-delete';
 
 // EXTENDED CLIENT
@@ -17,6 +19,8 @@ function getExtendedClient() {
     .$extends(useAllModelsCreateMany)
     .$extends(useAllModelsUpdate)
     .$extends(useAllModelsUpdateMany)
+    .$extends(useAllModelsFindUnique)
+    .$extends(useAllModelsFindMany)
     .$extends(useSoftDelete);
 }
 
