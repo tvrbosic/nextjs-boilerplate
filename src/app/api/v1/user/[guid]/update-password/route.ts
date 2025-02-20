@@ -19,7 +19,7 @@ export async function PATCH(req: Request, { params }: IPatchUserParams) {
 
     // Get password from body
     const body = await req.json();
-    const { password } = await req.json();
+    const { newPassword, oldPassword } = body;
 
     if (!guid) {
       return ApiErrorResponse({ status: 400, message: 'GUID is required' });
@@ -39,8 +39,8 @@ export async function PATCH(req: Request, { params }: IPatchUserParams) {
       });
     }
 
-    // 2) Check if posted password is correct
-    const passwordsMatch = await bcrypt.compare(password, user!.password);
+    // 2) Check if posted oldPassword is correct
+    const passwordsMatch = await bcrypt.compare(oldPassword, user!.password);
     if (!passwordsMatch) {
       return ApiErrorResponse({
         status: 401,
@@ -48,8 +48,8 @@ export async function PATCH(req: Request, { params }: IPatchUserParams) {
       });
     }
 
-    // 3) Hash and update the password
-    const hashedPassword = await bcrypt.hash(password, 10);
+    // 3) Hash and update the newPssword
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     const updatedUser = await prisma.user.update({
       where: {
