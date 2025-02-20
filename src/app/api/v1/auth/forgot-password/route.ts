@@ -9,6 +9,7 @@ import {
   ApiErrorResponse,
   ApiInternalServerErrorResponse,
 } from '@/utility/response/response';
+import { sendEmail } from '@/utility/email/email';
 
 export async function POST(req: Request) {
   try {
@@ -50,7 +51,7 @@ export async function POST(req: Request) {
       where: { email },
       data: {
         passwordResetToken,
-        passwordResetExpires: new Date(Date.now() + 10 * 60 * 1000), // 10 min expiration
+        passwordResetExpiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 min expiration
       },
     });
 
@@ -61,20 +62,18 @@ export async function POST(req: Request) {
 
     const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}. \n If you did not forget your password, please ignore this email!`;
 
-    try {
-      await sendEmail({
-        email: user.email,
-        subject: 'Your password reset token (valid for 10 min)',
-        message,
-      });
-
+    await sendEmail({
+      destinationEmail: user.email,
+      subject: 'Your password reset token (valid for 10 min)',
+      text: message,
+    });
 
     return ApiResponse({
       status: 200,
       message: 'Password reset link has been sent to provided email',
     });
   } catch (error: any) {
-    console.error('Error updating user password:', error);
+    console.error('Error processing forgot password request:', error);
     return ApiInternalServerErrorResponse();
   }
 }
