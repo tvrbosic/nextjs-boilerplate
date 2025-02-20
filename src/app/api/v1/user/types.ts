@@ -8,6 +8,10 @@ export interface IPutUserParams {
   params: Promise<IHasGuid>;
 }
 
+export interface IPatchUserParams {
+  params: Promise<IHasGuid>;
+}
+
 export interface IDeleteUserParams {
   params: Promise<IHasGuid>;
 }
