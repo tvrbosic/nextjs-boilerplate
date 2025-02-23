@@ -1,5 +1,4 @@
 // LIBRARY
-import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 
 // APP
@@ -17,7 +16,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { email } = body;
 
-    // 1) Get user based on posted email
+    // Get user based on posted email
     const user = await prisma.user.findUnique({
       where: {
         email,
@@ -31,11 +30,11 @@ export async function POST(req: Request) {
       });
     }
 
-    // 2) Generate the random password reset token
+    // Generate the random password reset token
     const resetToken = crypto.randomBytes(32).toString('hex');
 
-    // 3) Hash the token before storing it in the database.
-    const passwordResetToken = crypto
+    // Hash the token before storing it in the database.
+    const hashedResetToken = crypto
       .createHash('sha256')
       .update(resetToken)
       .digest('hex');
@@ -46,16 +45,16 @@ export async function POST(req: Request) {
      * - When a user submits a reset request, you hash their provided token and compare it with the stored hash in the database.
      */
 
-    // 4) Store the token and expiry in the database (assuming you have these fields)
+    // Store the token and expiry in the database (assuming you have these fields)
     await prisma.user.update({
       where: { email },
       data: {
-        passwordResetToken,
+        passwordResetToken: hashedResetToken,
         passwordResetExpiresAt: new Date(Date.now() + 10 * 60 * 1000), // 10 min expiration
       },
     });
 
-    // 5) Send password reset link to users email
+    // Send password reset link to users email
     const host = req.headers.get('host');
     const protocol = req.headers.get('x-forwarded-proto') || 'http'; // Handles proxies
     const resetURL = `${protocol}://${host}/api/v1/users/reset-password/${resetToken}`;
@@ -70,7 +69,7 @@ export async function POST(req: Request) {
 
     return ApiResponse({
       status: 200,
-      message: 'Password reset link has been sent to provided email',
+      message: 'Password reset link has been sent to provided email.',
     });
   } catch (error: any) {
     console.error('Error processing forgot password request:', error);

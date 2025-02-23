@@ -1,6 +1,3 @@
-// LIBRARY
-import { cookies } from 'next/headers';
-
 // APP
 import { deleteSession } from '@/utility/session/session';
 
