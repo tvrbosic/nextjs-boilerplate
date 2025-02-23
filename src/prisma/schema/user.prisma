@@ -21,11 +21,13 @@ model User {
   actionsTaken AuditLog[] @relation("actionBy_actionsTaken")
 
   // -------------------< Model specific fields >------------------- //
-  email     String @unique
-  firstName String
-  lastName  String
-  role      Role   @default(USER)
-  password  String
+  email                  String    @unique
+  firstName              String
+  lastName               String
+  role                   Role      @default(USER)
+  password               String
+  passwordResetToken     String?
+  passwordResetExpiresAt DateTime?
 
   @@map("user")
 }
