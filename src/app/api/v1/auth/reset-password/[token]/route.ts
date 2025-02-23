@@ -19,7 +19,7 @@ export async function PATCH(
   { params }: IPatchResetPasswordParams
 ) {
   try {
-    const resetToken = (await params).resetToken;
+    const resetToken = (await params).token;
 
     // Get new password from body
     const body = await req.json();
@@ -53,7 +53,7 @@ export async function PATCH(
     if (!user) {
       return ApiErrorResponse({
         status: 400,
-        message: 'Invalid email provided',
+        message: 'Invalid or expired token provided',
       });
     }
 
@@ -61,11 +61,11 @@ export async function PATCH(
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     await prisma.user.update({
-      where: { passwordResetToken: hashedResetToken },
+      where: { guid: user.guid },
       data: {
         password: hashedPassword,
-        passwordResetToken: undefined,
-        passwordResetExpiresAt: undefined,
+        passwordResetToken: null,
+        passwordResetExpiresAt: null,
       },
     });
 
