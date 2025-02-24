@@ -53,8 +53,12 @@ export async function middleware(req: Request) {
   }
 
   // Check if request pathname includes any of the defined restricted routes
-  if (isRestrictedRoute(pathname, req.method as THttpMethod)) {
-    middlewares.push(restrictToRoles('ADMIN'));
+  const { isRestricted, allowedRoles } = isRestrictedRoute(
+    pathname,
+    req.method as THttpMethod
+  );
+  if (isRestricted) {
+    middlewares.push(restrictToRoles(allowedRoles));
   }
 
   // Run middlewares if any were added
