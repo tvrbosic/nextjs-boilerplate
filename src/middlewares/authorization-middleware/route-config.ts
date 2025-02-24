@@ -9,28 +9,17 @@ export const restrictedRoutes: IRestrictedRouteConfig[] = [
   // -----------------------------< USER >----------------------------- //
   {
     path: '/api/v1/user',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST'],
     roles: ['ADMIN'],
   },
   {
     path: '/api/v1/user/[guid]',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'PUT', 'DELETE'],
     roles: ['ADMIN'],
   },
   {
     path: '/api/v1/user/[guid]/update-password',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    roles: ['ADMIN'],
-  },
-  // -----------------------------< AUTH >----------------------------- //
-  {
-    path: '/api/v1/auth/forgot-password',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    roles: ['ADMIN'],
-  },
-  {
-    path: '/api/v1/auth/reset-password/[token]',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    roles: ['ADMIN'],
+    methods: ['PATCH'],
+    roles: ['USER', 'ADMIN'],
   },
 ];

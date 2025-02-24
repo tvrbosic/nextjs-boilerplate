@@ -9,23 +9,14 @@ export const protectedRoutes: IProtectedRouteConfig[] = [
   // -----------------------------< USER >----------------------------- //
   {
     path: '/api/v1/user',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST'],
   },
   {
     path: '/api/v1/user/[guid]',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'PUT', 'DELETE'],
   },
   {
     path: '/api/v1/user/[guid]/update-password',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  },
-  // -----------------------------< AUTH >----------------------------- //
-  {
-    path: '/api/v1/auth/forgot-password',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  },
-  {
-    path: '/api/v1/auth/reset-password/[token]',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['PATCH'],
   },
 ];

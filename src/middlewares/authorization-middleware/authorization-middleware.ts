@@ -31,6 +31,7 @@ export function isRestrictedRoute(
 
     const isRestrictedRoute =
       routeRegex.test(requestPathname) && rr.methods.includes(requestMethod);
+
     if (isRestrictedRoute) {
       allowedRoles = rr.roles;
       isRestricted = true;
