@@ -3,32 +3,31 @@ import { NextResponse } from 'next/server';
 
 // APP
 import { getSession, updateSession } from '@/utility/session/session';
+import { protectedRoutes } from '@/middlewares/authentication-middleware/route-config';
 
 // TYPES
-import { IProtectedRouteConfig } from '@/middlewares/authentication-middleware/types';
 import { THttpMethod } from '@/types/network';
-
-// ============================| CONFGURATION |============================ //
-/**
- * Configuration array for defining protected routes (routes allowed only to authenticated users).
- * Array is used to check if a specific route and HTTP method combination should be allowed to user making request.
- */
-const protectedRoutes: IProtectedRouteConfig[] = [
-  {
-    path: 'api/v1/user',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-  },
-];
 
 // ============================| HELPER FUNCTIONS |============================ //
 export function isProtectedRoute(
   requestPathname: string,
   requestMethod: THttpMethod
 ): boolean {
-  return protectedRoutes.some(
-    (pr) =>
-      requestPathname.includes(pr.path) && pr.methods.includes(requestMethod)
-  );
+  return protectedRoutes.some((pr) => {
+    /**
+     * Convert a protected route path with dynamic segments like `[some-guid]` into a regular expression that matches actual request paths.
+     *
+     * - Replace `[some-guid]` with `([^/]+)` which matches any single path segment.
+     * - Regex is tailored to do exact matches and to prevent partial matches which gives more control.
+     */
+    const routeRegex = new RegExp(
+      `^${pr.path.replace(/\[.*?\]/g, '([^/]+)')}$`
+    );
+
+    return (
+      routeRegex.test(requestPathname) && pr.methods.includes(requestMethod)
+    );
+  });
 }
 
 // ============================| AUTHENTICATION MIDDLEWARE |============================ //
