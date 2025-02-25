@@ -2,18 +2,19 @@
 import bcrypt from 'bcryptjs';
 
 // APP
+import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
 import { prisma } from '@/prisma/prisma';
 import {
-  ApiResponse,
-  ApiErrorResponse,
-  ApiInternalServerErrorResponse,
+  ApiSuccessResponse,
+  ApiBadRequestResponse,
+  ApiUnauthorizedResponse,
 } from '@/utility/response/response';
 
 // TYPES
 import { IPatchUserParams } from '@/app/api/v1/user/types';
 
-export async function PATCH(req: Request, { params }: IPatchUserParams) {
-  try {
+export const PATCH = withApiErrorHandler(
+  async (req: Request, { params }: IPatchUserParams) => {
     // Get guid from query params
     const guid = (await params).guid;
 
@@ -22,10 +23,10 @@ export async function PATCH(req: Request, { params }: IPatchUserParams) {
     const { newPassword, oldPassword } = body;
 
     if (!guid) {
-      return ApiErrorResponse({ status: 400, message: 'GUID is required' });
+      return ApiBadRequestResponse({ message: 'GUID is required' });
     }
 
-    // 1) Get user from collection
+    // Get user from collection
     const user = await prisma.user.findUnique({
       where: {
         guid,
@@ -33,22 +34,18 @@ export async function PATCH(req: Request, { params }: IPatchUserParams) {
     });
 
     if (!user) {
-      return ApiErrorResponse({
-        status: 400,
-        message: 'Invalid GUID provided',
-      });
+      return ApiBadRequestResponse({ message: 'Invalid GUID provided' });
     }
 
-    // 2) Check if posted oldPassword is correct
+    // Check if posted oldPassword is correct
     const passwordsMatch = await bcrypt.compare(oldPassword, user!.password);
     if (!passwordsMatch) {
-      return ApiErrorResponse({
-        status: 401,
+      return ApiUnauthorizedResponse({
         message: 'Incorrect password provided',
       });
     }
 
-    // 3) Hash and update the newPssword
+    // Hash and update the newPssword
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     const updatedUser = await prisma.user.update({
@@ -60,13 +57,9 @@ export async function PATCH(req: Request, { params }: IPatchUserParams) {
       },
     });
 
-    return ApiResponse({
-      status: 200,
+    return ApiSuccessResponse({
       message: 'User password updated successfully',
       data: updatedUser,
     });
-  } catch (error: any) {
-    console.error('Error updating user password:', error);
-    return ApiInternalServerErrorResponse();
   }
-}
+);

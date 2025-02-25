@@ -1,57 +1,48 @@
 // LIBRARY
-import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 
 // APP
+import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
 import { prisma } from '@/prisma/prisma';
 import { createSession } from '@/utility/session/session';
 import {
-  ApiResponse,
-  ApiErrorResponse,
-  ApiInternalServerErrorResponse,
+  ApiSuccessResponse,
+  ApiBadRequestResponse,
+  ApiUnauthorizedResponse,
 } from '@/utility/response/response';
 
-export async function POST(req: Request) {
-  try {
-    const { email, password } = await req.json();
+export const POST = withApiErrorHandler(async (req: Request) => {
+  const { email, password } = await req.json();
 
-    // Validate input
-    if (!email || !password) {
-      return ApiErrorResponse({
-        status: 400,
-        message: 'Email and password are required!',
-      });
-    }
-
-    // Find user by email
-    const user = await prisma.user.findUnique({ where: { email } });
-
-    if (!user) {
-      return ApiErrorResponse({
-        status: 401,
-        message: 'Invalid credentials!',
-      });
-    }
-
-    // Compare hashed password
-    const passwordMatch = await bcrypt.compare(password, user.password);
-    if (!passwordMatch) {
-      return ApiErrorResponse({
-        status: 401,
-        message: 'Invalid credentials!',
-      });
-    }
-
-    // Create JWT token and user session
-    const token = await createSession({
-      userGuid: user.guid,
-      role: user.role,
+  // Validate input
+  if (!email || !password) {
+    return ApiBadRequestResponse({
+      message: 'Email and password are required!',
     });
-
-    // Send response with JWT token
-    return ApiResponse({ status: 200, message: 'Login successful' });
-  } catch (error) {
-    console.error(error);
-    return ApiInternalServerErrorResponse();
   }
-}
+
+  // Find user by email
+  const user = await prisma.user.findUnique({ where: { email } });
+
+  if (!user) {
+    return ApiUnauthorizedResponse({
+      message: 'User with provided email was not found!',
+    });
+  }
+
+  // Compare hashed password
+  const passwordMatch = await bcrypt.compare(password, user.password);
+  if (!passwordMatch) {
+    return ApiUnauthorizedResponse({
+      message: 'Provided passwords do not match!',
+    });
+  }
+
+  // Create JWT token and user session
+  const token = await createSession({
+    userGuid: user.guid,
+    role: user.role,
+  });
+
+  return ApiSuccessResponse({ message: 'Login successful' });
+});
