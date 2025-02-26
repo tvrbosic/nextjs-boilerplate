@@ -1,9 +1,9 @@
 // APP
+import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
 import { prisma } from '@/prisma/prisma';
 import {
-  ApiResponse,
-  ApiErrorResponse,
-  ApiInternalServerErrorResponse,
+  ApiSuccessResponse,
+  ApiBadRequestResponse,
 } from '@/utility/response/response';
 
 // TYPES
@@ -13,12 +13,12 @@ import {
   IPutUserParams,
 } from '@/app/api/v1/user/types';
 
-export async function GET(req: Request, { params }: IGetUserParams) {
-  try {
+export const GET = withApiErrorHandler(
+  async (req: Request, { params }: IGetUserParams) => {
     const guid = (await params).guid;
 
     if (!guid) {
-      return ApiErrorResponse({ status: 400, message: 'GUID is required' });
+      return ApiBadRequestResponse({ message: 'GUID is required' });
     }
 
     const user = await prisma.user.findUnique({
@@ -27,23 +27,19 @@ export async function GET(req: Request, { params }: IGetUserParams) {
       },
     });
 
-    return ApiResponse({
-      status: 200,
+    return ApiSuccessResponse({
       message: 'User fetched successfully',
       data: user,
     });
-  } catch (error: any) {
-    console.error('Error fetching user:', error);
-    return ApiInternalServerErrorResponse();
   }
-}
+);
 
-export async function PUT(req: Request, { params }: IPutUserParams) {
-  try {
+export const PUT = withApiErrorHandler(
+  async (req: Request, { params }: IPutUserParams) => {
     const guid = (await params).guid;
 
     if (!guid) {
-      return ApiErrorResponse({ status: 400, message: 'GUID is required' });
+      return ApiBadRequestResponse({ message: 'GUID is required' });
     }
 
     const body = await req.json();
@@ -57,36 +53,28 @@ export async function PUT(req: Request, { params }: IPutUserParams) {
       },
     });
 
-    return ApiResponse({
-      status: 200,
+    return ApiSuccessResponse({
       message: 'User updated successfully',
       data: updatedUser,
     });
-  } catch (error: any) {
-    console.error('Error updating user:', error);
-    return ApiInternalServerErrorResponse();
   }
-}
+);
 
-export async function DELETE(req: Request, { params }: IDeleteUserParams) {
-  try {
+export const DELETE = withApiErrorHandler(
+  async (req: Request, { params }: IDeleteUserParams) => {
     const guid = (await params).guid;
 
     if (!guid) {
-      return ApiErrorResponse({ status: 400, message: 'GUID is required' });
+      return ApiBadRequestResponse({ message: 'GUID is required' });
     }
 
     const deleteUser = await prisma.user.softDelete({
       guid,
     });
 
-    return ApiResponse({
-      status: 200,
+    return ApiSuccessResponse({
       message: 'User deleted successfully',
       data: deleteUser,
     });
-  } catch (error: any) {
-    console.error('Error deleting user:', error);
-    return ApiInternalServerErrorResponse();
   }
-}
+);

@@ -3,22 +3,19 @@ import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 
 // APP
+import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
 import { prisma } from '@/prisma/prisma';
 import {
-  ApiResponse,
-  ApiErrorResponse,
-  ApiInternalServerErrorResponse,
+  ApiSuccessResponse,
+  ApiBadRequestResponse,
 } from '@/utility/response/response';
 import { deleteSession } from '@/utility/session/session';
 
 // TYPES
 import { IPatchResetPasswordParams } from '@/app/api/v1/auth/types';
 
-export async function PATCH(
-  req: Request,
-  { params }: IPatchResetPasswordParams
-) {
-  try {
+export const PATCH = withApiErrorHandler(
+  async (req: Request, { params }: IPatchResetPasswordParams) => {
     const resetToken = (await params).token;
 
     // Get new password from body
@@ -27,8 +24,7 @@ export async function PATCH(
 
     // Return bad request if provided passwords do not match
     if (newPassword !== newPasswordConfirm) {
-      return ApiErrorResponse({
-        status: 400,
+      return ApiBadRequestResponse({
         message: 'Provided passwords do not match',
       });
     }
@@ -51,8 +47,7 @@ export async function PATCH(
 
     // Return bad request if token has expired or if there is no user
     if (!user) {
-      return ApiErrorResponse({
-        status: 400,
+      return ApiBadRequestResponse({
         message: 'Invalid or expired token provided',
       });
     }
@@ -72,12 +67,8 @@ export async function PATCH(
     // Log out user
     deleteSession();
 
-    return ApiResponse({
-      status: 200,
+    return ApiSuccessResponse({
       message: 'Password has been successfully updated, please log in again',
     });
-  } catch (error: any) {
-    console.error('Error processing reset password request:', error);
-    return ApiInternalServerErrorResponse();
   }
-}
+);

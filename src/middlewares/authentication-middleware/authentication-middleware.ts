@@ -4,6 +4,10 @@ import { NextResponse } from 'next/server';
 // APP
 import { getSession, updateSession } from '@/utility/session/session';
 import { protectedRoutes } from '@/middlewares/authentication-middleware/route-config';
+import {
+  ApiInternalServerErrorResponse,
+  ApiUnauthorizedResponse,
+} from '@/utility/response/response';
 
 // TYPES
 import { THttpMethod } from '@/types/network';
@@ -36,14 +40,11 @@ export async function authenticatedUser(req: Request) {
     const decodedToken = await getSession();
 
     if (!decodedToken) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      return ApiUnauthorizedResponse();
     }
 
     if (!decodedToken || typeof decodedToken === 'string') {
-      return NextResponse.json(
-        { error: 'Invalid or expired token' },
-        { status: 403 }
-      );
+      return ApiUnauthorizedResponse();
     }
 
     // Refresh user session on every successfully authenticated request
@@ -52,7 +53,10 @@ export async function authenticatedUser(req: Request) {
     // Continue with the next middleware by returning null
     return null;
   } catch (error) {
-    console.error('Error in token verification:', error);
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    console.error('!!! AUTHENTICATION MIDDLEWARE ERROR !!!');
+    console.error('Error details: ');
+    console.error(error);
+
+    return ApiInternalServerErrorResponse();
   }
 }
