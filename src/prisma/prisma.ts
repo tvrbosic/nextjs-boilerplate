@@ -12,9 +12,7 @@ import { useSoftDelete } from '@/prisma/extensions/model/all-models-soft-delete'
 
 // EXTENDED CLIENT
 function getExtendedClient() {
-  return new PrismaClient({
-    log: ['query', 'info', 'warn', 'error'], // OPTIONAL: Enable Prisma logging
-  })
+  return new PrismaClient()
     .$extends(useAllModelsCreate)
     .$extends(useAllModelsCreateMany)
     .$extends(useAllModelsUpdate)

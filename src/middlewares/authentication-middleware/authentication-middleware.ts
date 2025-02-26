@@ -1,6 +1,3 @@
-// LIBRARY
-import { NextResponse } from 'next/server';
-
 // APP
 import { getSession, updateSession } from '@/utility/session/session';
 import { protectedRoutes } from '@/middlewares/authentication-middleware/route-config';
@@ -53,7 +50,7 @@ export async function authenticatedUser(req: Request) {
     // Continue with the next middleware by returning null
     return null;
   } catch (error) {
-    console.error('!!! AUTHENTICATION MIDDLEWARE ERROR !!!');
+    console.error('❗❗❗ AUTHENTICATION MIDDLEWARE ERROR ❗❗❗');
     console.error('Error details: ');
     console.error(error);
 

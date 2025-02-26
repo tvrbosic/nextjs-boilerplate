@@ -1,6 +1,3 @@
-// LIBRARY
-import { NextResponse } from 'next/server';
-
 // APP
 import { getSession } from '@/utility/session/session';
 import { restrictedRoutes } from '@/middlewares/authorization-middleware/route-config';
