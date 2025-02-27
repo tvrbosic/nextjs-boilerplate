@@ -11,7 +11,7 @@ export function logRequest(req: Request) {
     fetch(`${apiBaseUrl}/log-write`, {
       method: 'POST',
       body: JSON.stringify({
-        level: 'info',
+        level: 'http',
         message: `${req.method} ${req.url}`,
         secret: logSecret,
       }),

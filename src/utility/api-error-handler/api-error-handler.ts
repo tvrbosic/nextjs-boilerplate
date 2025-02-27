@@ -6,6 +6,7 @@ import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
 } from '@/utility/response/response';
+import logger from '@/logger';
 
 export default function withApiErrorHandler(fn: Function) {
   return async function (request: Request, ...args: any[]) {
@@ -13,13 +14,6 @@ export default function withApiErrorHandler(fn: Function) {
       // Execute API route handler and catch possible errors
       return await fn(request, ...args);
     } catch (error) {
-      // ============================| LOG ERROR REQUEST DETAILS |============================ //
-      console.error('!!! API REQUEST ERROR !!!');
-      console.error(
-        `Error occured during processing: ${request.method} ${request.url}`
-      );
-      console.error('Error details: ');
-
       // ============================| HANDLE PRISMA ERRORS |============================ //
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         /**
@@ -35,25 +29,25 @@ export default function withApiErrorHandler(fn: Function) {
 
         switch (error.code) {
           case 'P2002':
-            console.error(logErrorObject);
+            logger.error('❗ PRISMA ERROR ❗', logErrorObject);
             return ApiBadRequestResponse({
               message:
                 'There was an unique constraint violation in your request. Check request data and try again.',
             });
           case 'P2025':
-            console.error(logErrorObject);
+            logger.error('❗ PRISMA ERROR ❗', logErrorObject);
             return ApiBadRequestResponse({
               message:
                 'Targeted entity was not found. Check request data and try again.',
             });
           default:
-            console.error(logErrorObject);
+            logger.error('❗ PRISMA ERROR ❗', logErrorObject);
             return ApiInternalServerErrorResponse();
         }
       }
 
       // ============================| HANDLE UNKNOWN ERRORS |============================ //
-      console.error(error);
+      logger.error('❗ UNKNOWN API REQUEST ERROR ❗', error);
       return ApiInternalServerErrorResponse();
     }
   };

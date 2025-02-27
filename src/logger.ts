@@ -5,9 +5,12 @@ import 'winston-daily-rotate-file';
 // TYPES
 const { combine, colorize, timestamp, printf, json, errors } = winston.format;
 
+// ENV
+const logDir = process.env.LOG_FOLDER;
+
 // ============================| CONFIGURE TRANSPORTS |============================ //
 const fileRotateTransport = new winston.transports.DailyRotateFile({
-  filename: 'logs/%DATE%.log',
+  filename: `${logDir}%DATE%.log`,
   datePattern: 'YYYY-MM-DD',
   maxFiles: '14d',
   format: combine(errors({ stack: true }), timestamp(), json()),
