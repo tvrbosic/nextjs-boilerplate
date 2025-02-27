@@ -8,6 +8,7 @@ import { generateToken, verifyToken } from '@/utility/jwt/jwt';
 import { IUserJwtClaims } from '@/utility/jwt/types';
 import { JWTPayload } from 'jose';
 
+// ENV
 const JWT_COOKE_EXPIRATION: number =
   parseInt(process.env.JWT_COOKE_EXPIRATION!) || 15;
 

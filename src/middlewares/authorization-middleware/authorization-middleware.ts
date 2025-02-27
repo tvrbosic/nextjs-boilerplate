@@ -1,6 +1,3 @@
-// LIBRARY
-import { NextResponse } from 'next/server';
-
 // APP
 import { getSession } from '@/utility/session/session';
 import { restrictedRoutes } from '@/middlewares/authorization-middleware/route-config';
@@ -13,6 +10,10 @@ import {
   ApiForbiddenResponse,
   ApiUnauthorizedResponse,
 } from '@/utility/response/response';
+
+// ENV
+const apiBaseUrl = process.env.APP_API_BASE_URL;
+const logSecret = process.env.LOG_SECRET;
 
 // ============================| HELPER FUNCTIONS |============================ //
 export function isRestrictedRoute(
@@ -67,9 +68,15 @@ export function restrictToRoles(roles: Role[]) {
       // Continue if the role is allowed
       return null;
     } catch (error) {
-      console.error('!!! AUTHORIZATION MIDDLEWARE ERROR !!!');
-      console.error('Error details: ');
-      console.error(error);
+      fetch(`${apiBaseUrl}/log-write`, {
+        method: 'POST',
+        body: JSON.stringify({
+          level: 'error',
+          message: '❗ AUTHORIZATION MIDDLEWARE ERROR ❗',
+          secret: logSecret,
+          error: error,
+        }),
+      });
     }
   };
 }

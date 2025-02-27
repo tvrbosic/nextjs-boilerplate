@@ -1,6 +1,3 @@
-// LIBRARY
-import { NextResponse } from 'next/server';
-
 // APP
 import { getSession, updateSession } from '@/utility/session/session';
 import { protectedRoutes } from '@/middlewares/authentication-middleware/route-config';
@@ -11,6 +8,10 @@ import {
 
 // TYPES
 import { THttpMethod } from '@/types/network';
+
+// ENV
+const apiBaseUrl = process.env.APP_API_BASE_URL;
+const logSecret = process.env.LOG_SECRET;
 
 // ============================| HELPER FUNCTIONS |============================ //
 export function isProtectedRoute(
@@ -53,9 +54,15 @@ export async function authenticatedUser(req: Request) {
     // Continue with the next middleware by returning null
     return null;
   } catch (error) {
-    console.error('!!! AUTHENTICATION MIDDLEWARE ERROR !!!');
-    console.error('Error details: ');
-    console.error(error);
+    fetch(`${apiBaseUrl}/log-write`, {
+      method: 'POST',
+      body: JSON.stringify({
+        level: 'error',
+        message: '❗ AUTHENTICATION MIDDLEWARE ERROR ❗',
+        secret: logSecret,
+        error: error,
+      }),
+    });
 
     return ApiInternalServerErrorResponse();
   }

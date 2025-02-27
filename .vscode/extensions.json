@@ -1,19 +1,20 @@
 {
-    "recommendations": [
-        "pkief.material-icon-theme",
-        "mikestead.dotenv",
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "Prisma.prisma",
-        "eamodio.gitlens",
-        "mhutchie.git-graph",
-        "csstools.postcss",
-        "bradlc.vscode-tailwindcss",
-        "formulahendry.auto-close-tag",
-        "formulahendry.auto-complete-tag",
-        "formulahendry.auto-rename-tag",
-        "antiantisepticeye.vscode-color-picker",
-        "gruntfuggly.todo-tree",
-        "oderwat.indent-rainbow",
-    ]
+  "recommendations": [
+    "pkief.material-icon-theme",
+    "mikestead.dotenv",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "Prisma.prisma",
+    "eamodio.gitlens",
+    "mhutchie.git-graph",
+    "csstools.postcss",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-complete-tag",
+    "formulahendry.auto-rename-tag",
+    "antiantisepticeye.vscode-color-picker",
+    "gruntfuggly.todo-tree",
+    "oderwat.indent-rainbow",
+    "bierner.emojisense"
+  ]
 }

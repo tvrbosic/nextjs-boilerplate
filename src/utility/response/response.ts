@@ -11,6 +11,10 @@ import {
   IOptionalMessageAndDataProps,
 } from '@/utility/response/type';
 
+// ENV
+const apiBaseUrl = process.env.APP_API_BASE_URL;
+const logSecret = process.env.LOG_SECRET;
+
 // ====================================| SUCCESS |==================================== //
 export function ApiSuccessResponse<T>({
   status = 200,

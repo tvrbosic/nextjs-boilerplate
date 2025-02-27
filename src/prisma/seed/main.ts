@@ -15,14 +15,14 @@ const prisma = new PrismaClient();
 
 async function main() {
   const start = new Date();
-  console.log('Database seed started...');
+  console.log('🌱 DATABASE SEED STARTED 🌱 ');
 
   const superUser = await seedSuperUser(prisma);
   await seedUsers(prisma, superUser);
 
   const end = new Date();
   console.log(
-    `Database seed completed in ${end.getTime() - start.getTime()}ms`
+    `✅ DATABASE SEED COMPLETED IN ${end.getTime() - start.getTime()} MS ✅✅`
   );
 }
 
