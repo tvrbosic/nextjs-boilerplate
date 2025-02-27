@@ -1,7 +1,10 @@
 // APP
 import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
 import logger from '@/logger';
-import { ApiSuccessResponse } from '@/utility/response/response';
+import {
+  ApiSuccessResponse,
+  ApiUnauthorizedResponse,
+} from '@/utility/response/response';
 
 // ENV
 const logSecret = process.env.LOG_SECRET;
@@ -16,33 +19,40 @@ const logSecret = process.env.LOG_SECRET;
  * NEXT.JS RUNTIMES: https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes
  */
 export const POST = withApiErrorHandler(async (req: Request) => {
+  let requestLogger = logger;
+
   // Extract payload from body
-  const { level, message, error, secret } = await req.json();
+  const { level, message, error, secret, payload } = await req.json();
 
   // Validate secret to ensure only internal middleware can invoke this logging endpoint. This prevents unauthorized external requests from writing logs.
-  if (secret !== logSecret) return;
+  if (secret !== logSecret) return ApiUnauthorizedResponse();
+
+  // If payload exists (POST, PUT, PATCH) create child logger and add payload data to it
+  if (payload !== undefined) {
+    requestLogger = logger.child({ payload });
+  }
 
   switch (level) {
     case 'error':
-      logger.error(message, error);
+      requestLogger.error(message, error);
       break;
     case 'warn':
-      logger.warn(message);
+      requestLogger.warn(message);
       break;
     case 'info':
-      logger.info(message);
+      requestLogger.info(message);
       break;
     case 'http':
-      logger.http(message);
+      requestLogger.http(message);
       break;
     case 'verbose':
-      logger.verbose(message);
+      requestLogger.verbose(message);
       break;
     case 'debug':
-      logger.debug(message);
+      requestLogger.debug(message);
       break;
     case 'silly':
-      logger.silly(message);
+      requestLogger.silly(message);
       break;
   }
 

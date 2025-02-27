@@ -62,7 +62,7 @@ export async function middleware(req: Request) {
     middlewares.push(restrictToRoles(allowedRoles));
   }
 
-  // Log triggered route except write log API route (see route implementation for more info)
+  // Log triggered route except write log API route (see middleware or route implementation for more information)
   if (pathname !== '/api/v1/log-write') {
     middlewares.push(logRequest);
   }
