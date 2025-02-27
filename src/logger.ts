@@ -2,8 +2,10 @@
 import winston from 'winston';
 import 'winston-daily-rotate-file';
 
+// TYPES
 const { combine, colorize, timestamp, printf, json, errors } = winston.format;
 
+// ============================| CONFIGURE TRANSPORTS |============================ //
 const fileRotateTransport = new winston.transports.DailyRotateFile({
   filename: 'logs/%DATE%.log',
   datePattern: 'YYYY-MM-DD',
@@ -11,21 +13,22 @@ const fileRotateTransport = new winston.transports.DailyRotateFile({
   format: combine(errors({ stack: true }), timestamp(), json()),
 });
 
+const consoleTransport = new winston.transports.Console({
+  format: combine(
+    errors({ stack: true }),
+    colorize(),
+    timestamp({
+      format: 'YYYY-MM-DD hh:mm:ss.SSS A',
+    }),
+    printf((info) => `[${info.timestamp}] ${info.level}: ${info.message}`)
+  ),
+});
+
+// ============================| CREATE LOGGER |============================ //
+
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
-  transports: [
-    new winston.transports.Console({
-      format: combine(
-        errors({ stack: true }),
-        colorize(),
-        timestamp({
-          format: 'YYYY-MM-DD hh:mm:ss.SSS A',
-        }),
-        printf((info) => `[${info.timestamp}] ${info.level}: ${info.message}`)
-      ),
-    }),
-    fileRotateTransport,
-  ],
+  transports: [consoleTransport, fileRotateTransport],
 });
 
 export default logger;

@@ -11,6 +11,7 @@ import {
   isRestrictedRoute,
   restrictToRoles,
 } from '@/middlewares/authorization-middleware/authorization-middleware';
+import { logRequest } from '@/middlewares/log-request-middleware/log-request-middleware';
 
 // TYPES
 import { THttpMethod } from '@/types/network';
@@ -59,6 +60,11 @@ export async function middleware(req: Request) {
   );
   if (isRestricted) {
     middlewares.push(restrictToRoles(allowedRoles));
+  }
+
+  // Log triggered route except write log API route (see route implementation for more info)
+  if (pathname !== '/api/v1/log-write') {
+    middlewares.push(logRequest);
   }
 
   // Run middlewares if any were added

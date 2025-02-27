@@ -11,6 +11,10 @@ import {
   ApiUnauthorizedResponse,
 } from '@/utility/response/response';
 
+// ENV
+const apiBaseUrl = process.env.APP_API_BASE_URL;
+const logSecret = process.env.LOG_SECRET;
+
 // ============================| HELPER FUNCTIONS |============================ //
 export function isRestrictedRoute(
   requestPathname: string,
@@ -64,9 +68,15 @@ export function restrictToRoles(roles: Role[]) {
       // Continue if the role is allowed
       return null;
     } catch (error) {
-      console.error('!!! AUTHORIZATION MIDDLEWARE ERROR !!!');
-      console.error('Error details: ');
-      console.error(error);
+      fetch(`${apiBaseUrl}/log-write`, {
+        method: 'POST',
+        body: JSON.stringify({
+          level: 'error',
+          message: '❗ AUTHORIZATION MIDDLEWARE ERROR ❗',
+          secret: logSecret,
+          error: error,
+        }),
+      });
     }
   };
 }
