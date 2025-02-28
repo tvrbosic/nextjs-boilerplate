@@ -1,5 +1,9 @@
+// LIBRARY
 import type { Metadata } from 'next';
 import { Aldrich } from 'next/font/google';
+
+// APP
+import Providers from '@/app/providers';
 
 // These styles apply to every route in the application
 import '@/styles/global.css';
@@ -22,7 +26,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={aldrich.className}>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
