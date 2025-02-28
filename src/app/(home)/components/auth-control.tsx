@@ -18,10 +18,9 @@ export default function AuthControl() {
       {user ? (
         <AvatarImage />
       ) : (
-        <AvatarImage />
-        // <Link href={'/sign-in'}>
-        //   <Button variant="outline">Sign in</Button>
-        // </Link>
+        <Link href={'/sign-in'}>
+          <Button variant="outline">Sign in</Button>
+        </Link>
       )}
     </div>
   );

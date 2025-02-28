@@ -1,4 +1,9 @@
+// ASSETS
+import AvatarPlaceholder from '@/assets/images/avatar.png';
+
+// TYPES
 import { IAvatarImageProps } from '@/components/avatar-image/types';
+import Image from 'next/image';
 
 const sizeClasses = {
   sm: 'h-8 w-8',
@@ -6,13 +11,19 @@ const sizeClasses = {
   lg: 'h-16 w-16',
 };
 
-export default function AvatarImage({ size = 'md' }: IAvatarImageProps) {
+export default function AvatarImage({
+  size = 'md',
+  imageSrc,
+}: IAvatarImageProps) {
+  // Use the provided imageSrc or fallback to the placeholder
+  const avatarSrc = imageSrc || AvatarPlaceholder;
+
   return (
     <div className="flex items-center">
       <div className="relative">
-        <img
+        <Image
+          src={avatarSrc}
           className={`${sizeClasses[size]} rounded-full object-cover`}
-          src="https://randomuser.me/api/portraits/women/87.jpg"
           alt="Avatar"
         />
       </div>

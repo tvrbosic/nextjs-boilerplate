@@ -2,7 +2,7 @@
 import Image from 'next/image';
 
 // ASSETS
-import LogoIpsumSvg from '@/app/(home)/assets/logo-ipsum.svg';
+import LogoIpsumSvg from '@/assets/images/logo-ipsum.svg';
 
 // COMPONENTS
 import Navigation from '@/app/(home)/components/navigation';

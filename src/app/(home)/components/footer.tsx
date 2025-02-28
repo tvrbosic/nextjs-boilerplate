@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { FaSquareTwitter, FaLinkedin, FaSquareFacebook } from 'react-icons/fa6';
 
 // ASSETS
-import LogoIpsumSvg from '@/app/(home)/assets/logo-ipsum.svg';
+import LogoIpsumSvg from '@/assets/images/logo-ipsum.svg';
 
 // COMPONENTS
 import IconButton from '@/components/button/icon-button';
