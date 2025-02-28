@@ -1,5 +1,5 @@
 'use client';
-// LIBRARY
+// LIB
 import { createContext, useState } from 'react';
 
 // TYPES

@@ -1,5 +1,5 @@
 // COMPONENTS
-import NavLink from '@/components/nav-link';
+import NavLink from '@/components/nav-link/nav-link';
 
 export default function Navigation() {
   return (

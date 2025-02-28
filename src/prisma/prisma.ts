@@ -1,4 +1,4 @@
-// LIBRARY
+// LIB
 import { PrismaClient } from '@prisma/client';
 
 // CUSTOM EXTENSIONS

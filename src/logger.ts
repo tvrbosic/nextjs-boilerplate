@@ -1,4 +1,4 @@
-// // LIBRARY
+// // LIB
 import winston from 'winston';
 import 'winston-daily-rotate-file';
 

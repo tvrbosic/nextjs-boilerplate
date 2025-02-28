@@ -8,7 +8,7 @@ import LogoIpsumSvg from '@/app/(home)/assets/logo-ipsum.svg';
 
 // COMPONENTS
 import Navigation from '@/app/(home)/components/navigation';
-import ToggleSwitch from '@/components/toggle-switch';
+import ToggleSwitch from '@/components/toggle-switch/toggle-switch';
 
 export default function Header() {
   const [isChecked, setIsChecked] = useState(false);

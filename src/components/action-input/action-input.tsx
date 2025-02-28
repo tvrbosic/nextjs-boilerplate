@@ -1,10 +1,4 @@
-interface IActionInputProps {
-  inputLabel?: string | undefined;
-  actionButtonLabel: string;
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}
-
-//  dark:text-stone-100 dark:bg-teal-500 dark:hover:bg-teal-600 dark:focus:ring-teal-700 duration-300',
+import { IActionInputProps } from '@/components/action-input/types';
 
 export default function ActionInput({
   inputLabel,

@@ -1,4 +1,4 @@
-// LIBRARY
+// LIB
 import { cookies } from 'next/headers';
 
 // APP

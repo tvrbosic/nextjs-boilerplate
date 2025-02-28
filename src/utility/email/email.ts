@@ -1,4 +1,4 @@
-// LIBRARY
+// LIB
 import nodemailer from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 

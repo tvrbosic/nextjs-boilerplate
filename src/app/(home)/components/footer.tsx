@@ -7,8 +7,8 @@ import { FaSquareTwitter, FaLinkedin, FaSquareFacebook } from 'react-icons/fa6';
 import LogoIpsumSvg from '@/app/(home)/assets/logo-ipsum.svg';
 
 // COMPONENTS
-import IconButton from '@/components/icon-button';
-import ActionInput from '@/components/action-input';
+import IconButton from '@/components/button/icon-button';
+import ActionInput from '@/components/action-input/action-input';
 
 export default function Footer() {
   return (

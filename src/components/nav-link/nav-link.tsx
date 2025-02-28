@@ -1,8 +1,8 @@
-import Link, { LinkProps } from 'next/link';
+// LIB
+import Link from 'next/link';
 
-interface INavLinkProps extends LinkProps {
-  children?: React.ReactNode | undefined;
-}
+// TYPES
+import { INavLinkProps } from '@/components/nav-link/types';
 
 export default function NavLink({ children, ...props }: INavLinkProps) {
   return (

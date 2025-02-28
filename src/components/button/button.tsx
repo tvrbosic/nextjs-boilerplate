@@ -1,16 +1,10 @@
-interface IButtonProps {
-  disabled?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'solid' | 'outline';
-  children: React.ReactNode;
-  onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
-}
+import { IButtonProps } from '@/components/button/types';
 
 const variantClasses = {
   solid:
-    'text-stone-100 bg-teal-500 hover:bg-teal-600 focus:ring-teal-700     dark:text-stone-100 dark:bg-teal-500 dark:hover:bg-teal-600 dark:focus:ring-teal-700 duration-300',
+    'text-stone-100 bg-teal-500 hover:bg-teal-600 focus:ring-teal-500/40     dark:text-stone-100 dark:bg-teal-500 dark:hover:bg-teal-600 dark:focus:ring-teal-500/40 duration-300',
   outline:
-    'border border-teal-500 text-teal-500 hover:bg-teal-500 hover:text-gray-100 focus:ring-teal-300     dark:border-teal-500 dark:text-teal-500 dark:hover:bg-teal-500 dark:hover:text-gray-100 dark:focus:ring-teal-700 duration-300',
+    'border border-stone-100 text-stone-100 hover:border-teal-200 hover:text-teal-200 focus:ring-teal-300/40     dark:border-stone-100 dark:text-stone-100 dark:hover:bg-teal-200/5    dark:hover:border-teal-200 dark:hover:text-teal-200 dark:focus:ring-teal-300/40 duration-300',
 };
 
 export default function Button({

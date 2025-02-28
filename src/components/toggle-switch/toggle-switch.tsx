@@ -1,8 +1,4 @@
-interface ToggleSwitchProps {
-  checked: boolean;
-  label?: React.ReactNode | undefined;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import { ToggleSwitchProps } from '@/components/toggle-switch/types';
 
 export default function ToggleSwitch({
   checked,
