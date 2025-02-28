@@ -1,4 +1,4 @@
-// LIBRARY
+// LIB
 import { Prisma } from '@prisma/client';
 
 // APP

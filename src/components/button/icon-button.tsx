@@ -1,7 +1,4 @@
-interface IIconButtonProps {
-  icon: React.ReactElement;
-  onClick: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void;
-}
+import { IIconButtonProps } from '@/components/button/types';
 
 export default function IconButton({ icon, onClick }: IIconButtonProps) {
   return (

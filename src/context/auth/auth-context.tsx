@@ -1,5 +1,5 @@
 'use client';
-// LIBRARY
+// LIB
 import { createContext, useState } from 'react';
 
 // TYPES
@@ -7,7 +7,7 @@ import { IAuthContext } from '@/context/auth/types';
 import { IChildrenProps } from '@/types/global';
 import { User } from '@prisma/client';
 
-const AuthContext = createContext<IAuthContext | null>(null);
+const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 const AuthProvider = ({ children }: IChildrenProps) => {
   const [user, setUser] = useState<User | null>(null);

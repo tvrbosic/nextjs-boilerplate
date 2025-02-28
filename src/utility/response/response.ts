@@ -1,4 +1,4 @@
-// LIBRARY
+// LIB
 import { NextResponse } from 'next/server';
 
 // TYPES
