@@ -3,6 +3,7 @@ export interface IButtonProps {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'solid' | 'outline';
   children: React.ReactNode;
+  fill?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 

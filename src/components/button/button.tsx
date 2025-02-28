@@ -13,6 +13,7 @@ export default function Button({
   variant = 'solid',
   children,
   onClick,
+  fill = false,
 }: IButtonProps) {
   const sizeClasses = {
     sm: 'text-xs px-3 py-1',
@@ -20,11 +21,13 @@ export default function Button({
     lg: 'text-lg px-7 py-3',
   };
 
+  const fillClass = fill ? 'w-full' : '';
+
   return (
     <button
       type="button"
       disabled={disabled}
-      className={`font-medium rounded-lg focus:ring-4 focus:outline-none me-2 mb-2  ${sizeClasses[size]} ${variantClasses[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:cursor-pointer'}`}
+      className={`font-medium rounded-lg focus:ring-4 focus:outline-none me-2 mb-2  ${sizeClasses[size]} ${variantClasses[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:cursor-pointer'} ${fillClass}`}
       onClick={onClick}
     >
       {children}
