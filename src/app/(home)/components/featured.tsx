@@ -1,10 +1,10 @@
 'use client';
 // LIBRARY
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { PiTreeStructureBold } from 'react-icons/pi';
 import { FaGears } from 'react-icons/fa6';
 import { BiSolidComponent } from 'react-icons/bi';
-import Link from 'next/link';
 
 // COMPONENTS
 import Button from '@/components/button/button';
@@ -89,9 +89,9 @@ export default function Featured() {
             </p>
 
             <div className="text-end">
-              {/* <Link href={'/features-and-mechanisms'}> */}
-              <Button>Read more</Button>
-              {/* </Link> */}
+              <Link href={'/features-and-mechanisms'}>
+                <Button>Read more</Button>
+              </Link>
             </div>
           </div>
         </div>
