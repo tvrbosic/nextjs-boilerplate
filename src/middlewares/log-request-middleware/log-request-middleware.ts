@@ -18,15 +18,15 @@ const logSecret = process.env.LOG_SECRET;
 
 // ============================| LOG REQUEST MIDDLEWARE |============================ //
 export async function logRequest(req: Request) {
-  // Extract payload from body and mask sensitive fields like passwords (avoid logging them)
-  const payload = maskObjectSensitiveFields(await req.json());
-
   try {
     if (
       req.method === 'POST' ||
       req.method === 'PUT' ||
       req.method === 'PATCH'
     ) {
+      // Extract payload from body and mask sensitive fields like passwords (avoid logging them)
+      const payload = maskObjectSensitiveFields(await req.json());
+
       fetch(`${apiBaseUrl}/log-write`, {
         method: 'POST',
         body: JSON.stringify({
