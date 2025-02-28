@@ -9,12 +9,14 @@ export default function LoginForm() {
   return (
     <form
       action={loginAction}
-      className="w-[500px] h-[400px] flex flex-col space-y-4 px-8 py-4 justify-center"
+      className="w-full flex flex-col space-y-4 justify-center"
     >
       <Input inputType="email" inputLabel="E-mail" />
       <Input inputType="password" inputLabel="Password" />
       <div className="mt-2">
-        <Button fill>Sign in</Button>
+        <Button fill size="lg">
+          Sign in
+        </Button>
       </div>
     </form>
   );
