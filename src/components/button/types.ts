@@ -1,7 +1,11 @@
+import { TComponentSize } from '@/types/theme';
+
+export type TButtonVariant = 'solid' | 'outline';
+
 export interface IButtonProps {
   disabled?: boolean;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'solid' | 'outline';
+  size?: TComponentSize;
+  variant?: TButtonVariant;
   children: React.ReactNode;
   fill?: boolean;
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;

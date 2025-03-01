@@ -44,7 +44,7 @@ export default function Footer() {
 
           <div className="w-full">
             <ActionInput
-              type="email"
+              inputType="email"
               placeholder="john.doe@email.com"
               actionButtonLabel="Subscribe"
               onClick={() => {}}

@@ -8,7 +8,7 @@ export default function ActionInput({
   return (
     <div className="flex flex-col space-y-1">
       {inputLabel && (
-        <label className="block mb-1 text-sm font-medium text-stone-800 dark:text-stone-200">
+        <label className="block mb-1 text-sm font-medium text-stone-200 dark:text-stone-200">
           {inputLabel}
         </label>
       )}
