@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { FaSquareTwitter, FaLinkedin, FaSquareFacebook } from 'react-icons/fa6';
 
 // ASSETS
-import LogoIpsumSvg from '@/app/(home)/assets/logo-ipsum.svg';
+import LogoIpsumSvg from '@/assets/images/logo-ipsum.svg';
 
 // COMPONENTS
-import IconButton from '@/components/icon-button';
-import ActionInput from '@/components/action-input';
+import IconButton from '@/components/button/icon-button';
+import ActionInput from '@/components/input/action-input';
 
 export default function Footer() {
   return (
@@ -43,7 +43,12 @@ export default function Footer() {
           </span>
 
           <div className="w-full">
-            <ActionInput actionButtonLabel="Subscribe" onClick={() => {}} />
+            <ActionInput
+              inputType="email"
+              placeholder="john.doe@email.com"
+              actionButtonLabel="Subscribe"
+              onClick={() => {}}
+            />
           </div>
         </div>
       </div>

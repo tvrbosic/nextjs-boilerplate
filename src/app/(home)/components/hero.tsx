@@ -2,7 +2,7 @@
 import Image from 'next/image';
 
 // ASSETS
-import CodingConceptPng from '@/app/(home)/assets/coding-concept.png';
+import CodingConceptPng from '@/assets/images/coding-concept.png';
 
 export default function Hero() {
   return (

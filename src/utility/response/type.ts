@@ -3,19 +3,19 @@ export interface IOptionalMessageProps {
   message?: string;
 }
 
-export interface IOptionalMessageAndDataProps<T> {
+export interface IOptionalMessageAndDataProps<T = undefined> {
   message?: string;
   data?: T;
 }
 
 // ====================================| SUCCESS |==================================== //
-export interface IApiSuccessResponseProps<T> {
+export interface IApiSuccessResponseProps<T = undefined> {
   status?: number;
   message?: string;
   data?: T;
 }
 
-export interface IApiSuccessResponse<T> {
+export interface IApiSuccessResponse<T = undefined> {
   success: true;
   message?: string;
   data?: T;

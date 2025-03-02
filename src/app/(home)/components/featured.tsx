@@ -1,12 +1,13 @@
 'use client';
 // LIBRARY
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { PiTreeStructureBold } from 'react-icons/pi';
 import { FaGears } from 'react-icons/fa6';
 import { BiSolidComponent } from 'react-icons/bi';
 
 // COMPONENTS
-import Button from '@/components/button';
+import Button from '@/components/button/button';
 
 export default function Featured() {
   const router = useRouter();
@@ -34,9 +35,9 @@ export default function Featured() {
             </p>
 
             <div className="text-end">
-              <Button onClick={() => router.push('/project-structure')}>
-                Read more
-              </Button>
+              <Link href={'/project-structure'}>
+                <Button>Read more</Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -61,9 +62,9 @@ export default function Featured() {
             </p>
 
             <div className="text-end">
-              <Button onClick={() => router.push('/custom-components')}>
-                Read more
-              </Button>
+              <Link href={'/custom-components'}>
+                <Button>Read more</Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -88,9 +89,9 @@ export default function Featured() {
             </p>
 
             <div className="text-end">
-              <Button onClick={() => router.push('/features-and-mechanisms')}>
-                Read more
-              </Button>
+              <Link href={'/features-and-mechanisms'}>
+                <Button>Read more</Button>
+              </Link>
             </div>
           </div>
         </div>

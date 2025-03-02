@@ -1,4 +1,4 @@
-// LIBRARY
+// LIB
 import { PrismaClient } from '@prisma/client';
 
 // APP
@@ -15,14 +15,14 @@ const prisma = new PrismaClient();
 
 async function main() {
   const start = new Date();
-  console.log('🌱 DATABASE SEED STARTED 🌱 ');
+  console.log('🌱 DATABASE SEED STARTED 🌱');
 
   const superUser = await seedSuperUser(prisma);
   await seedUsers(prisma, superUser);
 
   const end = new Date();
   console.log(
-    `✅ DATABASE SEED COMPLETED IN ${end.getTime() - start.getTime()} MS ✅✅`
+    `✅ DATABASE SEED COMPLETED IN ${end.getTime() - start.getTime()}ms ✅`
   );
 }
 

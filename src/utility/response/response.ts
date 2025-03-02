@@ -1,4 +1,4 @@
-// LIBRARY
+// LIB
 import { NextResponse } from 'next/server';
 
 // TYPES
@@ -12,7 +12,7 @@ import {
 } from '@/utility/response/type';
 
 // ENV
-const apiBaseUrl = process.env.APP_API_BASE_URL;
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const logSecret = process.env.LOG_SECRET;
 
 // ====================================| SUCCESS |==================================== //

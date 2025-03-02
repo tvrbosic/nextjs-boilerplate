@@ -1,4 +1,4 @@
-// LIBRARY
+// LIB
 import { SignJWT, jwtVerify } from 'jose';
 
 // TYPES
