@@ -1,4 +1,11 @@
 import axios, { AxiosInstance } from 'axios';
+import {
+  ICreateUserParams,
+  IGetUserParams,
+  IUpdateUserParams,
+  IUpdatePasswordParams,
+  IDeleteUserParams,
+} from './types';
 
 const baseUrl = process.env.APP_API_BASE_URL;
 
@@ -27,6 +34,37 @@ export class UserApiClient {
 
   public async getUsers(): Promise<any> {
     const response = await this.axiosInstance.get('');
+    return response.data;
+  }
+
+  public async createUser(user: ICreateUserParams): Promise<any> {
+    const response = await this.axiosInstance.post('', user);
+    return response.data;
+  }
+
+  public async getUser({ guid }: IGetUserParams): Promise<any> {
+    const response = await this.axiosInstance.get(`/${guid}`);
+    return response.data;
+  }
+
+  public async updateUser({ guid, user }: IUpdateUserParams): Promise<any> {
+    const response = await this.axiosInstance.put(`/${guid}`, user);
+    return response.data;
+  }
+
+  public async updatePassword({
+    guid,
+    passwords,
+  }: IUpdatePasswordParams): Promise<any> {
+    const response = await this.axiosInstance.patch(
+      `/${guid}/update-password`,
+      passwords
+    );
+    return response.data;
+  }
+
+  public async deleteUser({ guid }: IDeleteUserParams): Promise<any> {
+    const response = await this.axiosInstance.delete(`/${guid}`);
     return response.data;
   }
 }
