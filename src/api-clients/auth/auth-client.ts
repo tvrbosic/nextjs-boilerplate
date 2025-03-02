@@ -8,6 +8,7 @@ import {
   IForgotPasswordParams,
   IResetPasswordParams,
 } from '@/api-clients/auth/types';
+import { IApiSuccessResponse } from '@/utility/response/type';
 
 const baseUrl = process.env.APP_API_BASE_URL;
 
@@ -34,7 +35,7 @@ export class AuthApiClient {
     return AuthApiClient.#instance;
   }
 
-  public async login(params: ILoginParams) {
+  public async login(params: ILoginParams): Promise<IApiSuccessResponse> {
     const response = await this.axiosInstance.post('/login', params);
     return response.data;
   }
