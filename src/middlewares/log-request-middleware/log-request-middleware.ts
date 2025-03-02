@@ -3,7 +3,7 @@ import { maskObjectSensitiveFields } from '@/utility/general-utils/general-utils
 import { ApiInternalServerErrorResponse } from '@/utility/response/response';
 
 // ENV
-const apiBaseUrl = process.env.APP_API_BASE_URL;
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const logSecret = process.env.LOG_SECRET;
 
 /**

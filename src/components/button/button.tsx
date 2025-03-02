@@ -21,12 +21,13 @@ export default function Button({
   children,
   onClick,
   fill = false,
+  type = 'button',
 }: IButtonProps) {
   const fillClass = fill ? 'w-full' : '';
 
   return (
     <button
-      type="button"
+      type={type}
       disabled={disabled}
       className={`font-medium rounded-lg focus:ring-4 focus:outline-none me-2 mb-2  ${sizeClasses[size]} ${variantClasses[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:cursor-pointer'} ${fillClass}`}
       onClick={onClick}

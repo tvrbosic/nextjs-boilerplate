@@ -10,7 +10,7 @@ import {
 } from '@/api-clients/auth/types';
 import { IApiSuccessResponse } from '@/utility/response/type';
 
-const baseUrl = process.env.APP_API_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export class AuthApiClient {
   static #instance: AuthApiClient;
@@ -36,7 +36,10 @@ export class AuthApiClient {
   }
 
   public async login(params: ILoginParams): Promise<IApiSuccessResponse> {
-    const response = await this.axiosInstance.post('/login', params);
+    const response = await this.axiosInstance.post<IApiSuccessResponse>(
+      '/login',
+      params
+    );
     return response.data;
   }
 

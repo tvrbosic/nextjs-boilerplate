@@ -7,7 +7,7 @@ import {
   IDeleteUserParams,
 } from './types';
 
-const baseUrl = process.env.APP_API_BASE_URL;
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export class UserApiClient {
   static #instance: UserApiClient;

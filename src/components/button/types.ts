@@ -8,6 +8,7 @@ export interface IButtonProps {
   variant?: TButtonVariant;
   children: React.ReactNode;
   fill?: boolean;
+  type?: 'button' | 'submit' | 'reset';
   onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 }
 

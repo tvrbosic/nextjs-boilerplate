@@ -10,7 +10,7 @@ import {
 import { THttpMethod } from '@/types/network';
 
 // ENV
-const apiBaseUrl = process.env.APP_API_BASE_URL;
+const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const logSecret = process.env.LOG_SECRET;
 
 // ============================| HELPER FUNCTIONS |============================ //
