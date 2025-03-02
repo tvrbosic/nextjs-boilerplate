@@ -7,9 +7,6 @@ import { useRouter } from 'next/navigation';
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { AuthContext } from '@/context/auth/auth-context';
 
-// TYPES
-import { User } from '@prisma/client';
-
 // COMPONENTS
 import Button from '@/components/button/button';
 import Input from '@/components/input/input';
