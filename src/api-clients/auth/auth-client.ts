@@ -9,6 +9,7 @@ import {
   IResetPasswordParams,
 } from '@/api-clients/auth/types';
 import { IApiSuccessResponse } from '@/utility/response/type';
+import { User } from '@prisma/client';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -35,11 +36,12 @@ export class AuthApiClient {
     return AuthApiClient.#instance;
   }
 
-  public async login(params: ILoginParams): Promise<IApiSuccessResponse> {
-    const response = await this.axiosInstance.post<IApiSuccessResponse>(
-      '/login',
-      params
-    );
+  public async login(
+    params: ILoginParams
+  ): Promise<IApiSuccessResponse<{ user: User }>> {
+    const response = await this.axiosInstance.post<
+      IApiSuccessResponse<{ user: User }>
+    >('/login', params);
     return response.data;
   }
 

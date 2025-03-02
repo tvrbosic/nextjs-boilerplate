@@ -1,4 +1,4 @@
-// LIBRARY
+// LIB
 import bcrypt from 'bcryptjs';
 
 // APP
@@ -10,6 +10,9 @@ import {
   ApiBadRequestResponse,
   ApiUnauthorizedResponse,
 } from '@/utility/response/response';
+
+// TYPES
+import { User } from '@prisma/client';
 
 export const POST = withApiErrorHandler(async (req: Request) => {
   const { email, password } = await req.json();
@@ -34,7 +37,7 @@ export const POST = withApiErrorHandler(async (req: Request) => {
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) {
     return ApiUnauthorizedResponse({
-      message: 'Provided passwords do not match!',
+      message: 'Provided password is invalid!',
     });
   }
 
@@ -44,5 +47,8 @@ export const POST = withApiErrorHandler(async (req: Request) => {
     role: user.role,
   });
 
-  return ApiSuccessResponse({ message: 'Login successful' });
+  return ApiSuccessResponse<{ user: User }>({
+    message: 'Login successful',
+    data: { user },
+  });
 });
