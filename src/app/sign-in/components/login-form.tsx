@@ -35,9 +35,9 @@ export default function LoginForm() {
 
       // Set logged user to context
       setUser(response.data?.user!);
-      showToast('Logged in successfully');
 
       // Redirect to home page
+      showToast('Logged in successfully');
       router.push('/');
       return undefined;
     } catch (error) {
@@ -58,17 +58,10 @@ export default function LoginForm() {
     undefined
   );
 
-  const test = () => {
-    showToast('Test message', 'warning');
-    showToast('Test message', 'error');
-    showToast('Test message', 'info');
-    showToast('Test message', 'success');
-  };
-
   // ============================| RENDER |============================ //
   return (
     <form
-      action={test}
+      action={loginAction}
       className="w-full flex flex-col space-y-4 justify-center"
     >
       <Input inputType="email" inputLabel="E-mail" name="email" />
@@ -82,7 +75,7 @@ export default function LoginForm() {
       </div>
 
       <div className="mt-3">
-        <Button fill size="lg" type="submit">
+        <Button fullWidth size="lg" type="submit" isLoading={isPending}>
           Sign in
         </Button>
       </div>
