@@ -1,5 +1,5 @@
 // APP
-import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
+import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,
@@ -13,7 +13,7 @@ import {
   IPutUserParams,
 } from '@/app/api/v1/user/types';
 
-export const GET = withApiErrorHandler(
+export const GET = withApiErrorWrapper(
   async (req: Request, { params }: IGetUserParams) => {
     const guid = (await params).guid;
 
@@ -34,7 +34,7 @@ export const GET = withApiErrorHandler(
   }
 );
 
-export const PUT = withApiErrorHandler(
+export const PUT = withApiErrorWrapper(
   async (req: Request, { params }: IPutUserParams) => {
     const guid = (await params).guid;
 
@@ -60,7 +60,7 @@ export const PUT = withApiErrorHandler(
   }
 );
 
-export const DELETE = withApiErrorHandler(
+export const DELETE = withApiErrorWrapper(
   async (req: Request, { params }: IDeleteUserParams) => {
     const guid = (await params).guid;
 

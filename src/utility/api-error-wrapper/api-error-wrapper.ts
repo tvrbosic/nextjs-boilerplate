@@ -8,7 +8,7 @@ import {
 } from '@/utility/response/response';
 import logger from '@/logger';
 
-export default function withApiErrorHandler(fn: Function) {
+export default function withApiErrorWrapper(fn: Function) {
   return async function (request: Request, ...args: any[]) {
     try {
       // Execute API route handler and catch possible errors

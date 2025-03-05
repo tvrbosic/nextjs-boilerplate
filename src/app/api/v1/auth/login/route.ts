@@ -2,7 +2,7 @@
 import bcrypt from 'bcryptjs';
 
 // APP
-import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
+import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
 import { prisma } from '@/prisma/prisma';
 import { createSession } from '@/utility/session/session';
 import {
@@ -14,7 +14,7 @@ import {
 // TYPES
 import { User } from '@prisma/client';
 
-export const POST = withApiErrorHandler(async (req: Request) => {
+export const POST = withApiErrorWrapper(async (req: Request) => {
   const { email, password } = await req.json();
 
   // Validate input

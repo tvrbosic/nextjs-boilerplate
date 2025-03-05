@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
-import processError from '@/utility/process-axios-error/process-axios-error';
+import processAxiosError from '@/utility/process-axios-error/process-axios-error';
 
 // COMPONENTS
 import Button from '@/components/button/button';
@@ -33,21 +33,20 @@ export default function LoginForm() {
     try {
       const response = await AuthApiClient.instance.login({ email, password });
 
-      // Set logged user to context
+      // Set logged user to context and show toast message
       setUser(response.data?.user!);
+      showToast('Sign in successful');
 
       // Redirect to home page
-      showToast('Logged in successfully');
       router.push('/');
+
+      // No error
       return undefined;
     } catch (error) {
-      const errorMessage = processError({
-        error,
-        onError: () => {
-          console.log('Error');
-          showToast('Error occurred - TODO message from BE', 'error');
-        },
-      });
+      const errorMessage = processAxiosError({ error });
+      showToast(errorMessage, 'error');
+
+      // Return error message
       return errorMessage;
     }
   };
