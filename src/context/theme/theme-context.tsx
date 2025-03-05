@@ -4,12 +4,12 @@ import { createContext, useState } from 'react';
 
 // TYPES
 import { IChildrenProps } from '@/types/global';
-import { IThemeContext, TThemeVariations } from '@/context/theme/types';
+import { IThemeContext, TThemeVariant } from '@/context/theme/types';
 
-const ThemeContext = createContext<IThemeContext | null>(null);
+const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
 
 const ThemeProvider = ({ children }: IChildrenProps) => {
-  const [theme, setTheme] = useState<TThemeVariations>('dark');
+  const [theme, setTheme] = useState<TThemeVariant>('dark');
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));

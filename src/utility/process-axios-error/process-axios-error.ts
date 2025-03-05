@@ -11,7 +11,7 @@ export default function processError({ error, onError }: IProcessErrorProps) {
     error.status !== undefined &&
     error.status >= 500
   ) {
-    // Handle 400, 401, 403 errors by returning the message and executing optinal callback
+    // Handle 400, 401, 403 errors by returning the message and executing optional callback
     const response = error.response?.data as IApiErrorResponse;
     onError && onError();
 

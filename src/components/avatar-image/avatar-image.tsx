@@ -5,7 +5,7 @@ import AvatarPlaceholder from '@/assets/images/avatar.png';
 import { IAvatarImageProps } from '@/components/avatar-image/types';
 import Image from 'next/image';
 
-const sizeClasses = {
+const SIZE_CLASSES = {
   sm: 'h-8 w-8',
   md: 'h-12 w-12',
   lg: 'h-16 w-16',
@@ -23,7 +23,7 @@ export default function AvatarImage({
       <div className="relative">
         <Image
           src={avatarSrc}
-          className={`${sizeClasses[size]} rounded-full object-cover`}
+          className={`${SIZE_CLASSES[size]} rounded-full object-cover`}
           alt="Avatar"
         />
       </div>
