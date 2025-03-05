@@ -1,6 +1,6 @@
-export type TThemeVariations = 'dark' | 'light';
+export type TThemeVariant = 'dark' | 'light';
 
 export interface IThemeContext {
-  theme: TThemeVariations;
+  theme: TThemeVariant;
   toggleTheme: () => void;
 }
