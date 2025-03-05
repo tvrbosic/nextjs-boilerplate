@@ -1,5 +1,9 @@
+// TYPES
 import { TComponentSize } from '@/types/theme';
 import { IButtonProps, TButtonVariant } from '@/components/button/types';
+
+// COMPONENTS
+import Spinner from '@/components/spinner/spinner';
 
 const VARIANT_CLASSES: Record<TButtonVariant, string> = {
   solid:
@@ -15,24 +19,38 @@ const SIZE_CLASSES: Record<TComponentSize, string> = {
 };
 
 export default function Button({
+  children,
   disabled = false,
   size = 'md',
   variant = 'solid',
-  children,
-  onClick,
-  fill = false,
   type = 'button',
+  fullWidth = false,
+  isLoading = false,
+  onClick,
 }: IButtonProps) {
-  const fillClass = fill ? 'w-full' : '';
+  const fillClass = fullWidth ? 'w-full' : '';
 
+  const applyDisabledClasses =
+    disabled || isLoading
+      ? 'opacity-50 cursor-not-allowed'
+      : 'hover:cursor-pointer';
+
+  console.log(disabled || isLoading);
   return (
     <button
       type={type}
-      disabled={disabled}
-      className={`font-medium rounded-lg focus:ring-4 focus:outline-none me-2 mb-2  ${SIZE_CLASSES[size]} ${VARIANT_CLASSES[variant]} ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:cursor-pointer'} ${fillClass}`}
+      disabled={disabled || isLoading}
+      className={`font-medium rounded-lg focus:ring-4 focus:outline-none me-2 mb-2  ${SIZE_CLASSES[size]} ${VARIANT_CLASSES[variant]} ${applyDisabledClasses} ${fillClass}`}
       onClick={onClick}
     >
-      {children}
+      <div className="flex items-center justify-center space-x-1">
+        {children}
+        {isLoading && (
+          <div className="ml-2">
+            <Spinner />
+          </div>
+        )}
+      </div>
     </button>
   );
 }

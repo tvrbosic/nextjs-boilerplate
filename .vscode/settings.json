@@ -3,6 +3,7 @@
   "editor.formatOnPaste": false,
   "prettier.useEditorConfig": false,
   "prettier.useTabs": false,
+  "editor.tabSize": 2,
   "prettier.configPath": ".prettierrc",
   "typescript.tsdk": "node_modules/typescript/lib",
   "[javascript]": {
