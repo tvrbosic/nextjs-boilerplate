@@ -11,7 +11,7 @@ export default function processAxiosError({
   if (
     error instanceof AxiosError &&
     error.status !== undefined &&
-    error.status <= 500
+    error.status < 500
   ) {
     // Handle 400, 401, 403 errors by returning the error message
     const response = error.response?.data as IApiErrorResponse;
