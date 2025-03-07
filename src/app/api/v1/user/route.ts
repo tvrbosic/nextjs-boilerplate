@@ -2,7 +2,7 @@
 import bcrypt from 'bcryptjs';
 
 // APP
-import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
+import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,
@@ -10,7 +10,7 @@ import {
   ApiBadRequestResponse,
 } from '@/utility/response/response';
 
-export const GET = withApiErrorHandler(async (req: Request) => {
+export const GET = withApiErrorWrapper(async (req: Request) => {
   const users = await prisma.user.findMany();
   return ApiSuccessResponse({
     message: 'Users fetched successfully',
@@ -18,7 +18,7 @@ export const GET = withApiErrorHandler(async (req: Request) => {
   });
 });
 
-export const POST = withApiErrorHandler(async (req: Request) => {
+export const POST = withApiErrorWrapper(async (req: Request) => {
   const body = await req.json();
   const { email, firstName, lastName, role, password } = body;
 

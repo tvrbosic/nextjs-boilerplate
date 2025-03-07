@@ -2,7 +2,7 @@
 import crypto from 'crypto';
 
 // APP
-import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
+import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,
@@ -10,7 +10,7 @@ import {
 } from '@/utility/response/response';
 import { sendEmail } from '@/utility/email/email';
 
-export const POST = withApiErrorHandler(async (req: Request) => {
+export const POST = withApiErrorWrapper(async (req: Request) => {
   // Get email from body
   const body = await req.json();
   const { email } = body;

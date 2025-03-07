@@ -1,4 +1,3 @@
-export interface IProcessErrorProps {
+export interface IprocessAxiosErrorProps {
   error: unknown;
-  onError?: () => void;
 }

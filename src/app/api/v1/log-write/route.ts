@@ -1,5 +1,5 @@
 // APP
-import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
+import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
 import logger from '@/logger';
 import {
   ApiSuccessResponse,
@@ -18,7 +18,7 @@ const logSecret = process.env.LOG_SECRET;
  *
  * NEXT.JS RUNTIMES: https://nextjs.org/docs/app/building-your-application/rendering/edge-and-nodejs-runtimes
  */
-export const POST = withApiErrorHandler(async (req: Request) => {
+export const POST = withApiErrorWrapper(async (req: Request) => {
   let requestLogger = logger;
 
   // Extract payload from body

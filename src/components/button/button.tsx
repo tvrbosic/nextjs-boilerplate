@@ -35,7 +35,6 @@ export default function Button({
       ? 'opacity-50 cursor-not-allowed'
       : 'hover:cursor-pointer';
 
-  console.log(disabled || isLoading);
   return (
     <button
       type={type}

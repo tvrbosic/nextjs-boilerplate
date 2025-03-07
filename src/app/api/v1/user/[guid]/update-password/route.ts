@@ -2,7 +2,7 @@
 import bcrypt from 'bcryptjs';
 
 // APP
-import withApiErrorHandler from '@/utility/api-error-handler/api-error-handler';
+import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,
@@ -13,7 +13,7 @@ import {
 // TYPES
 import { IPatchUserParams } from '@/app/api/v1/user/types';
 
-export const PATCH = withApiErrorHandler(
+export const PATCH = withApiErrorWrapper(
   async (req: Request, { params }: IPatchUserParams) => {
     // Get guid from query params
     const guid = (await params).guid;

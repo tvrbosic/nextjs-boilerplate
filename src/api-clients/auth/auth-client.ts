@@ -19,6 +19,7 @@ export class AuthApiClient {
 
   // Private to prevent direct construction calls with the `new` operator.
   private constructor() {
+    // Create axios instance
     this.axiosInstance = axios.create({
       baseURL: `${baseUrl}/auth`,
       headers: {

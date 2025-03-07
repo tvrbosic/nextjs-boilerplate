@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Aldrich } from 'next/font/google';
 
 // APP
+import GlobalErrorBoundary from '@/components/global-error-boundary/global-error-boundary';
 import Providers from '@/app/providers';
 
 // These styles apply to every route in the application
@@ -27,7 +28,9 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${aldrich.className} dark`}>
       <body>
-        <Providers>{children}</Providers>
+        <GlobalErrorBoundary>
+          <Providers>{children}</Providers>
+        </GlobalErrorBoundary>
       </body>
     </html>
   );
