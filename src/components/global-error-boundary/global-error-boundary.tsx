@@ -1,4 +1,8 @@
+// LIB
 import { ErrorBoundary } from 'react-error-boundary';
+
+// COMPONENTS
+import GlobalErrorFallback from '@/components/global-error-boundary/global-error-fallback';
 
 export default function GlobalErrorBoundary({
   children,
@@ -6,8 +10,6 @@ export default function GlobalErrorBoundary({
   children: React.ReactNode;
 }) {
   return (
-    <ErrorBoundary fallback={<p>⚠️Something went wrong</p>}>
-      {children}
-    </ErrorBoundary>
+    <ErrorBoundary fallback={<GlobalErrorFallback />}>{children}</ErrorBoundary>
   );
 }
