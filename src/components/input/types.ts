@@ -6,6 +6,7 @@ export interface IInputProps {
   inputType?: HTMLInputTypeAttribute;
   inputLabel?: string | undefined;
   placeholder?: string;
+  error?: string;
 }
 
 export interface IActionInputProps {

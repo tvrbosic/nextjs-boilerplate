@@ -6,12 +6,14 @@ export default function ActionInput({
   inputType = 'text',
   inputLabel,
   placeholder,
+  error,
 }: IInputProps) {
   return (
     <div className="flex flex-col space-y-1">
       {inputLabel && (
         <label className="block mb-1 text-sm font-medium text-stone-200 dark:text-stone-200">
-          {inputLabel}
+          {inputLabel}{' '}
+          {error && <span className="text-red-400 italic ml-1">{error}</span>}
         </label>
       )}
 
