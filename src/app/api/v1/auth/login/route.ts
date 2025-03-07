@@ -18,9 +18,6 @@ import { User } from '@prisma/client';
 export const POST = withApiErrorWrapper(async (req: Request) => {
   const { email, password } = await req.json();
 
-  // TODO: just for testing, remove !!!!!!!!!!!!!!!!!!!!
-  return ApiInternalServerErrorResponse();
-
   // Validate input
   if (!email || !password) {
     return ApiBadRequestResponse({
