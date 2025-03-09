@@ -6,6 +6,9 @@ export interface IInputProps {
   inputType?: HTMLInputTypeAttribute;
   inputLabel?: string | undefined;
   placeholder?: string;
+  value?: string;
+  error?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface IActionInputProps {
@@ -16,4 +19,6 @@ export interface IActionInputProps {
   inputLabel?: string | undefined;
   inputType?: HTMLInputTypeAttribute;
   placeholder?: string;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

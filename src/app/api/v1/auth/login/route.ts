@@ -9,7 +9,6 @@ import {
   ApiSuccessResponse,
   ApiBadRequestResponse,
   ApiUnauthorizedResponse,
-  ApiInternalServerErrorResponse,
 } from '@/utility/response/response';
 
 // TYPES
