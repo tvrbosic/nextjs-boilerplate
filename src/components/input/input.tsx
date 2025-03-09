@@ -21,7 +21,9 @@ export default function ActionInput({
         required={required}
         name={name}
         type={inputType}
-        className="block w-full p-2.5 text-sm rounded-lg     bg-purple-200 border-purple-900 placeholder-purple-900 text-purple-900 focus:ring-purple-800 focus:border-purple-800     dark:bg-purple-200 dark:border-purple-900 dark:placeholder-purple-900 dark:text-purple-900 dark:focus:ring-purple-800 dark:focus:border-purple-800"
+        className={`block w-full p-2.5 text-sm rounded-lg border-2 focus:outline-none bg-purple-200 placeholder-purple-900 text-purple-900 focus:border-teal-500/50 dark:bg-purple-200 dark:placeholder-purple-900 dark:text-purple-900  dark:focus:border-teal-500/50 ${
+          error ? 'border-red-400' : 'border-transparent'
+        }`}
         placeholder={placeholder || undefined}
       />
     </div>

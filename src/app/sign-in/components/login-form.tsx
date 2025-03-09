@@ -106,11 +106,9 @@ export default function LoginForm() {
         </NavLink>
       </div>
 
-      <div className="mt-3">
-        <Button fullWidth size="lg" type="submit" isLoading={isPending}>
-          Sign in
-        </Button>
-      </div>
+      <Button fullWidth size="lg" type="submit" isLoading={isPending}>
+        Sign in
+      </Button>
 
       <div className="flex flex- space-x-2 justify-center items-center">
         <p className="text-purple-100">Don't have an account?</p>
