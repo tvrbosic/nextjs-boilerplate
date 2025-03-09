@@ -36,8 +36,13 @@ export default function LoginForm() {
   // ============================| FUNCTIONS |============================ //
   const submitLoginForm = async (
     previous: TSubmitLoginFormAction,
-    formData: FormData
+    formData: FormData | null
   ): Promise<TSubmitLoginFormAction> => {
+    // Reset errors (by calling function with formData null and returning initial state / empty object)
+    if (!formData) {
+      return {};
+    }
+
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
 
@@ -74,7 +79,7 @@ export default function LoginForm() {
   // ============================| ACTION |============================ //
   const [state, loginAction, isPending] = useActionState<
     TSubmitLoginFormAction,
-    FormData
+    FormData | null
   >(submitLoginForm, {});
 
   // ============================| RENDER |============================ //

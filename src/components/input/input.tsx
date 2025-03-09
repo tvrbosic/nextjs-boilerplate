@@ -6,7 +6,9 @@ export default function ActionInput({
   inputType = 'text',
   inputLabel,
   placeholder,
+  value,
   error,
+  onChange,
 }: IInputProps) {
   return (
     <div className="flex flex-col space-y-1">
@@ -25,6 +27,8 @@ export default function ActionInput({
           error ? 'border-red-400' : 'border-transparent'
         }`}
         placeholder={placeholder || undefined}
+        value={value}
+        onChange={onChange}
       />
     </div>
   );

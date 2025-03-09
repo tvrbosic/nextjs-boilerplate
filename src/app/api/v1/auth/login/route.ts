@@ -9,7 +9,6 @@ import {
   ApiSuccessResponse,
   ApiBadRequestResponse,
   ApiUnauthorizedResponse,
-  ApiInternalServerErrorResponse,
 } from '@/utility/response/response';
 
 // TYPES
@@ -17,10 +16,6 @@ import { User } from '@prisma/client';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
   const { email, password } = await req.json();
-
-  return ApiBadRequestResponse({
-    message: 'Email and password are required!',
-  });
 
   // Validate input
   if (!email || !password) {

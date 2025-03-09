@@ -8,6 +8,8 @@ export default function ActionInput({
   inputType = 'text',
   inputLabel,
   placeholder,
+  value,
+  onChange,
 }: IActionInputProps) {
   return (
     <div className="flex">
@@ -23,6 +25,8 @@ export default function ActionInput({
         type={inputType}
         className="block w-full p-2.5 text-sm rounded-s-lg border-2 border-transparent focus:outline-none     bg-purple-200 placeholder-purple-900 text-purple-900  focus:border-teal-500/50     dark:bg-purple-200 dark:placeholder-purple-900 dark:text-purple-900  dark:focus:border-teal-500/50"
         placeholder={placeholder || undefined}
+        value={value}
+        onChange={onChange}
       />
 
       <button
