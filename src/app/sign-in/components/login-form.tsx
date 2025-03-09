@@ -41,11 +41,13 @@ export default function LoginForm() {
     const email = formData.get('email') as string;
     const password = formData.get('password') as string;
 
+    // Validate form data
     const validationResult = loginValidationSchema.safeParse({
       email,
       password,
     });
 
+    // Return validation errors if any
     if (!validationResult.success) {
       return {
         errors: validationResult.error.flatten().fieldErrors,
@@ -53,22 +55,18 @@ export default function LoginForm() {
     }
 
     try {
+      // Call API to login user
       const response = await AuthApiClient.instance.login({ email, password });
 
-      // Set logged user to context and show toast message
+      // SUCCESS: Set user to context, show toast message, redirect to home page and return form data
       setUser(response.data?.user!);
       showToast('Sign in successful');
-
-      // Redirect to home page
       router.push('/');
-
-      // No error
       return { email, password };
     } catch (error) {
+      // FAIL: Show toast message and return API error
       const errorMessage = processAxiosError({ error });
       showToast(errorMessage, 'error');
-
-      // Return error message
       return { errors: { api: [errorMessage] } };
     }
   };
