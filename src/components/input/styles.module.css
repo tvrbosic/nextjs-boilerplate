@@ -1,0 +1,25 @@
+@references "@/styles/globals.css"
+
+.input_label {
+  @apply block mb-1 text-sm font-medium text-stone-200;
+
+  @variant dark {
+    @apply dark:text-stone-200;
+  }
+}
+
+.label_span_error {
+  @apply text-red-400 italic ml-1;
+}
+
+.input_common {
+  @apply block w-full p-2.5 text-sm rounded-lg border-2 focus:outline-none border-transparent;
+}
+
+.input_light {
+  @apply bg-purple-200 placeholder-purple-900 text-purple-900 focus:border-teal-500/50;
+}
+
+.input_dark {
+  @apply dark:bg-purple-200 dark:placeholder-purple-900 dark:text-purple-900  dark:focus:border-teal-500/50;
+}

@@ -7,7 +7,7 @@ import GlobalErrorBoundary from '@/components/global-error-boundary/global-error
 import Providers from '@/app/providers';
 
 // These styles apply to every route in the application
-import '@/styles/global.css';
+import '@/styles/globals.css';
 
 // EXTEND METADATA: https://nextjs.org/docs/app/api-reference/functions/generate-metadata
 export const metadata: Metadata = {
