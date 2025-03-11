@@ -5,19 +5,6 @@
   @apply underline-offset-4 duration-300 hover:underline;
 }
 
-/** ============================| SIZES |============================ */
-.navlink_small {
-  @apply text-sm;
-}
-
-.navlink_medium {
-  @apply text-base;
-}
-
-.navlink_large {
-  @apply text-lg;
-}
-
 /** ============================| VARIANTS |============================ */
 .navlink_light {
   @apply text-teal-100 hover:text-teal-200;

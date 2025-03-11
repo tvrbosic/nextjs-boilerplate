@@ -14,9 +14,9 @@ const VARIANT_CLASSES: Record<TNavLinkVariants, string> = {
 };
 
 const SIZE_CLASSES: Record<TComponentSize, string> = {
-  sm: styles.navlink_small,
-  md: styles.navlink_medium,
-  lg: styles.navlink_large,
+  sm: 'text-sm',
+  md: 'text-base',
+  lg: 'text-lg',
 };
 
 export default function NavLink({
