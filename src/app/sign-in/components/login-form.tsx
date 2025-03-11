@@ -86,7 +86,7 @@ export default function LoginForm() {
   return (
     <form
       action={loginAction}
-      className="w-full flex flex-col space-y-4 justify-center"
+      className="flex w-full flex-col justify-center space-y-4"
       noValidate
     >
       <Input
@@ -113,9 +113,9 @@ export default function LoginForm() {
         Sign in
       </Button>
 
-      <div className="flex flex- space-x-2 justify-center items-center">
+      <div className="flex items-center justify-center space-x-2">
         <p className="text-purple-100">Don't have an account?</p>
-        <NavLink href={'/register'} variant="light">
+        <NavLink href={'/register'} variant="dark">
           Register
         </NavLink>
       </div>

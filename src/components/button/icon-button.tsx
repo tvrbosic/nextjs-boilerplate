@@ -1,11 +1,12 @@
+// TYPES
 import { IIconButtonProps } from '@/components/button/types';
+
+// STYLES
+import styles from '@/components/button/styles.module.css';
 
 export default function IconButton({ icon, onClick }: IIconButtonProps) {
   return (
-    <span
-      className="text-stone-200 text-4xl hover:text-teal-200 hover:cursor-pointer duration-300"
-      onClick={onClick}
-    >
+    <span className={styles.icon_button} onClick={onClick}>
       {icon}
     </span>
   );

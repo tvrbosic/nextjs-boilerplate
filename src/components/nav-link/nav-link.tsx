@@ -5,28 +5,30 @@ import Link from 'next/link';
 import { INavLinkProps, TNavLinkVariants } from '@/components/nav-link/types';
 import { TComponentSize } from '@/types/theme';
 
+// STYLES
+import styles from '@/components/nav-link/styles.module.css';
+
 const VARIANT_CLASSES: Record<TNavLinkVariants, string> = {
-  default: 'text-stone-100 hover:text-teal-200',
-  light: 'text-teal-400 hover:text-teal-200',
-  dark: 'text-stone-100 hover:text-teal-200',
+  light: styles.navlink_light,
+  dark: styles.navlink_dark,
 };
 
 const SIZE_CLASSES: Record<TComponentSize, string> = {
-  sm: 'text-sm',
-  md: 'text-md',
-  lg: 'text-lg',
+  sm: styles.navlink_small,
+  md: styles.navlink_medium,
+  lg: styles.navlink_large,
 };
 
 export default function NavLink({
   children,
-  variant = 'default',
+  variant = 'light',
   size = 'md',
   ...props
 }: INavLinkProps) {
   return (
     <Link
       {...props}
-      className={`${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]} hover:underline underline-offset-4 duration-300`}
+      className={`${styles.navlink_common} ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]}`}
     >
       {children}
     </Link>
