@@ -11,6 +11,7 @@ export default function ActionInput({
   inputLabel,
   placeholder,
   value,
+  defaultValue,
   error,
   onChange,
 }: IInputProps) {
@@ -27,9 +28,10 @@ export default function ActionInput({
         required={required}
         name={name}
         type={inputType}
-        className={`${styles.input_common} ${styles.input_light}  ${error ?? 'border-red-400'}`}
+        className={`${styles.input} ${error ?? 'border-red-400'}`}
         placeholder={placeholder || undefined}
         value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
       />
     </div>

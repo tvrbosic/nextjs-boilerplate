@@ -7,6 +7,7 @@ export interface IInputProps {
   inputLabel?: string | undefined;
   placeholder?: string;
   value?: string;
+  defaultValue?: string;
   error?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -16,9 +17,11 @@ export interface IActionInputProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   required?: boolean;
   name?: string;
-  inputLabel?: string | undefined;
   inputType?: HTMLInputTypeAttribute;
+  inputLabel?: string | undefined;
   placeholder?: string;
   value?: string;
+  defaultValue?: string;
+  error?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
