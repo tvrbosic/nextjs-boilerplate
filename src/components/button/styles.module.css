@@ -1,6 +1,6 @@
 @reference "tailwindcss";
 
-/** ============================| BUTTON COMMON |============================ */
+/** ============================| BUTTON |============================ */
 .button_common {
   @apply me-2 mb-2 cursor-pointer rounded-lg focus:ring-4 focus:outline-none;
 }
@@ -9,7 +9,7 @@
   @apply cursor-not-allowed opacity-50;
 }
 
-/** ============================| BUTTON SIZES |============================ */
+/** SIZES */
 .button_small {
   @apply px-3 py-1 text-xs;
 }
@@ -22,7 +22,7 @@
   @apply px-7 py-3 text-lg;
 }
 
-/** ============================| BUTTON VARIANTS |============================ */
+/** VARIANTS */
 .button_solid {
   @apply bg-teal-500 text-stone-100 duration-300 hover:bg-teal-600 focus:ring-teal-500/40;
 

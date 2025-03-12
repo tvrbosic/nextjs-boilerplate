@@ -1,11 +1,10 @@
 @reference "tailwindcss";
 
-/** ============================| COMMON |============================ */
 .navlink_common {
   @apply underline-offset-4 duration-300 hover:underline;
 }
 
-/** ============================| VARIANTS |============================ */
+/** VARIANTS */
 .navlink_light {
   @apply text-teal-100 hover:text-teal-200;
 }

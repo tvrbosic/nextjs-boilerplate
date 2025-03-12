@@ -5,17 +5,18 @@ import {
   TSpinnerVariant,
 } from '@/components/spinner/types';
 
-// Define variant classes
+// STYLES
+import styles from '@/components/spinner/styles.module.css';
+
 const VARIANT_CLASSES: Record<TSpinnerVariant, string> = {
-  light: 'fill-slate-700 text-emerald-700 dark:text-emerald-700', // light theme
-  dark: 'fill-slate-200 text-emerald-300 dark:text-emerald-300', // dark theme
+  light: styles.spinner_light,
+  dark: styles.spinner_dark,
 };
 
-// Define size classes
 const SIZE_CLASSES: Record<TSpinnerSize, string> = {
-  sm: 'w-4 h-4', // small spinner
-  md: 'w-8 h-8', // medium spinner (default)
-  lg: 'w-12 h-12', // large spinner
+  sm: styles.spinner_small,
+  md: styles.spinner_medium,
+  lg: styles.spinner_large,
 };
 
 export default function Spinner({
