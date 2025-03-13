@@ -14,14 +14,14 @@ export const useAllModelsCreate = Prisma.defineExtension((prisma) =>
 
           // Get authenticated user and assign to createdById
           const decodedToken = await getSession();
-          args.data.createdById = decodedToken!.userGuid;
+          args.data.createdById = decodedToken?.guid;
 
           // Create audit log entry
           const auditEntry = {
             targetTable: model,
             targetGuid: '',
             action: operation,
-            actionById: decodedToken!.userGuid,
+            actionById: decodedToken?.guid,
             payload: JSON.parse(JSON.stringify(args.data)),
           };
 

@@ -1,18 +1,21 @@
 // LIB
 import { cookies } from 'next/headers';
+import { JWTPayload } from 'jose';
 
 // APP
 import { generateToken, verifyToken } from '@/utility/jwt/jwt';
 
 // TYPES
 import { IUserJwtClaims } from '@/utility/jwt/types';
-import { JWTPayload } from 'jose';
+import { Role } from '@prisma/client';
 
 // ENV
 const JWT_COOKE_EXPIRATION: number =
   parseInt(process.env.JWT_COOKE_EXPIRATION!) || 15;
 
-export async function createSession(userJwtClaims: IUserJwtClaims) {
+export async function createSession(
+  userJwtClaims: IUserJwtClaims
+): Promise<string> {
   const expiresAt = new Date(
     Date.now() + JWT_COOKE_EXPIRATION * 24 * 60 * 60 * 1000
   );
@@ -27,8 +30,10 @@ export async function createSession(userJwtClaims: IUserJwtClaims) {
     path: '/',
   });
 
-  // TODO: Remove, for testing with Postman
-  console.log(cookieStore.get('session'));
+  // UNCOMMENT FOR TESTING: Get cookie to be able to test with Postman
+  // console.log(cookieStore.get('session'));
+
+  return token;
 }
 
 export async function getSession(): Promise<IUserJwtClaims | null> {
@@ -44,15 +49,22 @@ export async function getSession(): Promise<IUserJwtClaims | null> {
     !decoded ||
     typeof decoded !== 'object' ||
     !decoded.userGuid ||
+    !decoded.email ||
+    !decoded.firstName ||
+    !decoded.lastName ||
     !decoded.role
   ) {
     return null; // Return null if required properties are missing
   }
 
-  // Cast and return the token as IUserJwtClaims
+  // Cast and return the decoded token as IUserJwtClaims
   return {
-    userGuid: decoded.userGuid as string,
-    role: decoded.roles as string,
+    guid: decoded.userGuid as string,
+    email: decoded.email as string,
+    firstName: decoded.firstName as string,
+    lastName: decoded.lastName as string,
+    role: decoded.roles as Role,
+    exp: decoded.exp,
     ...decoded, // Keep other fields if necessary
   };
 }

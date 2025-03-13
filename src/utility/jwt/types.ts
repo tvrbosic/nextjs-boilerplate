@@ -1,4 +1,10 @@
+import { Role } from '@prisma/client';
+
 export interface IUserJwtClaims {
-  userGuid: string;
-  role: string;
+  guid: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: Role;
+  exp?: number;
 }

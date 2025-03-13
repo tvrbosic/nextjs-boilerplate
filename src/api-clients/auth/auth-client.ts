@@ -39,9 +39,9 @@ export class AuthApiClient {
 
   public async login(
     params: ILoginParams
-  ): Promise<IApiSuccessResponse<{ user: User }>> {
+  ): Promise<IApiSuccessResponse<{ token: string }>> {
     const response = await this.axiosInstance.post<
-      IApiSuccessResponse<{ user: User }>
+      IApiSuccessResponse<{ token: string }>
     >('/login', params);
     return response.data;
   }
