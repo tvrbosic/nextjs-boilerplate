@@ -1,0 +1,14 @@
+@reference "tailwindcss";
+
+.navlink_common {
+  @apply underline-offset-4 duration-300 hover:underline;
+}
+
+/** VARIANTS */
+.navlink_light {
+  @apply text-teal-100 hover:text-teal-200;
+}
+
+.navlink_dark {
+  @apply text-teal-400 hover:text-teal-200;
+}

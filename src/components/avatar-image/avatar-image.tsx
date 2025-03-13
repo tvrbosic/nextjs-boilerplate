@@ -1,14 +1,19 @@
+// LIB
+import Image from 'next/image';
+
 // ASSETS
 import AvatarPlaceholder from '@/assets/images/avatar.png';
 
 // TYPES
 import { IAvatarImageProps } from '@/components/avatar-image/types';
-import Image from 'next/image';
+
+// STYLES
+import styles from '@/components/avatar-image/styles.module.css';
 
 const SIZE_CLASSES = {
-  sm: 'h-8 w-8',
-  md: 'h-12 w-12',
-  lg: 'h-16 w-16',
+  sm: styles.avatar_small,
+  md: styles.avatar_medium,
+  lg: styles.avatar_large,
 };
 
 export default function AvatarImage({
