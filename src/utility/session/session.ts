@@ -37,11 +37,14 @@ export async function createSession(
 }
 
 export async function getSession(): Promise<IUserJwtClaims | null> {
+  // Retrieve the session cookie value
   const cookieStore = await cookies();
-  const token = cookieStore.get('session')?.value; // Retrieve the session cookie value
+  const token = cookieStore.get('session')?.value;
 
-  if (!token) return null; // If session is not found, return null
+  // Session does not exist
+  if (!token) return null;
 
+  // Verify
   const decoded = (await verifyToken(token)) as JWTPayload;
 
   // Ensure decoded payload matches IUserJwtClaims
@@ -66,20 +69,25 @@ export async function getSession(): Promise<IUserJwtClaims | null> {
     role: decoded.roles as Role,
     exp: decoded.exp,
     ...decoded, // Keep other fields if necessary
-  };
+  } as IUserJwtClaims;
 }
 
 export async function updateSession() {
-  const token = (await cookies()).get('session')?.value;
+  // Retrieve the session cookie value
+  const cookieStore = await cookies();
+  const token = cookieStore.get('session')?.value;
+
+  // Verify
   const decodedToken = await verifyToken(token);
 
+  // If token is not valid or expired, delete session cookie
   if (!token || !decodedToken) {
+    cookieStore.delete('session');
     return null;
   }
 
   const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
-  const cookieStore = await cookies();
   cookieStore.set('session', token, {
     httpOnly: true,
     secure: true,

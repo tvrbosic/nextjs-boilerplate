@@ -11,9 +11,6 @@ import {
   ApiUnauthorizedResponse,
 } from '@/utility/response/response';
 
-// TYPES
-import { User } from '@prisma/client';
-
 export const POST = withApiErrorWrapper(async (req: Request) => {
   const { email, password } = await req.json();
 

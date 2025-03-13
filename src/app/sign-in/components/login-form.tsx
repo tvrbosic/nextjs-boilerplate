@@ -67,8 +67,8 @@ export default function LoginForm() {
       const response = await AuthApiClient.instance.login({ email, password });
 
       // Verify response and token existance
-      const { token } = response.data!;
       if (!response.data || !response.data.token) throw Error('Token missing!');
+      const token = response.data?.token || undefined;
 
       // SUCCESS: Decode token, set user data to context, show toast message, redirect to home page and return form data
       const decoded = (await verifyToken(token)) as unknown as IUserJwtClaims;

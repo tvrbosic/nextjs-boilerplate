@@ -46,6 +46,14 @@ export class AuthApiClient {
     return response.data;
   }
 
+  public async verify(): Promise<IApiSuccessResponse<{ token: string }>> {
+    const response =
+      await this.axiosInstance.get<IApiSuccessResponse<{ token: string }>>(
+        '/verify'
+      );
+    return response.data;
+  }
+
   public async register(params: IRegisterParams) {
     const response = await this.axiosInstance.post('/register', params);
     return response.data;
