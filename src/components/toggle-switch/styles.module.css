@@ -1,0 +1,43 @@
+@reference "tailwindcss";
+
+/** ============================| TOGGLE CONTAINER |============================ */
+.toggle_label_container {
+  @apply relative inline-block h-6 w-11;
+}
+
+/** ============================| TOGGLE HIDDEN INPUT |============================ */
+/* Hide default HTML checkbox */
+.toggle_input_hidden {
+  @apply h-0 w-0 opacity-0;
+}
+
+/** ============================| TOGGLE TRACK |============================ */
+.toggle_span_track {
+  @apply absolute top-0 right-0 bottom-0 left-0 cursor-pointer rounded-full bg-stone-400 transition-all;
+}
+
+.toggle_input_hidden:checked + .toggle_span_track {
+  @apply bg-teal-500;
+}
+
+.toggle_input_hidden:focus + .toggle_span_track {
+  @apply ring-4 ring-blue-500/50;
+}
+
+/** ============================| TOGGLE HANDLE |============================ */
+.toggle_span_track:before {
+  @apply absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-stone-100 transition-all content-[''];
+}
+
+.toggle_input_hidden:checked + .toggle_span_track:before {
+  @apply translate-x-full;
+}
+
+/** ============================| TOGGLE TEXT |============================ */
+.toggle_span_text {
+  @apply ms-3 text-sm font-medium text-gray-900;
+
+  @variant dark {
+    @apply text-gray-300;
+  }
+}
