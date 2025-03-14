@@ -1,4 +1,4 @@
-@reference "tailwindcss";
+@reference "../../styles/globals.css";
 
 /** SIZES */
 .avatar_small {
