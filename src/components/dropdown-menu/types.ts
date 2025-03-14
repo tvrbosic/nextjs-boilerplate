@@ -10,4 +10,5 @@ export interface IDropdownMenuProps {
 export interface IDropdownMenuItemProps {
   text: string;
   icon?: React.ReactNode;
+  onClick?: () => void;
 }

@@ -7,6 +7,7 @@ import styles from '@/components/dropdown-menu/styles.module.css';
 export default function DropdownMenuItem({
   text,
   icon,
+  onClick,
 }: IDropdownMenuItemProps) {
   return (
     <div className={styles.dropdown_menu_item}>
@@ -15,7 +16,9 @@ export default function DropdownMenuItem({
           {icon}
         </div>
       )}
-      <div className="ml-2 flex flex-1 items-center">{text}</div>
+      <div className="ml-2 flex flex-1 items-center" onClick={onClick}>
+        {text}
+      </div>
     </div>
   );
 }

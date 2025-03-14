@@ -60,7 +60,7 @@ export class AuthApiClient {
   }
 
   public async logout() {
-    const response = await this.axiosInstance.post('/logout');
+    const response = await this.axiosInstance.post('/logout', {});
     return response.data;
   }
 

@@ -12,7 +12,7 @@ import { verifyToken } from '@/utility/jwt/jwt';
 import processAxiosError from '@/utility/process-axios-error/process-axios-error';
 
 // TYPES
-import { TSubmitLoginFormAction } from '@/app/sign-in/components/types';
+import { TSubmitLoginFormAction } from '@/app/user/sign-in/components/types';
 
 // COMPONENTS
 import Button from '@/components/button/button';

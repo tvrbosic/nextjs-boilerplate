@@ -24,8 +24,9 @@ export async function logRequest(req: Request) {
       req.method === 'PUT' ||
       req.method === 'PATCH'
     ) {
+      const payload = await req.json();
       // Extract payload from body and mask sensitive fields like passwords (avoid logging them)
-      const payload = maskObjectSensitiveFields(await req.json());
+      const maskedPayload = payload ? maskObjectSensitiveFields(payload) : null;
 
       fetch(`${apiBaseUrl}/log-write`, {
         method: 'POST',
@@ -33,7 +34,7 @@ export async function logRequest(req: Request) {
           level: 'http',
           message: `${req.method} ${req.url}`,
           secret: logSecret,
-          payload,
+          maskedPayload,
         }),
       });
     } else {
