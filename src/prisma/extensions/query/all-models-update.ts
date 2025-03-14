@@ -20,7 +20,7 @@ export const useAllModelsUpdate = Prisma.defineExtension((prisma) =>
 
           // Set updatedById and updatedAt but not in case isSoftDeleteOperation
           if (!isSoftDeleteOperation) {
-            args.data.updatedById = decodedToken?.userGuid;
+            args.data.updatedById = decodedToken?.guid;
             args.data.updatedAt = new Date();
 
             // Global soft delete filter (do not update already deleted entries)
@@ -35,7 +35,7 @@ export const useAllModelsUpdate = Prisma.defineExtension((prisma) =>
             targetTable: model,
             targetGuid: '',
             action: operation as string,
-            actionById: decodedToken!.userGuid,
+            actionById: decodedToken?.guid,
             payload: JSON.parse(JSON.stringify(args.data)),
           };
 

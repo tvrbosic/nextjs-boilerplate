@@ -3,11 +3,13 @@
 import { use, useActionState } from 'react';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
+import { JWTPayload } from 'jose';
 
 // APP
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
+import { verifyToken } from '@/utility/jwt/jwt';
 import processAxiosError from '@/utility/process-axios-error/process-axios-error';
 
 // TYPES
@@ -17,6 +19,7 @@ import { TSubmitLoginFormAction } from '@/app/sign-in/components/types';
 import Button from '@/components/button/button';
 import Input from '@/components/input/input';
 import NavLink from '@/components/nav-link/nav-link';
+import { IUserJwtClaims } from '@/utility/jwt/types';
 
 const loginValidationSchema = z.object({
   email: z.string().min(1, 'Required').email('Invalid email address'),
@@ -63,8 +66,20 @@ export default function LoginForm() {
       // Call API to login user
       const response = await AuthApiClient.instance.login({ email, password });
 
-      // SUCCESS: Set user to context, show toast message, redirect to home page and return form data
-      setUser(response.data?.user!);
+      // Verify response and token existance
+      if (!response.data || !response.data.token) throw Error('Token missing!');
+      const token = response.data?.token || undefined;
+
+      // SUCCESS: Decode token, set user data to context, show toast message, redirect to home page and return form data
+      const decoded = (await verifyToken(token)) as unknown as IUserJwtClaims;
+      setUser({
+        guid: decoded.guid,
+        email: decoded.email,
+        firstName: decoded.firstName,
+        lastName: decoded.lastName,
+        role: decoded.role,
+        exp: decoded.exp,
+      });
       showToast('Sign in successful');
       router.push('/');
       return { email, password };

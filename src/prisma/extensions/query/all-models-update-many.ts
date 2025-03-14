@@ -16,7 +16,7 @@ export const useAllModelsUpdateMany = Prisma.defineExtension((prisma) =>
 
           // Set updatedById and updatedAt but not in case when updateMany was called as result of softDeleteMany (converted delete to update operation)
           if (!args.data.isDeleted) {
-            args.data.updatedById = decodedToken?.userGuid;
+            args.data.updatedById = decodedToken?.guid;
             args.data.updatedAt = new Date();
           }
 

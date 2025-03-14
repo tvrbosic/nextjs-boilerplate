@@ -21,7 +21,7 @@ export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
           // Add the createdById if not present
           const modifiedDataArray = dataArray.map((item) => ({
             ...item,
-            createdById: item.createdById || decodedToken?.userGuid,
+            createdById: item.createdById || decodedToken?.guid,
           }));
 
           // Execute transactions: split createMany into individual create operations

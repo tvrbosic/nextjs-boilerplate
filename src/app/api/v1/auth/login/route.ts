@@ -11,9 +11,6 @@ import {
   ApiUnauthorizedResponse,
 } from '@/utility/response/response';
 
-// TYPES
-import { User } from '@prisma/client';
-
 export const POST = withApiErrorWrapper(async (req: Request) => {
   const { email, password } = await req.json();
 
@@ -43,12 +40,15 @@ export const POST = withApiErrorWrapper(async (req: Request) => {
 
   // Create JWT token and user session
   const token = await createSession({
-    userGuid: user.guid,
+    guid: user.guid,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
     role: user.role,
   });
 
-  return ApiSuccessResponse<{ user: User }>({
+  return ApiSuccessResponse<{ token: string }>({
     message: 'Login successful',
-    data: { user },
+    data: { token },
   });
 });

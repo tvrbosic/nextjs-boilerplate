@@ -24,7 +24,7 @@ export const useSoftDelete = Prisma.defineExtension({
           data: {
             isDeleted: true,
             deletedAt: new Date(),
-            deletedById: decodedToken?.userGuid,
+            deletedById: decodedToken?.guid,
           },
         });
 
@@ -44,7 +44,7 @@ export const useSoftDelete = Prisma.defineExtension({
           data: {
             isDeleted: true,
             deletedAt: new Date(),
-            deletedById: decodedToken?.userGuid,
+            deletedById: decodedToken?.guid,
           },
         });
       },
