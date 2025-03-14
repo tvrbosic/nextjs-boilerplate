@@ -1,6 +1,4 @@
-'use client';
 // LIBRARY
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { PiTreeStructureBold } from 'react-icons/pi';
 import { FaGears } from 'react-icons/fa6';
@@ -10,20 +8,18 @@ import { BiSolidComponent } from 'react-icons/bi';
 import Button from '@/components/button/button';
 
 export default function Featured() {
-  const router = useRouter();
-
   return (
     <div className="bg-englishViolet py-[150px]">
       <div className="flex justify-center gap-[3vw]">
         {/** ================================| PROJECT STRUCTURE |================================ */}
-        <div className="w-md border-gray-800 border-1 rounded-lg">
-          <div className="flex flex-col h-full justify-between px-[40px] py-[20px] border-t-[10px] border-blue-300 rounded-t-md">
-            <div className="flex justify-around items-center mb-3">
-              <h2 className="text-stone-200 text-2xl underline underline-offset-4">
+        <div className="w-md rounded-lg border-1 border-gray-800">
+          <div className="flex h-full flex-col justify-between rounded-t-md border-t-[10px] border-blue-300 px-[40px] py-[20px]">
+            <div className="mb-3 flex items-center justify-around">
+              <h2 className="text-2xl text-stone-200 underline underline-offset-4">
                 Project structure
               </h2>
 
-              <span className="text-stone-200 text-5xl">
+              <span className="text-5xl text-stone-200">
                 <PiTreeStructureBold />
               </span>
             </div>
@@ -43,14 +39,14 @@ export default function Featured() {
         </div>
 
         {/** ================================| CUSTOM COMPONENTS |================================ */}
-        <div className="w-md border-gray-800 border-1 rounded-lg">
-          <div className="flex flex-col h-full justify-between px-[40px] py-[20px] border-t-[10px] border-orange-300 rounded-t-md">
-            <div className="flex justify-around items-center mb-3">
-              <h2 className="text-stone-200 text-2xl underline underline-offset-4">
+        <div className="w-md rounded-lg border-1 border-gray-800">
+          <div className="flex h-full flex-col justify-between rounded-t-md border-t-[10px] border-orange-300 px-[40px] py-[20px]">
+            <div className="mb-3 flex items-center justify-around">
+              <h2 className="text-2xl text-stone-200 underline underline-offset-4">
                 Custom components
               </h2>
 
-              <span className="text-stone-200 text-5xl">
+              <span className="text-5xl text-stone-200">
                 <BiSolidComponent />
               </span>
             </div>
@@ -70,14 +66,14 @@ export default function Featured() {
         </div>
 
         {/** ================================| FEATURES AND MECHANISMS |================================ */}
-        <div className="w-md border-gray-800 border-1 rounded-lg">
-          <div className="flex flex-col h-full justify-between px-[40px] py-[20px] border-t-[10px] border-green-300 rounded-t-md">
-            <div className="flex justify-around items-center mb-3">
-              <h2 className="text-stone-200 text-2xl underline underline-offset-4">
+        <div className="w-md rounded-lg border-1 border-gray-800">
+          <div className="flex h-full flex-col justify-between rounded-t-md border-t-[10px] border-green-300 px-[40px] py-[20px]">
+            <div className="mb-3 flex items-center justify-around">
+              <h2 className="text-2xl text-stone-200 underline underline-offset-4">
                 Features and mechanisms
               </h2>
 
-              <span className="text-stone-200 text-5xl">
+              <span className="text-5xl text-stone-200">
                 <FaGears />
               </span>
             </div>

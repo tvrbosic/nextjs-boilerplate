@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { AuthContext } from '@/context/auth/auth-context';
 
 // COMPONENTS
+import DropdownMenu from '@/components/dropdown-menu/dropdown-menu';
 import AvatarImage from '@/components/avatar-image/avatar-image';
 import Button from '@/components/button/button';
 
@@ -16,7 +17,7 @@ export default function AuthControl() {
   return (
     <div>
       {user ? (
-        <AvatarImage />
+        <DropdownMenu activateElement={<AvatarImage />} menuAlignment="right" />
       ) : (
         <Link href={'/sign-in'}>
           <Button variant="outline">Sign in</Button>

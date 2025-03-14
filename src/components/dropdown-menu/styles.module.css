@@ -1,0 +1,9 @@
+@reference "tailwindcss";
+
+.dropdown {
+  @apply relative inline-block;
+}
+
+.dropdown_content {
+  @apply absolute z-10 min-w-[160px] bg-gray-100 p-3 shadow-lg;
+}
