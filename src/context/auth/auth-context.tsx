@@ -30,8 +30,6 @@ const AuthProvider = ({ children }: IChildrenProps) => {
           token
         )) as unknown as IAuthContextUser;
         setUser(decoded);
-
-        console.log(decoded);
       } else {
         // NO TOKEN: Clear user and continue without user session
         console.warn('No session found!');
