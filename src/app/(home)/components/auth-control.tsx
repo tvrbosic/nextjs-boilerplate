@@ -1,6 +1,6 @@
 'use client';
 // LIB
-import { use, useEffect, useState } from 'react';
+import { use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FaUserCircle } from 'react-icons/fa';
@@ -12,17 +12,17 @@ import { ToastMessageContext } from '@/context/toast-message/toast-context';
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import processAxiosError from '@/utility/process-axios-error/process-axios-error';
 
+// TYPES
+import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
+
 // COMPONENTS
+import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 import DropdownMenu from '@/components/dropdown-menu/dropdown-menu';
 import DropdownMenuItem from '@/components/dropdown-menu/dropdown-menu-item';
 import AvatarImage from '@/components/avatar-image/avatar-image';
 import Button from '@/components/button/button';
 
-export default function AuthControl() {
-  // ============================| STATE |============================ //
-  const [triggerErrorBoundary, setTrrigerErrorBoundary] =
-    useState<boolean>(false);
-
+function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
   const { user, clearUser } = use(AuthContext);
   const { showToast } = use(ToastMessageContext);
@@ -37,17 +37,10 @@ export default function AuthControl() {
       router.push('/');
     } catch (error) {
       const errorMessage = processAxiosError({ error });
-      errorMessage === '500' && setTrrigerErrorBoundary(true);
+      errorMessage === '500' && triggerGlobalError();
       showToast(errorMessage, 'error');
     }
   };
-
-  // ============================| EFFECTS |============================ //
-  useEffect(() => {
-    if (triggerErrorBoundary) {
-      throw Error('500'); // Trigger error boundary
-    }
-  }, [triggerErrorBoundary]);
 
   // ============================| RENDER |============================ //
   return (
@@ -74,3 +67,5 @@ export default function AuthControl() {
     </div>
   );
 }
+
+export default withErrorBoundaryTrigger(AuthControl);
