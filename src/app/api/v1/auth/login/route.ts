@@ -9,6 +9,7 @@ import {
   ApiSuccessResponse,
   ApiBadRequestResponse,
   ApiUnauthorizedResponse,
+  ApiInternalServerErrorResponse,
 } from '@/utility/response/response';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {

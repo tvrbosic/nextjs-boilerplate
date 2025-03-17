@@ -34,7 +34,7 @@ export async function logRequest(req: Request) {
           level: 'http',
           message: `${req.method} ${req.url}`,
           secret: logSecret,
-          maskedPayload,
+          payload: maskedPayload,
         }),
       });
     } else {
@@ -51,13 +51,25 @@ export async function logRequest(req: Request) {
     // Continue with the next middleware by returning null
     return null;
   } catch (error) {
+    let errorMessage = 'Unknown error';
+    let errorStack: string | undefined;
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      errorStack = error.stack;
+    } else if (typeof error === 'string') {
+      errorMessage = error;
+    } else if (typeof error === 'object' && error !== null) {
+      errorMessage = JSON.stringify(error);
+    }
+
     fetch(`${apiBaseUrl}/log-write`, {
       method: 'POST',
       body: JSON.stringify({
         level: 'error',
         message: '❗ LOG REQUEST MIDDLEWARE ERROR ❗',
         secret: logSecret,
-        error: error,
+        error: { message: errorMessage, stack: errorStack },
       }),
     });
 

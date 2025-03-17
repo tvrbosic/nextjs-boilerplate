@@ -1,6 +1,6 @@
 'use client';
 // LIB
-import { use, useActionState } from 'react';
+import { use, useActionState, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
 
@@ -30,6 +30,10 @@ const loginValidationSchema = z.object({
 });
 
 export default function LoginForm() {
+  // ============================| STATE |============================ //
+  const [triggerErrorBoundary, setTrrigerErrorBoundary] =
+    useState<boolean>(false);
+
   // ============================| UTILITY |============================ //
   const { user, setUser } = use(AuthContext);
   const { showToast } = use(ToastMessageContext);
@@ -95,6 +99,13 @@ export default function LoginForm() {
     TSubmitLoginFormAction,
     FormData | null
   >(submitLoginForm, {});
+
+  // ============================| EFFECTS |============================ //
+  useEffect(() => {
+    if (triggerErrorBoundary) {
+      throw Error('500'); // Trigger error boundary
+    }
+  }, [triggerErrorBoundary]);
 
   // ============================| RENDER |============================ //
   return (

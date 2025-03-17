@@ -5,7 +5,7 @@ import {
   IUpdateUserParams,
   IUpdatePasswordParams,
   IDeleteUserParams,
-} from './types';
+} from '@/api-clients/user/types';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 

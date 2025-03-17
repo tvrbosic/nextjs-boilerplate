@@ -1,6 +1,6 @@
 'use client';
 // LIB
-import { use } from 'react';
+import { use, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { FaUserCircle } from 'react-icons/fa';
@@ -19,6 +19,10 @@ import AvatarImage from '@/components/avatar-image/avatar-image';
 import Button from '@/components/button/button';
 
 export default function AuthControl() {
+  // ============================| STATE |============================ //
+  const [triggerErrorBoundary, setTrrigerErrorBoundary] =
+    useState<boolean>(false);
+
   // ============================| UTILITY |============================ //
   const { user, clearUser } = use(AuthContext);
   const { showToast } = use(ToastMessageContext);
@@ -33,9 +37,17 @@ export default function AuthControl() {
       router.push('/');
     } catch (error) {
       const errorMessage = processAxiosError({ error });
+      errorMessage === '500' && setTrrigerErrorBoundary(true);
       showToast(errorMessage, 'error');
     }
   };
+
+  // ============================| EFFECTS |============================ //
+  useEffect(() => {
+    if (triggerErrorBoundary) {
+      throw Error('500'); // Trigger error boundary
+    }
+  }, [triggerErrorBoundary]);
 
   // ============================| RENDER |============================ //
   return (
@@ -47,7 +59,7 @@ export default function AuthControl() {
             icon={<FaUserCircle size={20} />}
             onClick={() => router.push('/user/profile')}
           />
-          <DropdownMenuItem text="wasd" icon={<FaUserCircle size={20} />} />
+
           <DropdownMenuItem
             text="Sign out"
             icon={<FaSignOutAlt size={20} />}
