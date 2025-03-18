@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 
 // TYPES
-import {
-  IDropdownMenuProps,
-  TMenuAlignment,
-} from '@/components/dropdown-menu/types';
+import { IDropdownProps, TMenuAlignment } from '@/components/dropdown/types';
 
 // STYLES
-import styles from '@/components/dropdown-menu/styles.module.css';
+import styles from '@/components/dropdown/styles.module.css';
+
+// COMPONENTS
+import DropdownButton from '@/components/dropdown/dropdown-button';
 
 const ALIGNMENT_CLASSES: Record<TMenuAlignment, string> = {
   left: 'left-0',
@@ -17,10 +17,11 @@ const ALIGNMENT_CLASSES: Record<TMenuAlignment, string> = {
 };
 
 export default function DropdownMenu({
-  activateElement,
+  text,
   children,
+  activateElement,
   menuAlignment = 'left',
-}: IDropdownMenuProps) {
+}: IDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null); // Reference to the dropdown container
 
@@ -51,7 +52,11 @@ export default function DropdownMenu({
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <div onClick={toggleDropdown} className="cursor-pointer">
-        {activateElement}
+        {activateElement ? (
+          activateElement
+        ) : (
+          <DropdownButton>{text}</DropdownButton>
+        )}
       </div>
 
       {isOpen && (

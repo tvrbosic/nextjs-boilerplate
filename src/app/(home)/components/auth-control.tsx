@@ -17,8 +17,8 @@ import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
 // COMPONENTS
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
-import DropdownMenu from '@/components/dropdown-menu/dropdown-menu';
-import DropdownMenuItem from '@/components/dropdown-menu/dropdown-menu-item';
+import Dropdown from '@/components/dropdown/dropdown';
+import DropdownMenuItem from '@/components/dropdown/dropdown-menu-item';
 import AvatarImage from '@/components/avatar-image/avatar-image';
 import Button from '@/components/button/button';
 
@@ -43,10 +43,11 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   };
 
   // ============================| RENDER |============================ //
+  // activateElement={<AvatarImage />}
   return (
     <div>
       {user ? (
-        <DropdownMenu activateElement={<AvatarImage />} menuAlignment="right">
+        <Dropdown menuAlignment="right" text="Menu">
           <DropdownMenuItem
             text="Profile"
             icon={<FaUserCircle size={20} />}
@@ -58,7 +59,7 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
             icon={<FaSignOutAlt size={20} />}
             onClick={logoutHandler}
           />
-        </DropdownMenu>
+        </Dropdown>
       ) : (
         <Link href={'/user/sign-in'}>
           <Button variant="outline">Sign in</Button>

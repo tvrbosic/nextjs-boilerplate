@@ -1,8 +1,8 @@
 // TYPES
-import { IDropdownMenuItemProps } from '@/components/dropdown-menu/types';
+import { IDropdownMenuItemProps } from '@/components/dropdown/types';
 
 // STYLES
-import styles from '@/components/dropdown-menu/styles.module.css';
+import styles from '@/components/dropdown/styles.module.css';
 
 export default function DropdownMenuItem({
   text,
