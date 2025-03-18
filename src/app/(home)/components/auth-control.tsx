@@ -43,11 +43,10 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   };
 
   // ============================| RENDER |============================ //
-  // activateElement={<AvatarImage />}
   return (
     <div>
       {user ? (
-        <Dropdown menuAlignment="right" text="Menu">
+        <Dropdown menuAlignment="right" activateElement={<AvatarImage />}>
           <DropdownMenuItem
             text="Profile"
             icon={<FaUserCircle size={20} />}

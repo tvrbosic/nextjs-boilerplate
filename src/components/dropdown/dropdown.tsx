@@ -8,16 +8,12 @@ import { IDropdownProps, TMenuAlignment } from '@/components/dropdown/types';
 // STYLES
 import styles from '@/components/dropdown/styles.module.css';
 
-// COMPONENTS
-import DropdownButton from '@/components/dropdown/dropdown-button';
-
 const ALIGNMENT_CLASSES: Record<TMenuAlignment, string> = {
   left: 'left-0',
   right: 'right-0',
 };
 
 export default function DropdownMenu({
-  text,
   children,
   activateElement,
   menuAlignment = 'left',
@@ -52,11 +48,7 @@ export default function DropdownMenu({
   return (
     <div className={styles.dropdown} ref={dropdownRef}>
       <div onClick={toggleDropdown} className="cursor-pointer">
-        {activateElement ? (
-          activateElement
-        ) : (
-          <DropdownButton>{text}</DropdownButton>
-        )}
+        {activateElement}
       </div>
 
       {isOpen && (

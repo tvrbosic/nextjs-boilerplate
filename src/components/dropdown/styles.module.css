@@ -5,7 +5,7 @@
   @apply relative inline-block;
 }
 
-/** ============================| BUTTON |============================ */
+/** ============================| DROPDOWN BUTTON |============================ */
 .dropdown_button_common {
   @apply me-2 mb-2 cursor-pointer rounded-lg focus:ring-4 focus:outline-none;
 }

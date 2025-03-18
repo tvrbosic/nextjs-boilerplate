@@ -3,7 +3,6 @@ import { TComponentSize } from '@/types/theme';
 export type TMenuAlignment = 'left' | 'right';
 
 export interface IDropdownProps {
-  text: string;
   children: React.ReactNode;
   activateElement?: React.ReactNode;
   menuAlignment?: TMenuAlignment;
