@@ -1,4 +1,4 @@
-@reference "tailwindcss";
+@reference "../../styles/globals.css";
 
 .navlink_common {
   @apply underline-offset-4 duration-300 hover:underline;

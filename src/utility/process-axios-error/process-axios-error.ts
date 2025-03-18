@@ -3,11 +3,16 @@ import { AxiosError } from 'axios';
 
 // TYPES
 import { IprocessAxiosErrorProps } from '@/utility/process-axios-error/types';
-import { IApiErrorResponse } from '../response/type';
+import { IApiErrorResponse } from '@/utility/response/type';
 
 export default function processAxiosError({
   error,
 }: IprocessAxiosErrorProps): string {
+  /** NOTE:
+   * Error boundaries cannot catch errors thrown in event hanlders (i.e. onClick).
+   * We must return values for errors and handle them manually for example with useEffects.
+   */
+
   if (
     error instanceof AxiosError &&
     error.status !== undefined &&
@@ -18,7 +23,6 @@ export default function processAxiosError({
 
     return response.message;
   }
-
-  // Re-throw 5xx errors (or if not AxiosError)
-  throw error;
+  // Return '500' for internal server errors (or if not AxiosError)
+  return '500';
 }

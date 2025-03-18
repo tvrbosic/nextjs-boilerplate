@@ -1,4 +1,4 @@
-@reference "tailwindcss";
+@reference "../../styles/globals.css";
 
 /** ============================| COMMON |============================ */
 .input_label {

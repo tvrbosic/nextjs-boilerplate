@@ -1,3 +1,4 @@
+'use client';
 // LIB
 import {
   FaSyncAlt,
@@ -5,7 +6,6 @@ import {
   FaEnvelope,
   FaExclamationTriangle,
 } from 'react-icons/fa';
-import Link from 'next/link';
 
 // COMPONENTS
 import Button from '@/components/button/button';
@@ -56,9 +56,14 @@ export default function GlobalErrorFallback() {
           </div>
 
           <div className="mb-4 flex w-full flex-grow items-center justify-center text-center">
-            <Link href={'/'}>
-              <Button size="lg">Go Back</Button>
-            </Link>
+            <Button
+              size="lg"
+              onClick={() => {
+                window.location.reload();
+              }}
+            >
+              Refresh
+            </Button>
           </div>
         </div>
       </div>

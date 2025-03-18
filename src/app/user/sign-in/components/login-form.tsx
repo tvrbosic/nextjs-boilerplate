@@ -3,7 +3,6 @@
 import { use, useActionState } from 'react';
 import { useRouter } from 'next/navigation';
 import { z } from 'zod';
-import { JWTPayload } from 'jose';
 
 // APP
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
@@ -13,9 +12,11 @@ import { verifyToken } from '@/utility/jwt/jwt';
 import processAxiosError from '@/utility/process-axios-error/process-axios-error';
 
 // TYPES
-import { TSubmitLoginFormAction } from '@/app/sign-in/components/types';
+import { TSubmitLoginFormAction } from '@/app/user/sign-in/components/types';
+import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
 // COMPONENTS
+import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 import Button from '@/components/button/button';
 import Input from '@/components/input/input';
 import NavLink from '@/components/nav-link/nav-link';
@@ -30,7 +31,7 @@ const loginValidationSchema = z.object({
     .regex(/[0-9]/, { message: 'Must contain at least one number.' }),
 });
 
-export default function LoginForm() {
+function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
   const { user, setUser } = use(AuthContext);
   const { showToast } = use(ToastMessageContext);
@@ -86,6 +87,7 @@ export default function LoginForm() {
     } catch (error) {
       // FAIL: Show toast message and return API error
       const errorMessage = processAxiosError({ error });
+      errorMessage === '500' && triggerGlobalError();
       showToast(errorMessage, 'error');
       return { errors: { api: [errorMessage] } };
     }
@@ -137,3 +139,5 @@ export default function LoginForm() {
     </form>
   );
 }
+
+export default withErrorBoundaryTrigger(LoginForm);
