@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
-import { resetPasswordValidationSchema } from '@/app/api/v1/auth/reset-password/[token]/validations';
+import { resetPasswordValidationSchema } from '@/app/api/v1/auth/validations';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,

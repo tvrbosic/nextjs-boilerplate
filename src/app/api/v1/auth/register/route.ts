@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
-import { registerValidationSchema } from '@/app/api/v1/auth/register/validations';
+import { registerValidationSchema } from '@/app/api/v1/auth/validations';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiCreatedResponse,

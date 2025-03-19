@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
-import { updatePasswordValidationSchema } from '@/app/api/v1/user/[guid]/update-password/validations';
+import { updatePasswordValidationSchema } from '@/app/api/v1/user/validations';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,

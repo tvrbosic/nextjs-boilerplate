@@ -4,10 +4,7 @@ import { cookies } from 'next/headers';
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
 import { verifyToken } from '@/utility/jwt/jwt';
-import {
-  ApiSuccessResponse,
-  ApiUnauthorizedResponse,
-} from '@/utility/response/response';
+import { ApiSuccessResponse } from '@/utility/response/response';
 
 export const GET = withApiErrorWrapper(async (req: Request) => {
   // Retrieve the session cookie value
