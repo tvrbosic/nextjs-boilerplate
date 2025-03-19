@@ -19,7 +19,7 @@ export const POST = withApiErrorWrapper(async (req: Request) => {
   const body = loginValidationSchema.safeParse(bodyRaw);
   if (!body.success) {
     return ApiBadRequestResponse({
-      message: 'Login data is invalid!',
+      message: body.error.issues[0].message,
     });
   }
 

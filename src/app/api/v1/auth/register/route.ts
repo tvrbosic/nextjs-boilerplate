@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import { registerValidationSchema } from '@/app/api/v1/auth/register/validations';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiCreatedResponse,
@@ -10,12 +11,18 @@ import {
 } from '@/utility/response/response';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
-  const { email, password, firstName, lastName } = await req.json();
+  const bodyRaw = await req.json();
 
-  // Validate input
-  if (!email || !password || !firstName || !lastName) {
-    return ApiBadRequestResponse({ message: 'All fields are required' });
+  // Validate
+  const body = registerValidationSchema.safeParse(bodyRaw);
+  if (!body.success) {
+    return ApiBadRequestResponse({
+      message: body.error.issues[0].message,
+    });
   }
+
+  // Extract data
+  const { email, password, firstName, lastName } = body.data;
 
   // Check if user already exists
   const existingUser = await prisma.user.findUnique({ where: { email } });

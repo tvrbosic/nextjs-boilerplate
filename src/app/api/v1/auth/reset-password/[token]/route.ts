@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import { resetPasswordValidationSchema } from '@/app/api/v1/auth/reset-password/[token]/validations';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,
@@ -17,10 +18,18 @@ import { IPatchResetPasswordParams } from '@/app/api/v1/auth/types';
 export const PATCH = withApiErrorWrapper(
   async (req: Request, { params }: IPatchResetPasswordParams) => {
     const resetToken = (await params).token;
+    const bodyRaw = await req.json();
 
-    // Get new password from body
-    const body = await req.json();
-    const { newPassword, newPasswordConfirm } = body;
+    // Validate
+    const body = resetPasswordValidationSchema.safeParse(bodyRaw);
+    if (!body.success) {
+      return ApiBadRequestResponse({
+        message: body.error.issues[0].message,
+      });
+    }
+
+    // Extract data
+    const { newPassword, newPasswordConfirm } = body.data;
 
     // Return bad request if provided passwords do not match
     if (newPassword !== newPasswordConfirm) {
