@@ -3,6 +3,7 @@ import crypto from 'crypto';
 
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import { forgotPasswordValidationSchema } from '@/app/api/v1/auth/validations';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,
@@ -11,9 +12,18 @@ import {
 import { sendEmail } from '@/utility/email/email';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
-  // Get email from body
   const body = await req.json();
-  const { email } = body;
+
+  // Validate
+  const validationResult = forgotPasswordValidationSchema.safeParse(body);
+  if (!validationResult.success) {
+    return ApiBadRequestResponse({
+      message: validationResult.error.issues[0].message,
+    });
+  }
+
+  // Extract data
+  const { email } = validationResult.data;
 
   // Get user based on posted email
   const user = await prisma.user.findUnique({

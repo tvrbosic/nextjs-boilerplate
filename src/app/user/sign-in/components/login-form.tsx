@@ -28,7 +28,7 @@ const loginValidationSchema = z.object({
     .string()
     .min(8, { message: 'Must be at least 8 characters long' })
     .regex(/[a-zA-Z]/, { message: 'Must contain at least one letter.' })
-    .regex(/[0-9]/, { message: 'Must contain at least one number.' }),
+    .regex(/[0-9]/, { message: 'Must contain at least one number' }),
 });
 
 function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {

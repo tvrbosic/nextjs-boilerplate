@@ -44,21 +44,30 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
 
   // ============================| RENDER |============================ //
   return (
-    <div>
+    <div className="flex items-center justify-center gap-4">
       {user ? (
-        <Dropdown menuAlignment="right" activateElement={<AvatarImage />}>
-          <DropdownMenuItem
-            text="Profile"
-            icon={<FaUserCircle size={20} />}
-            onClick={() => router.push('/user/profile')}
-          />
+        <>
+          <div className="flex flex-col text-end text-teal-100">
+            <p>{`${user?.firstName} ${user?.lastName}`} </p>
+            <p>{user.role} </p>
+          </div>
 
-          <DropdownMenuItem
-            text="Sign out"
-            icon={<FaSignOutAlt size={20} />}
-            onClick={logoutHandler}
-          />
-        </Dropdown>
+          <div>
+            <Dropdown menuAlignment="right" activateElement={<AvatarImage />}>
+              <DropdownMenuItem
+                text="Profile"
+                icon={<FaUserCircle size={20} />}
+                onClick={() => router.push('/user/profile')}
+              />
+
+              <DropdownMenuItem
+                text="Sign out"
+                icon={<FaSignOutAlt size={20} />}
+                onClick={logoutHandler}
+              />
+            </Dropdown>
+          </div>
+        </>
       ) : (
         <Link href={'/user/sign-in'}>
           <Button variant="outline">Sign in</Button>

@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import { postUserValidationSchema } from '@/app/api/v1/user/validations';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,
@@ -20,11 +21,17 @@ export const GET = withApiErrorWrapper(async (req: Request) => {
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
   const body = await req.json();
-  const { email, firstName, lastName, role, password } = body;
 
-  if (!email) {
-    return ApiBadRequestResponse({ message: 'Email is mandatory field' });
+  // Validate
+  const validationResult = postUserValidationSchema.safeParse(body);
+  if (!validationResult.success) {
+    return ApiBadRequestResponse({
+      message: validationResult.error.issues[0].message,
+    });
   }
+
+  // Extract data
+  const { email, password, firstName, lastName, role } = validationResult.data;
 
   // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
