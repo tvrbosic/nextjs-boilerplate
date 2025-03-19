@@ -3,24 +3,28 @@ import bcrypt from 'bcryptjs';
 
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import { loginValidationSchema } from '@/app/api/v1/auth/login/validations';
 import { prisma } from '@/prisma/prisma';
 import { createSession } from '@/utility/session/session';
 import {
   ApiSuccessResponse,
   ApiBadRequestResponse,
   ApiUnauthorizedResponse,
-  ApiInternalServerErrorResponse,
 } from '@/utility/response/response';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
-  const { email, password } = await req.json();
+  const bodyRaw = await req.json();
 
-  // Validate input
-  if (!email || !password) {
+  // Validate
+  const body = loginValidationSchema.safeParse(bodyRaw);
+  if (!body.success) {
     return ApiBadRequestResponse({
-      message: 'Email and password are required!',
+      message: 'Login data is invalid!',
     });
   }
+
+  // Extract data
+  const { email, password } = body.data;
 
   // Find user by email
   const user = await prisma.user.findUnique({ where: { email } });
