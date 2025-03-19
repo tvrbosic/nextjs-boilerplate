@@ -11,18 +11,18 @@ import {
 } from '@/utility/response/response';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
-  const bodyRaw = await req.json();
+  const body = await req.json();
 
   // Validate
-  const body = registerValidationSchema.safeParse(bodyRaw);
-  if (!body.success) {
+  const validationResult = registerValidationSchema.safeParse(body);
+  if (!validationResult.success) {
     return ApiBadRequestResponse({
-      message: body.error.issues[0].message,
+      message: validationResult.error.issues[0].message,
     });
   }
 
   // Extract data
-  const { email, password, firstName, lastName } = body.data;
+  const { email, password, firstName, lastName } = validationResult.data;
 
   // Check if user already exists
   const existingUser = await prisma.user.findUnique({ where: { email } });

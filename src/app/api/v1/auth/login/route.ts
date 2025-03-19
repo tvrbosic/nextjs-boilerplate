@@ -13,18 +13,18 @@ import {
 } from '@/utility/response/response';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
-  const bodyRaw = await req.json();
+  const body = await req.json();
 
   // Validate
-  const body = loginValidationSchema.safeParse(bodyRaw);
-  if (!body.success) {
+  const validationResult = loginValidationSchema.safeParse(body);
+  if (!validationResult.success) {
     return ApiBadRequestResponse({
-      message: body.error.issues[0].message,
+      message: validationResult.error.issues[0].message,
     });
   }
 
   // Extract data
-  const { email, password } = body.data;
+  const { email, password } = validationResult.data;
 
   // Find user by email
   const user = await prisma.user.findUnique({ where: { email } });

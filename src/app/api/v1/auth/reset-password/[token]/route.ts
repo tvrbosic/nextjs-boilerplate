@@ -18,18 +18,21 @@ import { IPatchResetPasswordParams } from '@/app/api/v1/auth/types';
 export const PATCH = withApiErrorWrapper(
   async (req: Request, { params }: IPatchResetPasswordParams) => {
     const resetToken = (await params).token;
-    const bodyRaw = await req.json();
+    const body = await req.json();
 
     // Validate
-    const body = resetPasswordValidationSchema.safeParse(bodyRaw);
-    if (!body.success) {
+    const validationResult = resetPasswordValidationSchema.safeParse({
+      resetToken,
+      ...body,
+    });
+    if (!validationResult.success) {
       return ApiBadRequestResponse({
-        message: body.error.issues[0].message,
+        message: validationResult.error.issues[0].message,
       });
     }
 
     // Extract data
-    const { newPassword, newPasswordConfirm } = body.data;
+    const { newPassword, newPasswordConfirm } = validationResult.data;
 
     // Return bad request if provided passwords do not match
     if (newPassword !== newPasswordConfirm) {

@@ -12,18 +12,18 @@ import {
 import { sendEmail } from '@/utility/email/email';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
-  const bodyRaw = await req.json();
+  const body = await req.json();
 
   // Validate
-  const body = forgotPasswordValidationSchema.safeParse(bodyRaw);
-  if (!body.success) {
+  const validationResult = forgotPasswordValidationSchema.safeParse(body);
+  if (!validationResult.success) {
     return ApiBadRequestResponse({
-      message: body.error.issues[0].message,
+      message: validationResult.error.issues[0].message,
     });
   }
 
   // Extract data
-  const { email } = body.data;
+  const { email } = validationResult.data;
 
   // Get user based on posted email
   const user = await prisma.user.findUnique({
