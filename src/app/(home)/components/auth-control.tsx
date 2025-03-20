@@ -69,7 +69,7 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
           </div>
         </>
       ) : (
-        <Link href={'/user/sign-in'}>
+        <Link href={'/sign-in'}>
           <Button variant="outline">Sign in</Button>
         </Link>
       )}
