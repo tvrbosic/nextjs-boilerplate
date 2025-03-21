@@ -1,50 +1,53 @@
 'use client';
 // LIB
 import { use, useActionState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 // APP
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
-import { loginValidationSchema } from '@/app/(auth)/validations';
-import { verifyToken } from '@/utility/jwt/jwt';
+import { resetPasswordValidationSchema } from '@/app/(auth)/validations';
 import processAxiosError from '@/utility/process-axios-error/process-axios-error';
 
 // TYPES
-import { TSubmitLoginFormAction } from '@/app/(auth)/types';
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
+import { TSubmitResetPasswordFormAction } from '@/app/(auth)/types';
 
 // COMPONENTS
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 import Button from '@/components/button/button';
 import Input from '@/components/input/input';
 import NavLink from '@/components/nav-link/nav-link';
-import { IUserJwtClaims } from '@/utility/jwt/types';
 
-function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
+function ForgotPasswordForm({
+  triggerGlobalError,
+}: IWithErrorBoundaryTriggerProps) {
+  // ============================| STATE |============================ //
+  const { token } = useParams<{ token: string }>();
+
   // ============================| UTILITY |============================ //
-  const { user, setUser } = use(AuthContext);
+  const { clearUser } = use(AuthContext);
   const { showToast } = use(ToastMessageContext);
   const router = useRouter();
 
   // ============================| FUNCTIONS |============================ //
   const submitLoginForm = async (
-    previous: TSubmitLoginFormAction,
+    previous: TSubmitResetPasswordFormAction,
     formData: FormData | null
-  ): Promise<TSubmitLoginFormAction> => {
+  ): Promise<TSubmitResetPasswordFormAction> => {
     // Reset errors (by calling function with formData null and returning initial state / empty object)
     if (!formData) {
       return {};
     }
 
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+    const newPassword = formData.get('newPassword') as string;
+    const newPasswordConfirm = formData.get('newPasswordConfirm') as string;
 
     // Validate form data
-    const validationResult = loginValidationSchema.safeParse({
-      email,
-      password,
+    const validationResult = resetPasswordValidationSchema.safeParse({
+      newPassword,
+      newPasswordConfirm,
     });
 
     // Return validation errors if any
@@ -55,26 +58,19 @@ function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
     }
 
     try {
-      // Call API to login user
-      const response = await AuthApiClient.instance.login({ email, password });
-
-      // Verify response and token existance
-      if (!response.data || !response.data.token) throw Error('Token missing!');
-      const token = response.data?.token || undefined;
-
-      // SUCCESS: Decode token, set user data to context, show toast message, redirect to home page and return form data
-      const decoded = (await verifyToken(token)) as unknown as IUserJwtClaims;
-      setUser({
-        guid: decoded.guid,
-        email: decoded.email,
-        firstName: decoded.firstName,
-        lastName: decoded.lastName,
-        role: decoded.role,
-        exp: decoded.exp,
+      // Call API to sent password reset link
+      const response = await AuthApiClient.instance.resetPassword({
+        token,
+        newPassword,
+        newPasswordConfirm,
       });
-      showToast('Sign in successful');
+
+      // SUCCESS: Show toast message, redirect to home page and return form data
+      const successMessage = response.message;
+      showToast(successMessage);
+      clearUser();
       router.push('/');
-      return { email, password };
+      return { message: successMessage };
     } catch (error) {
       // FAIL: Show toast message and return API error
       const errorMessage = processAxiosError({ error });
@@ -86,7 +82,7 @@ function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
 
   // ============================| ACTION |============================ //
   const [state, loginAction, isPending] = useActionState<
-    TSubmitLoginFormAction,
+    TSubmitResetPasswordFormAction,
     FormData | null
   >(submitLoginForm, {});
 
@@ -94,41 +90,33 @@ function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   return (
     <form
       action={loginAction}
-      className="flex w-full flex-col justify-center space-y-4"
+      className="flex w-full flex-col justify-center gap-4"
       noValidate
     >
       <Input
-        inputType="email"
-        inputLabel="E-mail"
-        name="email"
-        error={state.errors?.email?.[0]}
+        inputType="password"
+        inputLabel="New password"
+        name="newPassword"
+        error={state.errors?.newPassword?.[0]}
       />
-
       <Input
         inputType="password"
-        inputLabel="Password"
-        name="password"
-        error={state.errors?.password?.[0]}
+        inputLabel="Confirm password"
+        name="newPasswordConfirm"
+        error={state.errors?.newPasswordConfirm?.[0]}
       />
 
-      <div className="text-end">
-        <NavLink href={'/forgot-password'} size="sm">
-          Forgot password?
-        </NavLink>
-      </div>
-
       <Button fullWidth size="lg" type="submit" isLoading={isPending}>
-        Sign in
+        Reset my password
       </Button>
 
-      <div className="flex items-center justify-center space-x-2">
-        <p className="text-purple-100">Don't have an account?</p>
-        <NavLink href={'/register'} variant="dark">
-          Register
+      <div className="flex items-center justify-center">
+        <NavLink href={'/'} variant="light">
+          Return to home page
         </NavLink>
       </div>
     </form>
   );
 }
 
-export default withErrorBoundaryTrigger(LoginForm);
+export default withErrorBoundaryTrigger(ForgotPasswordForm);

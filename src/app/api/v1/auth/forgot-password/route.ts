@@ -63,7 +63,7 @@ export const POST = withApiErrorWrapper(async (req: Request) => {
   // Send password reset link to users email
   const host = req.headers.get('host');
   const protocol = req.headers.get('x-forwarded-proto') || 'http'; // Handles proxies
-  const resetURL = `${protocol}://${host}/api/v1/users/reset-password/${resetToken}`;
+  const resetURL = `${protocol}://${host}/reset-password/${resetToken}`;
 
   const message = `Forgot your password? Visit following URL to reset your password: 
                   \n ${resetURL}
