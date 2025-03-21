@@ -65,11 +65,14 @@ export const POST = withApiErrorWrapper(async (req: Request) => {
   const protocol = req.headers.get('x-forwarded-proto') || 'http'; // Handles proxies
   const resetURL = `${protocol}://${host}/api/v1/users/reset-password/${resetToken}`;
 
-  const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}. \n If you did not forget your password, please ignore this email!`;
+  const message = `Forgot your password? Visit following URL to reset your password: 
+                  \n ${resetURL}
+                  \n Provided password reset URL is valid for 10 minutes. 
+                  \n If you did not forget your password, please ignore this email!`;
 
   await sendEmail({
     destinationEmail: user.email,
-    subject: 'Your password reset token (valid for 10 min)',
+    subject: 'Your password reset URL (valid for 10 min)',
     text: message,
   });
 

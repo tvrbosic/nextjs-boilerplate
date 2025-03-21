@@ -2,17 +2,17 @@
 // LIB
 import { use, useActionState } from 'react';
 import { useRouter } from 'next/navigation';
-import { z } from 'zod';
 
 // APP
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
+import { loginValidationSchema } from '@/app/(auth)/validations';
 import { verifyToken } from '@/utility/jwt/jwt';
 import processAxiosError from '@/utility/process-axios-error/process-axios-error';
 
 // TYPES
-import { TSubmitLoginFormAction } from '@/app/user/sign-in/components/types';
+import { TSubmitLoginFormAction } from '@/app/(auth)/sign-in/components/types';
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
 // COMPONENTS
@@ -21,15 +21,6 @@ import Button from '@/components/button/button';
 import Input from '@/components/input/input';
 import NavLink from '@/components/nav-link/nav-link';
 import { IUserJwtClaims } from '@/utility/jwt/types';
-
-const loginValidationSchema = z.object({
-  email: z.string().min(1, 'Required').email('Invalid email address'),
-  password: z
-    .string()
-    .min(8, { message: 'Must be at least 8 characters long' })
-    .regex(/[a-zA-Z]/, { message: 'Must contain at least one letter.' })
-    .regex(/[0-9]/, { message: 'Must contain at least one number' }),
-});
 
 function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
