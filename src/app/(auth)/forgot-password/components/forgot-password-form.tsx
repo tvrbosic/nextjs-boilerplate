@@ -55,8 +55,9 @@ function ForgotPasswordForm({
       const response = await AuthApiClient.instance.forgotPassword({ email });
 
       // TODO: TEST !!!
-      const successMessage = response.data.message;
+      const successMessage = response.message;
       showToast(successMessage);
+      router.push('/');
       return { message: successMessage };
     } catch (error) {
       // FAIL: Show toast message and return API error
@@ -76,7 +77,7 @@ function ForgotPasswordForm({
   // ============================| RENDER |============================ //
   return (
     <form
-      action={() => {}}
+      action={loginAction}
       className="flex w-full flex-col justify-center gap-4"
       noValidate
     >
@@ -87,7 +88,7 @@ function ForgotPasswordForm({
         error={state.errors?.email?.[0]}
       />
 
-      <Button fullWidth size="lg" type="submit" isLoading={false}>
+      <Button fullWidth size="lg" type="submit" isLoading={isPending}>
         Reset my password
       </Button>
 
