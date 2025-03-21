@@ -11,7 +11,7 @@ import processAxiosError from '@/utility/process-axios-error/process-axios-error
 
 // TYPES
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
-import { TSubmitForgotPasswordFormAction } from '@/app/(auth)/forgot-password/components/types';
+import { TSubmitForgotPasswordFormAction } from '@/app/(auth)/types';
 
 // COMPONENTS
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
@@ -27,7 +27,7 @@ function ForgotPasswordForm({
   const router = useRouter();
 
   // ============================| FUNCTIONS |============================ //
-  const submitLoginForm = async (
+  const submitForgotPasswordForm = async (
     previous: TSubmitForgotPasswordFormAction,
     formData: FormData | null
   ): Promise<TSubmitForgotPasswordFormAction> => {
@@ -54,7 +54,7 @@ function ForgotPasswordForm({
       // Call API to sent password reset link
       const response = await AuthApiClient.instance.forgotPassword({ email });
 
-      // TODO: TEST !!!
+      // SUCCESS: Show toast message, redirect to home page and return form data
       const successMessage = response.message;
       showToast(successMessage);
       router.push('/');
@@ -69,15 +69,15 @@ function ForgotPasswordForm({
   };
 
   // ============================| ACTION |============================ //
-  const [state, loginAction, isPending] = useActionState<
+  const [state, forgotPasswordAction, isPending] = useActionState<
     TSubmitForgotPasswordFormAction,
     FormData | null
-  >(submitLoginForm, {});
+  >(submitForgotPasswordForm, {});
 
   // ============================| RENDER |============================ //
   return (
     <form
-      action={loginAction}
+      action={forgotPasswordAction}
       className="flex w-full flex-col justify-center gap-4"
       noValidate
     >

@@ -1,4 +1,4 @@
-import LoginForm from '@/app/(auth)/sign-in/components/login-form';
+import ResetPasswordForm from '@/app/(auth)/reset-password/[token]/components/reset-password-form';
 
 export default function LoginPage() {
   return (
@@ -9,11 +9,15 @@ export default function LoginPage() {
       <div className="absolute inset-0 flex items-center justify-center">
         {/** Content container */}
         <div className="bg-deepRuby flex h-[450px] w-[500px] flex-col items-center justify-center rounded-2xl px-8 py-4">
-          <h1 className="mb-2 text-2xl text-stone-100 underline underline-offset-4">
-            Login
+          <h1 className="mb-4 text-2xl text-stone-100 underline underline-offset-4">
+            Reset password
           </h1>
 
-          <LoginForm />
+          <div className="mb-4 text-center text-sm text-teal-100">
+            Enter a new password below to change your current password.
+          </div>
+
+          <ResetPasswordForm />
         </div>
       </div>
     </div>

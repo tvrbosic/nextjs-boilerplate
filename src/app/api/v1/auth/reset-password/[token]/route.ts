@@ -77,7 +77,7 @@ export const PATCH = withApiErrorWrapper(
     });
 
     // Log out user
-    deleteSession();
+    await deleteSession();
 
     return ApiSuccessResponse({
       message: 'Password has been successfully updated, please log in again',
