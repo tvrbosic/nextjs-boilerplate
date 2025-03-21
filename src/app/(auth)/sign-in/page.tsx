@@ -12,6 +12,7 @@ export default function LoginPage() {
           <h1 className="mb-2 text-2xl text-stone-100 underline underline-offset-4">
             Login
           </h1>
+
           <LoginForm />
         </div>
       </div>

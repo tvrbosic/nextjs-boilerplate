@@ -65,10 +65,10 @@ function ForgotPasswordForm({
         newPasswordConfirm,
       });
 
-      // SUCCESS: Show toast message, redirect to home page and return form data
+      // SUCCESS: Clear currently logged in user, show toast message, redirect to home page and return form data
       const successMessage = response.message;
-      showToast(successMessage);
       clearUser();
+      showToast(successMessage);
       router.push('/');
       return { message: successMessage };
     } catch (error) {
