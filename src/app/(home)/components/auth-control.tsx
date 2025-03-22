@@ -57,7 +57,7 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
               <DropdownMenuItem
                 text="Profile"
                 icon={<FaUserCircle size={20} />}
-                onClick={() => router.push('/user/profile')}
+                onClick={() => router.push(`/user/${user?.guid}`)}
               />
 
               <DropdownMenuItem

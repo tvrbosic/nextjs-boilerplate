@@ -1,18 +1,19 @@
 'use client';
 // LIB
 import { use, useActionState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 // APP
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
-import { resetPasswordValidationSchema } from '@/app/(auth)/validations';
+import { registerValidationSchema } from '@/app/(auth)/validations';
 import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+import { formDataToObject } from '@/utility/object/object';
 
 // TYPES
+import { IRegisterForm, TSubmitRegisterFormAction } from '@/app/(auth)/types';
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
-import { TSubmitResetPasswordFormAction } from '@/app/(auth)/types';
 
 // COMPONENTS
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
@@ -20,34 +21,34 @@ import Button from '@/components/button/button';
 import Input from '@/components/input/input';
 import NavLink from '@/components/nav-link/nav-link';
 
-function ForgotPasswordForm({
-  triggerGlobalError,
-}: IWithErrorBoundaryTriggerProps) {
-  // ============================| STATE |============================ //
-  const { token } = useParams<{ token: string }>();
-
+function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
-  const { clearUser } = use(AuthContext);
+  const { user, setUser } = use(AuthContext);
   const { showToast } = use(ToastMessageContext);
   const router = useRouter();
 
   // ============================| FUNCTIONS |============================ //
-  const submitLoginForm = async (
-    previous: TSubmitResetPasswordFormAction,
+  const submitRegisterForm = async (
+    previous: TSubmitRegisterFormAction,
     formData: FormData | null
-  ): Promise<TSubmitResetPasswordFormAction> => {
+  ): Promise<TSubmitRegisterFormAction> => {
     // Reset errors (by calling function with formData null and returning initial state / empty object)
     if (!formData) {
       return {};
     }
 
-    const newPassword = formData.get('newPassword') as string;
-    const newPasswordConfirm = formData.get('newPasswordConfirm') as string;
+    const { email, password, passwordConfirm, firstName, lastName } =
+      formDataToObject<IRegisterForm>(formData);
+
+    console.log(email, password, passwordConfirm, firstName, lastName);
 
     // Validate form data
-    const validationResult = resetPasswordValidationSchema.safeParse({
-      newPassword,
-      newPasswordConfirm,
+    const validationResult = registerValidationSchema.safeParse({
+      email,
+      password,
+      passwordConfirm,
+      firstName,
+      lastName,
     });
 
     // Return validation errors if any
@@ -58,16 +59,17 @@ function ForgotPasswordForm({
     }
 
     try {
-      // Call API to sent password reset link
-      const response = await AuthApiClient.instance.resetPassword({
-        token,
-        newPassword,
-        newPasswordConfirm,
+      // Call API to register user
+      const response = await AuthApiClient.instance.register({
+        email,
+        password,
+        passwordConfirm,
+        firstName,
+        lastName,
       });
 
-      // SUCCESS: Clear currently logged in user, show toast message, redirect to home page and return form data
+      // SUCCESS: Show toast message, redirect to home page and return form data
       const successMessage = response.message;
-      clearUser();
       showToast(successMessage);
       router.push('/sign-in');
       return { message: successMessage };
@@ -81,42 +83,65 @@ function ForgotPasswordForm({
   };
 
   // ============================| ACTION |============================ //
-  const [state, loginAction, isPending] = useActionState<
-    TSubmitResetPasswordFormAction,
+  const [state, registerAction, isPending] = useActionState<
+    TSubmitRegisterFormAction,
     FormData | null
-  >(submitLoginForm, {});
+  >(submitRegisterForm, {});
 
   // ============================| RENDER |============================ //
   return (
     <form
-      action={loginAction}
-      className="flex w-full flex-col justify-center gap-4"
+      action={registerAction}
+      className="flex w-full flex-col justify-center space-y-4"
       noValidate
     >
       <Input
-        inputType="password"
-        inputLabel="New password"
-        name="newPassword"
-        error={state.errors?.newPassword?.[0]}
+        inputType="text"
+        inputLabel="First name"
+        name="firstName"
+        error={state.errors?.firstName?.[0]}
       />
+
+      <Input
+        inputType="text"
+        inputLabel="Last name"
+        name="lastName"
+        error={state.errors?.lastName?.[0]}
+      />
+
+      <Input
+        inputType="email"
+        inputLabel="E-mail"
+        name="email"
+        error={state.errors?.email?.[0]}
+      />
+
+      <Input
+        inputType="password"
+        inputLabel="Password"
+        name="password"
+        error={state.errors?.password?.[0]}
+      />
+
       <Input
         inputType="password"
         inputLabel="Confirm password"
-        name="newPasswordConfirm"
-        error={state.errors?.newPasswordConfirm?.[0]}
+        name="passwordConfirm"
+        error={state.errors?.passwordConfirm?.[0]}
       />
 
       <Button fullWidth size="lg" type="submit" isLoading={isPending}>
-        Reset my password
+        Sign up
       </Button>
 
-      <div className="flex items-center justify-center">
-        <NavLink href={'/'} variant="light">
-          Return to home page
+      <div className="flex items-center justify-center space-x-2">
+        <p className="text-purple-100">Already have an account?</p>
+        <NavLink href={'/sign-in'} variant="dark">
+          Sign in here
         </NavLink>
       </div>
     </form>
   );
 }
 
-export default withErrorBoundaryTrigger(ForgotPasswordForm);
+export default withErrorBoundaryTrigger(RegisterForm);
