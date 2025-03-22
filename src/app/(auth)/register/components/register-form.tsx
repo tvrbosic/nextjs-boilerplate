@@ -40,8 +40,6 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
     const { email, password, passwordConfirm, firstName, lastName } =
       formDataToObject<IRegisterForm>(formData);
 
-    console.log(email, password, passwordConfirm, firstName, lastName);
-
     // Validate form data
     const validationResult = registerValidationSchema.safeParse({
       email,
@@ -68,7 +66,7 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
         lastName,
       });
 
-      // SUCCESS: Show toast message, redirect to home page and return form data
+      // SUCCESS: Show toast message, redirect to sign in page and return form data
       const successMessage = response.message;
       showToast(successMessage);
       router.push('/sign-in');
