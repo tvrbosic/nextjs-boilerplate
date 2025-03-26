@@ -8,15 +8,15 @@ export default function Hero() {
   return (
     <div className="relative">
       {/** Backgrounds container */}
-      <div className="grid grid-cols-12 h-dvh">
-        <div className="col-span-4 bg-darkStone"></div>
-        <div className="col-span-8 bg-deepRuby"></div>
+      <div className="grid h-dvh grid-cols-12">
+        <div className="bg-tertiary col-span-4"></div>
+        <div className="bg-primary col-span-8"></div>
       </div>
 
       {/** Floating container */}
       <div className="absolute inset-0 flex justify-center">
         {/** Content container */}
-        <div className="flex w-6xl justify-center items-center gap-20">
+        <div className="flex w-6xl items-center justify-center gap-20">
           <div className="w-3/6">
             <Image
               src={CodingConceptPng}
@@ -24,7 +24,7 @@ export default function Hero() {
             />
           </div>
 
-          <div className="w-3/6 flex flex-col gap-6">
+          <div className="flex w-3/6 flex-col gap-6">
             <h1 className="text-7xl text-stone-100">
               Next.js boilerplate project
             </h1>

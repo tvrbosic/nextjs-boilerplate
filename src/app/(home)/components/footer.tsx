@@ -12,7 +12,7 @@ import ActionInput from '@/components/input/action-input';
 
 export default function Footer() {
   return (
-    <div className="bg-deepRuby pt-6">
+    <div className="bg-primary pt-6">
       <div className="flex justify-around gap-[40px] px-[40px] py-[20px]">
         {/** ================================| COMPANY |================================ */}
 
@@ -34,7 +34,7 @@ export default function Footer() {
         </div>
         {/** ================================| SUBSCRIBE |================================ */}
         <div className="flex w-lg flex-col items-center gap-5">
-          <h2 className="text-purpleLavander text-2xl underline underline-offset-4">
+          <h2 className="text-quaternary text-2xl underline underline-offset-4">
             Newsletter
           </h2>
 
