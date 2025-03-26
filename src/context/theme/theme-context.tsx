@@ -1,6 +1,6 @@
 'use client';
 // LIB
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 
 // TYPES
 import { IChildrenProps } from '@/types/global';
@@ -14,6 +14,11 @@ const ThemeProvider = ({ children }: IChildrenProps) => {
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
+
+  useEffect(() => {
+    document.documentElement.classList.remove('light', 'dark');
+    document.documentElement.classList.add(theme);
+  }, [theme]);
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

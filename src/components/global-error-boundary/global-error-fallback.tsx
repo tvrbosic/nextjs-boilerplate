@@ -14,11 +14,11 @@ export default function GlobalErrorFallback() {
   return (
     <div className="relative">
       {/** Background */}
-      <div className="bg-darkStone h-dvh w-full" />
+      <div className="bg-tertiary h-dvh w-full" />
       {/** Floating container */}
       <div className="absolute inset-0 flex items-center justify-center">
         {/** Content container */}
-        <div className="bg-deepRuby flex h-[525px] w-[625px] flex-col items-center justify-center rounded-2xl">
+        <div className="bg-primary flex h-[525px] w-[625px] flex-col items-center justify-center rounded-2xl">
           <div className="mt-2 flex w-full flex-grow items-center justify-around px-8">
             <FaExclamationTriangle className="h-16 w-16 text-red-300" />
 
@@ -34,7 +34,7 @@ export default function GlobalErrorFallback() {
             </p>
           </div>
 
-          <div className="bg-englishViolet flex w-full flex-grow flex-col items-center justify-center px-8 pt-2 pb-4">
+          <div className="bg-secondary flex w-full flex-grow flex-col items-center justify-center px-8 pt-2 pb-4">
             <p className="mb-4 w-full text-left text-stone-100">
               Here is what you can do:
             </p>

@@ -3,8 +3,25 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-deepRuby: #774069;
-  --color-englishViolet: #4c3a69;
-  --color-purpleLavander: #9c84bf;
-  --color-darkStone: #2c2a32;
+}
+
+:root {
+  --primary-color: #9bd4e4;
+  --secondary-color: #39ace7;
+  --tertiary-color: #0784b5;
+  --quaternary-color: #cadeef;
+}
+
+:root[class~='dark'] {
+  --primary-color: #774069;
+  --secondary-color: #4c3a69;
+  --tertiary-color: #2c2a32;
+  --quaternary-color: #9c84bf;
+}
+
+@theme {
+  --color-primary: var(--primary-color);
+  --color-secondary: var(--secondary-color);
+  --color-tertiary: var(--tertiary-color);
+  --color-quaternary: var(--quaternary-color);
 }

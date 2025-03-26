@@ -9,7 +9,7 @@ import Button from '@/components/button/button';
 
 export default function Featured() {
   return (
-    <div className="bg-englishViolet py-[150px]">
+    <div className="bg-secondary py-[150px]">
       <div className="flex justify-center gap-[3vw]">
         {/** ================================| PROJECT STRUCTURE |================================ */}
         <div className="w-md rounded-lg border-1 border-gray-800">
