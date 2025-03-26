@@ -1,4 +1,11 @@
 export type TSubmitRegisterFormAction = {
+  data?: {
+    email?: string;
+    password?: string;
+    passwordConfirm?: string;
+    firstName?: string;
+    lastName?: string;
+  };
   message?: string;
   errors?: {
     api?: string[];

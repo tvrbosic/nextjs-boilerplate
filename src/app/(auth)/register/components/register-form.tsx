@@ -52,6 +52,7 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
     // Return validation errors if any
     if (!validationResult.success) {
       return {
+        data: { email, password, passwordConfirm, firstName, lastName },
         errors: validationResult.error.flatten().fieldErrors,
       };
     }
@@ -70,7 +71,9 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
       const successMessage = response.message;
       showToast(successMessage);
       router.push('/sign-in');
-      return { message: successMessage };
+      return {
+        message: successMessage,
+      };
     } catch (error) {
       // FAIL: Show toast message and return API error
       const errorMessage = processAxiosError({ error });
@@ -97,6 +100,7 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
         inputType="text"
         inputLabel="First name"
         name="firstName"
+        defaultValue={state.data?.firstName}
         error={state.errors?.firstName?.[0]}
       />
 
@@ -104,6 +108,7 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
         inputType="text"
         inputLabel="Last name"
         name="lastName"
+        defaultValue={state.data?.lastName}
         error={state.errors?.lastName?.[0]}
       />
 
@@ -111,6 +116,7 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
         inputType="email"
         inputLabel="E-mail"
         name="email"
+        defaultValue={state.data?.email}
         error={state.errors?.email?.[0]}
       />
 
@@ -118,6 +124,7 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
         inputType="password"
         inputLabel="Password"
         name="password"
+        defaultValue={state.data?.password}
         error={state.errors?.password?.[0]}
       />
 
@@ -125,6 +132,7 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
         inputType="password"
         inputLabel="Confirm password"
         name="passwordConfirm"
+        defaultValue={state.data?.passwordConfirm}
         error={state.errors?.passwordConfirm?.[0]}
       />
 
