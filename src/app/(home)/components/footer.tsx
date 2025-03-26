@@ -1,12 +1,9 @@
 'use client';
 // LIBRARY
-import Image from 'next/image';
 import { FaSquareTwitter, FaLinkedin, FaSquareFacebook } from 'react-icons/fa6';
 
-// ASSETS
-import LogoIpsumSvg from '@/assets/images/logo-ipsum.svg';
-
 // COMPONENTS
+import LogoIpsum from '@/components/logo/logo-ipsum';
 import IconButton from '@/components/button/icon-button';
 import ActionInput from '@/components/input/action-input';
 
@@ -15,9 +12,8 @@ export default function Footer() {
     <div className="bg-primary pt-6">
       <div className="flex justify-around gap-[40px] px-[40px] py-[20px]">
         {/** ================================| COMPANY |================================ */}
-
         <div className="flex w-lg flex-col items-center gap-5">
-          <Image src={LogoIpsumSvg} alt="Page logo" />
+          <LogoIpsum />
 
           <span className="text-center text-xl text-stone-100">
             Full-stack app starter built on Next.js 15, React 19, and Tailwind
