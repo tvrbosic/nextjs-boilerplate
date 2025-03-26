@@ -9,7 +9,7 @@ import { IThemeContext, TThemeVariant } from '@/context/theme/types';
 const ThemeContext = createContext<IThemeContext>({} as IThemeContext);
 
 const ThemeProvider = ({ children }: IChildrenProps) => {
-  const [theme, setTheme] = useState<TThemeVariant>('dark');
+  const [theme, setTheme] = useState<TThemeVariant>('light');
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));

@@ -6,7 +6,7 @@ import { INavLinkProps, TNavLinkVariants } from '@/components/nav-link/types';
 import { TComponentSize } from '@/types/theme';
 
 // STYLES
-import styles from '@/components/nav-link/styles.module.css';
+import styles from '@/components/nav-link/styles';
 
 const VARIANT_CLASSES: Record<TNavLinkVariants, string> = {
   light: styles.navlink_light,

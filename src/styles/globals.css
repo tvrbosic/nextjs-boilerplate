@@ -2,9 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
-}
-
 :root {
   --primary-color: #9bd4e4;
   --secondary-color: #39ace7;

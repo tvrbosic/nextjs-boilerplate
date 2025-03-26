@@ -26,7 +26,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${aldrich.className} dark`}>
+    <html lang="en" className={`${aldrich.className} light`}>
       <body>
         <GlobalErrorBoundary>
           <Providers>{children}</Providers>
