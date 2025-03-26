@@ -22,3 +22,23 @@
   --color-tertiary: var(--tertiary-color);
   --color-quaternary: var(--quaternary-color);
 }
+
+@layer utilities {
+  .text-primary {
+    color: var(--color-teal-800);
+
+    @variant dark {
+      color: var(--color-stone-100);
+    }
+  }
+
+  .text-title {
+    color: var(--color-teal-800);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    @variant dark {
+      color: var(--color-stone-100);
+    }
+  }
+}

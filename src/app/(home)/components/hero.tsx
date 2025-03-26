@@ -25,11 +25,11 @@ export default function Hero() {
           </div>
 
           <div className="flex w-3/6 flex-col gap-6">
-            <h1 className="text-7xl text-stone-100">
+            <h1 className="text-7xl text-teal-900 dark:text-stone-100">
               Next.js boilerplate project
             </h1>
 
-            <p className="text-xl text-teal-100">
+            <p className="text-xl text-teal-600 dark:text-teal-200">
               Full-stack app starter built on Next.js 15, React 19, and Tailwind
               CSS 4. Comes with JWT-based authentication & authorization, soft
               delete mechanism, audit log system, global error-handling

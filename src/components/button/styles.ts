@@ -10,7 +10,7 @@ export const DISABLED = 'cursor-not-allowed opacity-50';
 
 export const VARIANTS: Record<TButtonVariant, string> = {
   solid:
-    'bg-teal-500 text-stone-100 duration-300 hover:bg-teal-600 focus:ring-teal-500/40',
+    'bg-teal-600 text-stone-100 duration-300 hover:bg-teal-500 hover:text-stone-200 focus:ring-teal-500/40 dark:bg-teal-500 dark:text-stone-100 dark:hover:bg-teal-600',
   outline:
     'border border-teal-700 text-teal-700 duration-300 hover:border-teal-500 hover:text-teal-500 hover:bg-teal-500/10 focus:ring-teal-300/40 dark:border-stone-100 dark:text-stone-100 dark:hover:border-teal-500 hover:text-teal-500 hover:bg-transparent focus:ring-teal-300/40',
 };
@@ -23,4 +23,4 @@ export const SIZES: Record<TComponentSize, string> = {
 
 // ============================| ICON BUTTON |============================ //
 export const ICON_BUTTON =
-  'text-4xl text-stone-200 duration-300 hover:cursor-pointer hover:text-teal-200';
+  'text-4xl duration-300 hover:cursor-pointer text-teal-700 hover:text-teal-500 dark:text-stone-200 dark:hover:text-teal-200';

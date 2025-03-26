@@ -2,11 +2,11 @@
 import { IIconButtonProps } from '@/components/button/types';
 
 // STYLES
-import styles from '@/components/button/styles.module.css';
+import { ICON_BUTTON } from '@/components/button/styles';
 
 export default function IconButton({ icon, onClick }: IIconButtonProps) {
   return (
-    <span className={styles.icon_button} onClick={onClick}>
+    <span className={ICON_BUTTON} onClick={onClick}>
       {icon}
     </span>
   );
