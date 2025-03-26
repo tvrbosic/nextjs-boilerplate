@@ -5,7 +5,6 @@ import { IInputProps } from '@/components/input/types';
 import styles from '@/components/input/styles.module.css';
 
 export default function ActionInput({
-  required = false,
   name,
   inputType = 'text',
   inputLabel,
@@ -25,7 +24,6 @@ export default function ActionInput({
       )}
 
       <input
-        required={required}
         name={name}
         type={inputType}
         className={`${styles.input} ${error ?? 'border-red-400'}`}

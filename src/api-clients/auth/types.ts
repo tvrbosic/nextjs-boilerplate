@@ -6,6 +6,7 @@ export interface ILoginParams {
 export interface IRegisterParams {
   email: string;
   password: string;
+  passwordConfirm: string;
   firstName: string;
   lastName: string;
 }

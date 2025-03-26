@@ -69,7 +69,7 @@ function ForgotPasswordForm({
       const successMessage = response.message;
       clearUser();
       showToast(successMessage);
-      router.push('/');
+      router.push('/sign-in');
       return { message: successMessage };
     } catch (error) {
       // FAIL: Show toast message and return API error
