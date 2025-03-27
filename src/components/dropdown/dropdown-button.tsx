@@ -1,23 +1,13 @@
 // TYPES
-import { TComponentSize } from '@/types/theme';
-import {
-  IDropdownButtonProps,
-  TDropdonwButtonVariant,
-} from '@/components/dropdown/types';
+import { IDropdownButtonProps } from '@/components/dropdown/types';
 
 // STYLES
-import styles from '@/components/dropdown/styles.module.css';
-
-const VARIANT_CLASSES: Record<TDropdonwButtonVariant, string> = {
-  solid: styles.dropdown_button_solid,
-  outline: styles.dropdown_button_outline,
-};
-
-const SIZE_CLASSES: Record<TComponentSize, string> = {
-  sm: styles.dropdown_button_small,
-  md: styles.dropdown_button_medium,
-  lg: styles.dropdown_button_large,
-};
+import {
+  DROPDOWN_BUTTON_COMMON,
+  DROPDOWN_BUTTON_DISABLED,
+  SIZES,
+  VARIANTS,
+} from '@/components/dropdown/styles';
 
 export default function DropdownButton({
   children,
@@ -30,7 +20,7 @@ export default function DropdownButton({
   return (
     <button
       disabled={disabled}
-      className={`${styles.dropdown_button_common} ${SIZE_CLASSES[size]} ${VARIANT_CLASSES[variant]} ${disabled ?? styles.dropdown_button_disabled} ${fullWidth ?? 'w-full'}`}
+      className={`${DROPDOWN_BUTTON_COMMON} ${SIZES[size]} ${VARIANTS[variant]} ${disabled ? DROPDOWN_BUTTON_DISABLED : ''} ${fullWidth ? 'w-full' : ''}`}
       onClick={onClick}
     >
       <div className="flex items-center justify-center space-x-1">
