@@ -1,23 +1,11 @@
 // TYPES
-import { TComponentSize } from '@/types/theme';
-import { IButtonProps, TButtonVariant } from '@/components/button/types';
+import { IButtonProps } from '@/components/button/types';
 
 // COMPONENTS
 import Spinner from '@/components/spinner/spinner';
 
 // STYLES
-import styles from '@/components/button/styles.module.css';
-
-const VARIANT_CLASSES: Record<TButtonVariant, string> = {
-  solid: styles.button_solid,
-  outline: styles.button_outline,
-};
-
-const SIZE_CLASSES: Record<TComponentSize, string> = {
-  sm: styles.button_small,
-  md: styles.button_medium,
-  lg: styles.button_large,
-};
+import { COMMON, VARIANTS, SIZES, DISABLED } from '@/components/button/styles';
 
 export default function Button({
   children,
@@ -35,7 +23,7 @@ export default function Button({
     <button
       type={type}
       disabled={isDisabled}
-      className={`${styles.button_common} ${SIZE_CLASSES[size]} ${VARIANT_CLASSES[variant]} ${isDisabled ?? styles.button_disabled} ${fullWidth ?? 'w-full'}`}
+      className={`${COMMON} ${SIZES[size]} ${VARIANTS[variant]} ${isDisabled ?? DISABLED} ${fullWidth ?? 'w-full'}`}
       onClick={onClick}
     >
       <div className="flex items-center justify-center space-x-1">

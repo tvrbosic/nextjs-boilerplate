@@ -14,13 +14,16 @@ export default function ThemeToggle() {
 
   return (
     <div className="flex items-center justify-center space-x-2">
-      <span className="text-xl text-yellow-300">
+      <span className="text-xl text-amber-500 dark:text-amber-300">
         <FiSun />
       </span>
 
-      <ToggleSwitch checked={theme === 'dark'} onChange={toggleTheme} />
+      <ToggleSwitch
+        initialCheckedValue={theme === 'dark'}
+        onChange={toggleTheme}
+      />
 
-      <span className="text-xl text-gray-400">
+      <span className="text-xl text-blue-900 dark:text-gray-400">
         <FiMoon />
       </span>
     </div>

@@ -1,8 +1,8 @@
+import { TComponentSize } from '@/types/theme';
+
 export type TSpinnerVariant = 'light' | 'dark';
 
-export type TSpinnerSize = 'sm' | 'md' | 'lg';
-
 export interface ISpinnerProps {
-  size?: TSpinnerSize;
+  size?: TComponentSize;
   variant?: TSpinnerVariant;
 }

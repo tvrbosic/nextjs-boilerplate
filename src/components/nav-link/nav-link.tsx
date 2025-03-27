@@ -2,33 +2,21 @@
 import Link from 'next/link';
 
 // TYPES
-import { INavLinkProps, TNavLinkVariants } from '@/components/nav-link/types';
-import { TComponentSize } from '@/types/theme';
+import { INavLinkProps } from '@/components/nav-link/types';
 
 // STYLES
-import styles from '@/components/nav-link/styles.module.css';
-
-const VARIANT_CLASSES: Record<TNavLinkVariants, string> = {
-  light: styles.navlink_light,
-  dark: styles.navlink_dark,
-};
-
-const SIZE_CLASSES: Record<TComponentSize, string> = {
-  sm: 'text-sm',
-  md: 'text-base',
-  lg: 'text-lg',
-};
+import { COMMON, VARIANTS, SIZES } from '@/components/nav-link/styles';
 
 export default function NavLink({
   children,
-  variant = 'light',
+  variant = 'primary',
   size = 'md',
   ...props
 }: INavLinkProps) {
   return (
     <Link
       {...props}
-      className={`${styles.navlink_common} ${VARIANT_CLASSES[variant]} ${SIZE_CLASSES[size]}`}
+      className={`${COMMON} ${VARIANTS[variant]} ${SIZES[size]}`}
     >
       {children}
     </Link>

@@ -2,9 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
-}
-
 :root {
   --primary-color: #9bd4e4;
   --secondary-color: #39ace7;
@@ -24,4 +21,24 @@
   --color-secondary: var(--secondary-color);
   --color-tertiary: var(--tertiary-color);
   --color-quaternary: var(--quaternary-color);
+}
+
+@layer utilities {
+  .text-main {
+    color: var(--color-teal-800);
+
+    @variant dark {
+      color: var(--color-stone-100);
+    }
+  }
+
+  .text-title {
+    color: var(--color-teal-800);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+
+    @variant dark {
+      color: var(--color-stone-100);
+    }
+  }
 }

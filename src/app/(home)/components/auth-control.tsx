@@ -47,7 +47,7 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
     <div className="flex items-center justify-center gap-4">
       {user ? (
         <>
-          <div className="flex flex-col text-end text-teal-100">
+          <div className="text-main flex flex-col text-end">
             <p>{`${user?.firstName} ${user?.lastName}`} </p>
             <p>{user.role} </p>
           </div>

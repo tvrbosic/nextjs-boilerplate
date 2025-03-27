@@ -8,13 +8,7 @@ import AvatarPlaceholder from '@/assets/images/avatar.png';
 import { IAvatarImageProps } from '@/components/avatar-image/types';
 
 // STYLES
-import styles from '@/components/avatar-image/styles.module.css';
-
-const SIZE_CLASSES = {
-  sm: styles.avatar_small,
-  md: styles.avatar_medium,
-  lg: styles.avatar_large,
-};
+import { SIZES } from '@/components/avatar-image/styles';
 
 export default function AvatarImage({
   size = 'md',
@@ -28,7 +22,7 @@ export default function AvatarImage({
       <div className="relative">
         <Image
           src={avatarSrc}
-          className={`${SIZE_CLASSES[size]} rounded-full object-cover`}
+          className={`${SIZES[size]} rounded-full object-cover`}
           alt="Avatar"
         />
       </div>

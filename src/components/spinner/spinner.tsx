@@ -1,23 +1,8 @@
 // TYPES
-import {
-  ISpinnerProps,
-  TSpinnerSize,
-  TSpinnerVariant,
-} from '@/components/spinner/types';
+import { ISpinnerProps } from '@/components/spinner/types';
 
 // STYLES
-import styles from '@/components/spinner/styles.module.css';
-
-const VARIANT_CLASSES: Record<TSpinnerVariant, string> = {
-  light: styles.spinner_light,
-  dark: styles.spinner_dark,
-};
-
-const SIZE_CLASSES: Record<TSpinnerSize, string> = {
-  sm: styles.spinner_small,
-  md: styles.spinner_medium,
-  lg: styles.spinner_large,
-};
+import { VARIANTS, SIZES } from '@/components/spinner/styles';
 
 export default function Spinner({
   size = 'md',
@@ -27,7 +12,7 @@ export default function Spinner({
     <div role="status">
       <svg
         aria-hidden="true"
-        className={`animate-spin ${SIZE_CLASSES[size]} ${VARIANT_CLASSES[variant]}`}
+        className={`animate-spin ${SIZES[size]} ${VARIANTS[variant]}`}
         viewBox="0 0 100 101"
         fill="none"
       >

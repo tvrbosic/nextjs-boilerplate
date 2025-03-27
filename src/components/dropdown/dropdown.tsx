@@ -3,15 +3,14 @@
 import { useEffect, useRef, useState } from 'react';
 
 // TYPES
-import { IDropdownProps, TMenuAlignment } from '@/components/dropdown/types';
+import { IDropdownProps } from '@/components/dropdown/types';
 
 // STYLES
-import styles from '@/components/dropdown/styles.module.css';
-
-const ALIGNMENT_CLASSES: Record<TMenuAlignment, string> = {
-  left: 'left-0',
-  right: 'right-0',
-};
+import {
+  ALIGNMENTS,
+  DROPDOWN,
+  DROPDOWN_MENU,
+} from '@/components/dropdown/styles';
 
 export default function DropdownMenu({
   children,
@@ -46,15 +45,13 @@ export default function DropdownMenu({
   }, []);
 
   return (
-    <div className={styles.dropdown} ref={dropdownRef}>
+    <div className={DROPDOWN} ref={dropdownRef}>
       <div onClick={toggleDropdown} className="cursor-pointer">
         {activateElement}
       </div>
 
       {isOpen && (
-        <div
-          className={`${styles.dropdown_menu} ${ALIGNMENT_CLASSES[menuAlignment]}`}
-        >
+        <div className={`${DROPDOWN_MENU} ${ALIGNMENTS[menuAlignment]}`}>
           {children}
         </div>
       )}
