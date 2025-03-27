@@ -24,7 +24,7 @@
 }
 
 @layer utilities {
-  .text-primary {
+  .text-main {
     color: var(--color-teal-800);
 
     @variant dark {

@@ -122,10 +122,14 @@ function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
       </Button>
 
       <div className="flex items-center justify-center space-x-2">
-        <p className="text-purple-100">Don't have an account?</p>
-        <NavLink href={'/register'} variant="dark">
+        <p className="text-main">Don't have an account?</p>
+        <NavLink href={'/register'} variant="secondary">
           Register
         </NavLink>
+      </div>
+
+      <div className="mt-2 flex items-center justify-center">
+        <NavLink href={'/'}>Return to home page</NavLink>
       </div>
     </form>
   );

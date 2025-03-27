@@ -9,7 +9,7 @@ import { COMMON, VARIANTS, SIZES } from '@/components/nav-link/styles';
 
 export default function NavLink({
   children,
-  variant = 'light',
+  variant = 'primary',
   size = 'md',
   ...props
 }: INavLinkProps) {

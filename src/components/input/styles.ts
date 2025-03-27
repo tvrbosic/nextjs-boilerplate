@@ -1,5 +1,5 @@
 // ============================| COMMON |============================ //
-export const INPUT_LABEL = `mb-1 block text-sm text-primary`;
+export const INPUT_LABEL = `mb-1 block text-sm text-main`;
 
 export const LABEL_SPAN_ERROR = `ml-1 text-red-400 italic`;
 

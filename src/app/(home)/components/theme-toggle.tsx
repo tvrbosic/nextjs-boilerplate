@@ -18,7 +18,10 @@ export default function ThemeToggle() {
         <FiSun />
       </span>
 
-      <ToggleSwitch checked={theme === 'dark'} onChange={toggleTheme} />
+      <ToggleSwitch
+        initialCheckedValue={theme === 'dark'}
+        onChange={toggleTheme}
+      />
 
       <span className="text-xl text-blue-900 dark:text-gray-400">
         <FiMoon />

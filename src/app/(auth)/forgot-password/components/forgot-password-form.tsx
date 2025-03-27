@@ -93,9 +93,7 @@ function ForgotPasswordForm({
       </Button>
 
       <div className="flex items-center justify-center">
-        <NavLink href={'/'} variant="light">
-          Return to home page
-        </NavLink>
+        <NavLink href={'/'}>Return to home page</NavLink>
       </div>
     </form>
   );

@@ -141,10 +141,14 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
       </Button>
 
       <div className="flex items-center justify-center space-x-2">
-        <p className="text-purple-100">Already have an account?</p>
-        <NavLink href={'/sign-in'} variant="dark">
+        <p className="text-main">Already have an account?</p>
+        <NavLink href={'/sign-in'} variant="secondary">
           Sign in here
         </NavLink>
+      </div>
+
+      <div className="flex items-center justify-center">
+        <NavLink href={'/'}>Return to home page</NavLink>
       </div>
     </form>
   );
