@@ -2,7 +2,12 @@
 import { IActionInputProps } from '@/components/input/types';
 
 // STYLES
-import styles from '@/components/input/styles.module.css';
+import {
+  ACTION_INPUT,
+  ACTION_INPUT_BUTTON,
+  INPUT_LABEL,
+  LABEL_SPAN_ERROR,
+} from '@/components/input/styles';
 
 export default function ActionInput({
   actionButtonLabel,
@@ -19,23 +24,23 @@ export default function ActionInput({
   return (
     <div className="flex">
       {inputLabel && (
-        <label className={styles.input_label}>
+        <label className={INPUT_LABEL}>
           {inputLabel}{' '}
-          {error && <span className={styles.label_span_error}>{error}</span>}
+          {error && <span className={LABEL_SPAN_ERROR}>{error}</span>}
         </label>
       )}
 
       <input
         name={name}
         type={inputType}
-        className={`${styles.action_input} ${error ?? 'border-red-400'}`}
+        className={`${ACTION_INPUT} ${error ?? 'border-red-400'}`}
         placeholder={placeholder || undefined}
         value={value}
         defaultValue={defaultValue}
         onChange={onChange}
       />
 
-      <button className={`${styles.action_input_button}`} onClick={onClick}>
+      <button className={`${ACTION_INPUT_BUTTON}`} onClick={onClick}>
         {actionButtonLabel}
       </button>
     </div>

@@ -2,7 +2,11 @@
 import { IInputProps } from '@/components/input/types';
 
 // STYLES
-import styles from '@/components/input/styles.module.css';
+import {
+  INPUT_LABEL,
+  INPUT,
+  LABEL_SPAN_ERROR,
+} from '@/components/input/styles';
 
 export default function ActionInput({
   name,
@@ -17,16 +21,16 @@ export default function ActionInput({
   return (
     <div className="flex flex-col space-y-1">
       {inputLabel && (
-        <label className={`${styles.input_label}`}>
+        <label className={`${INPUT_LABEL}`}>
           {inputLabel}{' '}
-          {error && <span className={styles.label_span_error}>{error}</span>}
+          {error && <span className={LABEL_SPAN_ERROR}>{error}</span>}
         </label>
       )}
 
       <input
         name={name}
         type={inputType}
-        className={`${styles.input} ${error ?? 'border-red-400'}`}
+        className={`${INPUT} ${error ?? 'border-red-400'}`}
         placeholder={placeholder || undefined}
         value={value}
         defaultValue={defaultValue}
