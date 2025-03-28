@@ -2,6 +2,7 @@
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import AvatarImage from '@/components/avatar-image/avatar-image';
+import ProfileForm from '@/app/user/[guid]/components/profile-form';
 
 export default function Page() {
   return (
@@ -22,7 +23,7 @@ export default function Page() {
 
           {/* Right container */}
           <div className="w-4/5">
-            <div>Firstname Lastname</div>
+            <ProfileForm />
           </div>
         </div>
       </div>
