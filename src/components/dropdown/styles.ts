@@ -16,7 +16,7 @@ export const ALIGNMENTS: Record<TMenuAlignment, string> = {
   right: 'right-0',
 };
 
-export const SIZES: Record<TComponentSize, string> = {
+export const SIZES: Partial<Record<TComponentSize, string>> = {
   sm: 'px-3 py-1 text-xs',
   md: 'px-5 py-2.5 text-sm',
   lg: 'px-7 py-3 text-lg',
