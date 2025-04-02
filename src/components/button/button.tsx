@@ -23,7 +23,7 @@ export default function Button({
     <button
       type={type}
       disabled={isDisabled}
-      className={`${COMMON} ${SIZES[size]} ${VARIANTS[variant]} ${isDisabled ?? DISABLED} ${fullWidth ?? 'w-full'}`}
+      className={`${COMMON} ${SIZES[size]} ${VARIANTS[variant]} ${isDisabled ? DISABLED : ''} ${fullWidth ? 'w-full' : ''}`}
       onClick={onClick}
     >
       <div className="flex items-center justify-center space-x-1">

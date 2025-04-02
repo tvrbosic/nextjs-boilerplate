@@ -1,6 +1,10 @@
 import { TComponentSize } from '@/types/theme';
 
-export type TButtonVariant = 'solid' | 'outline';
+export type TButtonVariant =
+  | 'solid'
+  | 'solidInverse'
+  | 'outline'
+  | 'outlineInverse';
 
 export interface IButtonProps {
   children: React.ReactNode;

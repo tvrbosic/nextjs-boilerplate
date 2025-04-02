@@ -4,7 +4,7 @@ import Hero from '@/app/(home)/components/hero';
 import Featured from '@/app/(home)/components/featured';
 import Footer from '@/components/layout/footer';
 
-export default function Page() {
+export default function HomePage() {
   return (
     <div className="relative">
       <Header />

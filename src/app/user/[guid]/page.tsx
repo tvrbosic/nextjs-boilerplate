@@ -1,11 +1,14 @@
 'use client';
+// APP
+import { withProtectedComponent } from '@/hoc/protected-component';
+
 // COMPONENTS
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
 import AvatarImage from '@/components/avatar-image/avatar-image';
 import ProfileForm from '@/app/user/[guid]/components/profile-form';
 
-export default function Page() {
+function UserProfilePage() {
   return (
     <div>
       <Header />
@@ -33,3 +36,5 @@ export default function Page() {
     </div>
   );
 }
+
+export default withProtectedComponent(UserProfilePage);
