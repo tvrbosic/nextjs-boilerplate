@@ -54,9 +54,6 @@ export const PUT = withApiErrorWrapper(
       });
     }
 
-    // Extract data
-    const { email, firstName, lastName, role } = validationResult.data;
-
     // NOTE: Password will be stripped from validation object. Password is updated on different endpoint.
     const updatedUser = await prisma.user.update({
       where: {

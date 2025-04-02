@@ -17,9 +17,4 @@ export const restrictedRoutes: IRestrictedRouteConfig[] = [
     methods: ['GET', 'PUT', 'DELETE'],
     roles: ['ADMIN'],
   },
-  {
-    path: '/api/v1/user/[guid]/update-password',
-    methods: ['PATCH'],
-    roles: ['USER', 'ADMIN'],
-  },
 ];
