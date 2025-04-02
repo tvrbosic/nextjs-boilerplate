@@ -20,7 +20,7 @@ import Button from '@/components/button/button';
 import Input from '@/components/input/input';
 import NavLink from '@/components/nav-link/nav-link';
 
-function ForgotPasswordForm({
+function ResetPasswordForm({
   triggerGlobalError,
 }: IWithErrorBoundaryTriggerProps) {
   // ============================| STATE |============================ //
@@ -111,7 +111,7 @@ function ForgotPasswordForm({
       </Button>
 
       <div className="flex items-center justify-center">
-        <NavLink href={'/'} variant="light">
+        <NavLink href={'/'} variant="primary">
           Return to home page
         </NavLink>
       </div>
@@ -119,4 +119,4 @@ function ForgotPasswordForm({
   );
 }
 
-export default withErrorBoundaryTrigger(ForgotPasswordForm);
+export default withErrorBoundaryTrigger(ResetPasswordForm);

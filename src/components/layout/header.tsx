@@ -1,8 +1,8 @@
 // COMPONENTS
 import LogoIpsum from '@/components/logo/logo-ipsum';
-import Navigation from '@/app/(home)/components/navigation';
-import AuthControl from '@/app/(home)/components/auth-control';
-import ThemeToggle from '@/app/(home)/components/theme-toggle';
+import Navigation from '@/components/navigation/navigation';
+import AuthControl from '@/components/auth-control/auth-control';
+import ThemeToggle from '@/components/theme-toggle/theme-toggle';
 
 export default function Header() {
   return (
@@ -17,6 +17,7 @@ export default function Header() {
 
       <div className="col-span-3 flex items-center justify-end space-x-5 pr-5">
         <ThemeToggle />
+
         <AuthControl />
       </div>
     </div>

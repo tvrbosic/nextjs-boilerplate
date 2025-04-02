@@ -11,7 +11,7 @@ export const VARIANTS: Record<TNavLinkVariants, string> = {
     dark:text-teal-500 dark:hover:text-teal-200`,
 };
 
-export const SIZES: Record<TComponentSize, string> = {
+export const SIZES: Partial<Record<TComponentSize, string>> = {
   sm: 'text-sm',
   md: 'text-base',
   lg: 'text-lg',

@@ -1,5 +1,7 @@
 import { HTMLInputTypeAttribute } from 'react';
 
+export type TLableStyle = 'default' | 'inverse' | 'light' | 'dark';
+
 export interface IInputProps {
   name?: string;
   inputType?: HTMLInputTypeAttribute;
@@ -8,6 +10,7 @@ export interface IInputProps {
   value?: string;
   defaultValue?: string;
   error?: string;
+  labelStyle?: TLableStyle;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,5 +24,6 @@ export interface IActionInputProps {
   value?: string;
   defaultValue?: string;
   error?: string;
+  labelStyle?: TLableStyle;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }

@@ -1,10 +1,10 @@
 // COMPONENTS
-import Header from '@/app/(home)/components/header';
+import Header from '@/components/layout/header';
 import Hero from '@/app/(home)/components/hero';
 import Featured from '@/app/(home)/components/featured';
-import Footer from '@/app/(home)/components/footer';
+import Footer from '@/components/layout/footer';
 
-export default function Page() {
+export default function HomePage() {
   return (
     <div className="relative">
       <Header />

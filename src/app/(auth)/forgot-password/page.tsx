@@ -1,7 +1,7 @@
 import CenteredContent from '@/components/layout/centered-content';
 import ForgotPasswordForm from '@/app/(auth)/forgot-password/components/forgot-password-form';
 
-export default function LoginPage() {
+export default function ForgotPasswordPage() {
   return (
     <CenteredContent>
       {/** Content container */}
