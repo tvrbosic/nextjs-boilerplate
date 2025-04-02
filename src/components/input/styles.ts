@@ -1,5 +1,12 @@
+import { TLableStyle } from '@/components/input/types';
+
 // ============================| COMMON |============================ //
-export const INPUT_LABEL = `mb-1 block text-sm text-main`;
+export const INPUT_LABEL: Record<TLableStyle, string> = {
+  default: `mb-1 block text-sm text-main`,
+  inverse: `mb-1 block text-sm text-main-inverse`,
+  light: `mb-1 block text-sm text-stone-100`,
+  dark: `mb-1 block text-sm text-teal-800`,
+};
 
 export const LABEL_SPAN_ERROR = `ml-1 text-red-400 italic`;
 

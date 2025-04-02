@@ -1,3 +1,4 @@
+'use client';
 // COMPONENTS
 import Header from '@/components/layout/header';
 import Footer from '@/components/layout/footer';
@@ -17,12 +18,12 @@ export default function Page() {
           <div className="w-1/5">
             {/* User image */}
             <div className="relative -top-28">
-              <AvatarImage size="3xl" />
+              <AvatarImage size="3xl" onEdit={() => {}} />
             </div>
           </div>
 
           {/* Right container */}
-          <div className="w-4/5">
+          <div className="w-4/5 pt-10 pl-20">
             <ProfileForm />
           </div>
         </div>

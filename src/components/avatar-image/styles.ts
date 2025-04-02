@@ -1,4 +1,6 @@
+// TYPES
 import { TComponentSize } from '@/types/theme';
+import { TEditIconStyle } from '@/components/avatar-image/types';
 
 export const SIZES: Partial<Record<TComponentSize, string>> = {
   sm: 'h-8 w-8',
@@ -7,4 +9,16 @@ export const SIZES: Partial<Record<TComponentSize, string>> = {
   xl: 'h-24 w-24',
   '2xl': 'h-36 w-36',
   '3xl': 'h-64 w-64',
+};
+
+/**
+ * duration-300 bg-teal-600 text-stone-100 hover:bg-teal-500 hover:text-stone-200 focus:ring-teal-500/40 
+    dark:bg-teal-500 dark:text-stone-100 dark:hover:bg-teal-600
+ */
+
+export const EDIT_BUTTON: Record<TEditIconStyle, string> = {
+  default: `text-4xl duration-300 absolute right-8 hover:cursor-pointer bottom-1 border-1 rounded-full p-2 
+  border-stone-600/50 text-stone-200 bg-teal-600 hover:bg-teal-500 
+  dark:border-stone-300/80 dark:bg-teal-500 dark:hover:bg-teal-600`,
+  // NOTE: Extend TEditIconStyle and add styles here (light, dark, inverse, etc.)
 };

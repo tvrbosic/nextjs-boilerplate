@@ -12,10 +12,43 @@ export default function ProfileForm() {
   const { user } = use(AuthContext);
 
   return (
-    <div>
-      <Input defaultValue={user?.firstName} inputLabel="First name" />
-      <Input defaultValue={user?.lastName} inputLabel="Last name" />
-      <Input defaultValue={user?.email} inputLabel="Email" inputType="email" />
+    <div className="flex space-x-5">
+      <div className="flex-1 space-y-2">
+        <Input
+          defaultValue={user?.firstName}
+          inputLabel="First name"
+          labelStyle="light"
+        />
+        <Input
+          defaultValue={user?.lastName}
+          inputLabel="Last name"
+          labelStyle="light"
+        />
+        <Input
+          defaultValue={user?.email}
+          inputLabel="Email"
+          inputType="email"
+          labelStyle="light"
+        />
+      </div>
+
+      <div className="flex-1 space-y-2">
+        <Input
+          inputLabel="New password"
+          inputType="password"
+          labelStyle="light"
+        />
+        <Input
+          inputLabel="New password confirm"
+          inputType="password"
+          labelStyle="light"
+        />
+        <Input
+          inputLabel="Old password"
+          inputType="password"
+          labelStyle="light"
+        />
+      </div>
     </div>
   );
 }

@@ -19,12 +19,13 @@ export default function ActionInput({
   value,
   defaultValue,
   error,
+  labelStyle = 'default',
   onChange,
 }: IActionInputProps) {
   return (
     <div className="flex">
       {inputLabel && (
-        <label className={INPUT_LABEL}>
+        <label className={INPUT_LABEL[labelStyle]}>
           {inputLabel}{' '}
           {error && <span className={LABEL_SPAN_ERROR}>{error}</span>}
         </label>

@@ -32,6 +32,14 @@
     }
   }
 
+  .text-main-inverse {
+    color: var(--color-stone-100);
+
+    @variant dark {
+      color: var(--color-teal-800);
+    }
+  }
+
   .text-title {
     color: var(--color-teal-800);
     text-decoration: underline;
