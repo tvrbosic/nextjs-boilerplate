@@ -1,5 +1,6 @@
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import { getSession } from '@/utility/session/session';
 import {
   putUserValidationSchema,
   patchUserValidationSchema,
@@ -45,6 +46,14 @@ export const PATCH = withApiErrorWrapper(
   async (req: Request, { params }: IPatchUserParams) => {
     const guid = (await params).guid;
     const body = await req.json();
+
+    const activeUser = await getSession();
+
+    if (activeUser!.guid !== guid) {
+      return ApiBadRequestResponse({
+        message: 'You can only update your own profile',
+      });
+    }
 
     // Validate
     const validationResult = patchUserValidationSchema.safeParse({
