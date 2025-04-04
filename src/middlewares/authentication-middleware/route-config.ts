@@ -13,7 +13,7 @@ export const protectedRoutes: IProtectedRouteConfig[] = [
   },
   {
     path: '/api/v1/user/[guid]',
-    methods: ['GET', 'PUT', 'DELETE'],
+    methods: ['GET', 'PATCH', 'PUT', 'DELETE'],
   },
   {
     path: '/api/v1/user/[guid]/update-password',

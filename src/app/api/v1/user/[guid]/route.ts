@@ -2,6 +2,7 @@
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
 import {
   putUserValidationSchema,
+  patchUserValidationSchema,
   deleteUserValidationSchema,
 } from '@/app/api/v1/user/validations';
 import { prisma } from '@/prisma/prisma';
@@ -12,9 +13,10 @@ import {
 
 // TYPES
 import {
-  IDeleteUserParams,
   IGetUserParams,
-  IPutUserParams,
+  IPatchUserParams,
+  IUpdateUserParams,
+  IDeleteUserParams,
 } from '@/app/api/v1/user/types';
 
 export const GET = withApiErrorWrapper(
@@ -38,8 +40,42 @@ export const GET = withApiErrorWrapper(
   }
 );
 
+// NOTE: PATCH does not update password and role (safe to be called by non admin users). Password is updated using a different API.
+export const PATCH = withApiErrorWrapper(
+  async (req: Request, { params }: IPatchUserParams) => {
+    const guid = (await params).guid;
+    const body = await req.json();
+
+    // Validate
+    const validationResult = patchUserValidationSchema.safeParse({
+      guid,
+      ...body,
+    });
+    if (!validationResult.success) {
+      return ApiBadRequestResponse({
+        message: validationResult.error.issues[0].message,
+      });
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: {
+        guid,
+      },
+      data: {
+        ...validationResult.data,
+      },
+    });
+
+    return ApiSuccessResponse({
+      message: 'User updated successfully',
+      data: updatedUser,
+    });
+  }
+);
+
+// NOTE: PUT does not update password but can update role (only admins should use this API). Password is updated using a different API.
 export const PUT = withApiErrorWrapper(
-  async (req: Request, { params }: IPutUserParams) => {
+  async (req: Request, { params }: IUpdateUserParams) => {
     const guid = (await params).guid;
     const body = await req.json();
 
@@ -54,7 +90,6 @@ export const PUT = withApiErrorWrapper(
       });
     }
 
-    // NOTE: Password will be stripped from validation object. Password is updated on different endpoint.
     const updatedUser = await prisma.user.update({
       where: {
         guid,

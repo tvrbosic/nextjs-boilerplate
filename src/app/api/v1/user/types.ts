@@ -4,7 +4,7 @@ export interface IGetUserParams {
   params: Promise<IHasGuid>;
 }
 
-export interface IPutUserParams {
+export interface IUpdateUserParams {
   params: Promise<IHasGuid>;
 }
 

@@ -1,11 +1,17 @@
+// LIB
 import axios, { AxiosInstance } from 'axios';
+
+// TYPES
 import {
   ICreateUserParams,
   IGetUserParams,
+  IPartialUpdateUserParams,
   IUpdateUserParams,
   IUpdatePasswordParams,
   IDeleteUserParams,
+  IPartialUpdateUserResponse,
 } from '@/api-clients/user/types';
+import { IApiSuccessResponse } from '@/utility/response/type';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -44,6 +50,16 @@ export class UserApiClient {
 
   public async getUser({ guid }: IGetUserParams): Promise<any> {
     const response = await this.axiosInstance.get(`/${guid}`);
+    return response.data;
+  }
+
+  public async partialUpdateUser({
+    guid,
+    user,
+  }: IPartialUpdateUserParams): Promise<
+    IApiSuccessResponse<IPartialUpdateUserResponse>
+  > {
+    const response = await this.axiosInstance.patch(`/${guid}`, user);
     return response.data;
   }
 

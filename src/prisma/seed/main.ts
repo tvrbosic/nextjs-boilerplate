@@ -8,7 +8,7 @@ import seedUsers from '@/prisma/seed/1-users';
 /**
  * NOTE:
  * For seed we use non-extended prisma client directly from library because extended client uses
- * userGuid for session which is not available in seed scenario (triggered from command line and
+ * guid for session which is not available in seed scenario (triggered from command line and
  * not through HTTP request).
  */
 const prisma = new PrismaClient();
