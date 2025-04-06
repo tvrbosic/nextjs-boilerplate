@@ -1,7 +1,9 @@
 // APP
 import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import { getSession } from '@/utility/session/session';
 import {
   putUserValidationSchema,
+  patchUserValidationSchema,
   deleteUserValidationSchema,
 } from '@/app/api/v1/user/validations';
 import { prisma } from '@/prisma/prisma';
@@ -9,12 +11,15 @@ import {
   ApiSuccessResponse,
   ApiBadRequestResponse,
 } from '@/utility/response/response';
+import { baseModelOmitFields, userOmitFields } from '@/prisma/utility';
 
 // TYPES
 import {
-  IDeleteUserParams,
   IGetUserParams,
-  IPutUserParams,
+  IPatchUserParams,
+  IUpdateUserParams,
+  IDeleteUserParams,
+  IGetUserDTO,
 } from '@/app/api/v1/user/types';
 
 export const GET = withApiErrorWrapper(
@@ -25,21 +30,75 @@ export const GET = withApiErrorWrapper(
       return ApiBadRequestResponse({ message: 'GUID is required' });
     }
 
-    const user = await prisma.user.findUnique({
+    const user: IGetUserDTO | null = await prisma.user.findUnique({
+      omit: {
+        ...baseModelOmitFields(),
+        ...userOmitFields(),
+      },
       where: {
         guid,
       },
     });
 
-    return ApiSuccessResponse({
+    if (!user) {
+      return ApiBadRequestResponse({ message: 'User not found' });
+    }
+
+    return ApiSuccessResponse<IGetUserDTO>({
       message: 'User fetched successfully',
       data: user,
     });
   }
 );
 
+// NOTE: PATCH does not update password and role (safe to be called by non admin users). Password is updated using a different API.
+export const PATCH = withApiErrorWrapper(
+  async (req: Request, { params }: IPatchUserParams) => {
+    const guid = (await params).guid;
+    const body = await req.json();
+
+    const activeUser = await getSession();
+
+    if (activeUser!.guid !== guid) {
+      return ApiBadRequestResponse({
+        message: 'You can only update your own profile',
+      });
+    }
+
+    // Validate
+    const validationResult = patchUserValidationSchema.safeParse({
+      guid,
+      ...body,
+    });
+    if (!validationResult.success) {
+      return ApiBadRequestResponse({
+        message: validationResult.error.issues[0].message,
+      });
+    }
+
+    const updatedUser: IGetUserDTO = await prisma.user.update({
+      omit: {
+        ...baseModelOmitFields(),
+        ...userOmitFields(),
+      },
+      where: {
+        guid,
+      },
+      data: {
+        ...validationResult.data,
+      },
+    });
+
+    return ApiSuccessResponse<IGetUserDTO>({
+      message: 'User updated successfully',
+      data: updatedUser,
+    });
+  }
+);
+
+// NOTE: PUT does not update password but can update role (only admins should use this API). Password is updated using a different API.
 export const PUT = withApiErrorWrapper(
-  async (req: Request, { params }: IPutUserParams) => {
+  async (req: Request, { params }: IUpdateUserParams) => {
     const guid = (await params).guid;
     const body = await req.json();
 
@@ -54,8 +113,11 @@ export const PUT = withApiErrorWrapper(
       });
     }
 
-    // NOTE: Password will be stripped from validation object. Password is updated on different endpoint.
-    const updatedUser = await prisma.user.update({
+    const updatedUser: IGetUserDTO = await prisma.user.update({
+      omit: {
+        ...baseModelOmitFields(),
+        ...userOmitFields(),
+      },
       where: {
         guid,
       },
@@ -64,7 +126,7 @@ export const PUT = withApiErrorWrapper(
       },
     });
 
-    return ApiSuccessResponse({
+    return ApiSuccessResponse<IGetUserDTO>({
       message: 'User updated successfully',
       data: updatedUser,
     });

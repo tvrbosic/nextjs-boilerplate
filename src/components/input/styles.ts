@@ -8,7 +8,7 @@ export const INPUT_LABEL: Record<TLableStyle, string> = {
   dark: `mb-1 block text-sm text-teal-800`,
 };
 
-export const LABEL_SPAN_ERROR = `ml-1 text-red-400 italic`;
+export const LABEL_SPAN_ERROR = `ml-1 italic text-amber-500 dark:text-red-400`;
 
 // ============================| INPUT |============================ //
 export const INPUT = `block w-full rounded-lg border-2 p-2.5 text-sm border-transparent focus:outline-none 

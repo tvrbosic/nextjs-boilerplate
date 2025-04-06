@@ -16,6 +16,13 @@ export const postUserValidationSchema = z.object({
   role: z.nativeEnum(Role),
 });
 
+export const patchUserValidationSchema = z.object({
+  guid: z.string().uuid('Invalid GUID provided.'),
+  email: z.string().min(1, 'Email is required').email('Invalid email address'),
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+});
+
 export const putUserValidationSchema = z.object({
   guid: z.string().uuid('Invalid GUID provided.'),
   email: z.string().min(1, 'Email is required').email('Invalid email address'),
@@ -24,19 +31,29 @@ export const putUserValidationSchema = z.object({
   role: z.nativeEnum(Role),
 });
 
-export const updatePasswordValidationSchema = z.object({
-  guid: z.string().uuid('Invalid GUID provided.'),
-  newPassword: z
-    .string()
-    .min(8, 'Must be at least 8 characters long')
-    .regex(/[a-zA-Z]/, 'Must contain at least one letter.')
-    .regex(/[0-9]/, 'Must contain at least one number'),
-  oldPassword: z
-    .string()
-    .min(8, 'Must be at least 8 characters long')
-    .regex(/[a-zA-Z]/, 'Must contain at least one letter.')
-    .regex(/[0-9]/, 'Must contain at least one number'),
-});
+export const updatePasswordValidationSchema = z
+  .object({
+    guid: z.string().uuid('Invalid GUID provided.'),
+    newPassword: z
+      .string()
+      .min(8, 'Must be at least 8 characters long')
+      .regex(/[a-zA-Z]/, 'Must contain at least one letter.')
+      .regex(/[0-9]/, 'Must contain at least one number'),
+    newPasswordConfirm: z
+      .string()
+      .min(8, 'Must be at least 8 characters long')
+      .regex(/[a-zA-Z]/, 'Must contain at least one letter.')
+      .regex(/[0-9]/, 'Must contain at least one number'),
+    oldPassword: z
+      .string()
+      .min(8, 'Must be at least 8 characters long')
+      .regex(/[a-zA-Z]/, 'Must contain at least one letter.')
+      .regex(/[0-9]/, 'Must contain at least one number'),
+  })
+  .refine((data) => data.newPassword === data.newPasswordConfirm, {
+    message: 'Passwords do not match',
+    path: ['newPasswordConfirm'],
+  });
 
 export const deleteUserValidationSchema = z.object({
   guid: z.string().uuid('Invalid GUID provided.'),

@@ -10,6 +10,17 @@ export interface IGetUserParams {
   guid: string;
 }
 
+export interface IPartialUpdateUserParams {
+  guid: string;
+  user: any;
+}
+
+export interface IPartialUpdateUserResponse {
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+
 export interface IUpdateUserParams {
   guid: string;
   user: any;
@@ -20,6 +31,7 @@ export interface IUpdatePasswordParams {
   passwords: {
     oldPassword: string;
     newPassword: string;
+    newPasswordConfirm: string;
   };
 }
 

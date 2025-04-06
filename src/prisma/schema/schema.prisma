@@ -28,5 +28,6 @@ datasource db {
  * deletedById  String?
  * deletedBy    User?     @relation("deletedBy_usersDeleted", fields: [deletedById], references: [guid])
  * usersDeleted User[]    @relation("deletedBy_usersDeleted")
+ * actionsTaken AuditLog[] @relation("actionBy_actionsTaken")
  * }
  */

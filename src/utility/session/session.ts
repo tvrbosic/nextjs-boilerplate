@@ -51,7 +51,7 @@ export async function getSession(): Promise<IUserJwtClaims | null> {
   if (
     !decoded ||
     typeof decoded !== 'object' ||
-    !decoded.userGuid ||
+    !decoded.guid ||
     !decoded.email ||
     !decoded.firstName ||
     !decoded.lastName ||
@@ -62,7 +62,7 @@ export async function getSession(): Promise<IUserJwtClaims | null> {
 
   // Cast and return the decoded token as IUserJwtClaims
   return {
-    guid: decoded.userGuid as string,
+    guid: decoded.guid as string,
     email: decoded.email as string,
     firstName: decoded.firstName as string,
     lastName: decoded.lastName as string,

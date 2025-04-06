@@ -10,14 +10,24 @@ import {
   ApiBadRequestResponse,
   ApiUnauthorizedResponse,
 } from '@/utility/response/response';
+import { getSession } from '@/utility/session/session';
+import { baseModelOmitFields, userOmitFields } from '@/prisma/utility';
 
 // TYPES
-import { IPatchUserParams } from '@/app/api/v1/user/types';
+import { IGetUserDTO, IPatchUserParams } from '@/app/api/v1/user/types';
 
 export const PATCH = withApiErrorWrapper(
   async (req: Request, { params }: IPatchUserParams) => {
     const guid = (await params).guid;
     const body = await req.json();
+
+    const activeUser = await getSession();
+
+    if (activeUser!.guid !== guid) {
+      return ApiBadRequestResponse({
+        message: 'You can only update your own profile',
+      });
+    }
 
     // Validate
     const validationResult = updatePasswordValidationSchema.safeParse({
@@ -55,7 +65,11 @@ export const PATCH = withApiErrorWrapper(
     // Hash and update the newPssword
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    const updatedUser = await prisma.user.update({
+    const updatedUser: IGetUserDTO = await prisma.user.update({
+      omit: {
+        ...baseModelOmitFields(),
+        ...userOmitFields(),
+      },
       where: {
         guid,
       },
@@ -64,7 +78,7 @@ export const PATCH = withApiErrorWrapper(
       },
     });
 
-    return ApiSuccessResponse({
+    return ApiSuccessResponse<IGetUserDTO>({
       message: 'User password updated successfully',
       data: updatedUser,
     });
