@@ -11,6 +11,7 @@ import {
   ApiSuccessResponse,
   ApiBadRequestResponse,
 } from '@/utility/response/response';
+import { baseModelOmitFields, userOmitFields } from '@/prisma/utility';
 
 // TYPES
 import {
@@ -18,6 +19,7 @@ import {
   IPatchUserParams,
   IUpdateUserParams,
   IDeleteUserParams,
+  IGetUserDTO,
 } from '@/app/api/v1/user/types';
 
 export const GET = withApiErrorWrapper(
@@ -28,13 +30,21 @@ export const GET = withApiErrorWrapper(
       return ApiBadRequestResponse({ message: 'GUID is required' });
     }
 
-    const user = await prisma.user.findUnique({
+    const user: IGetUserDTO | null = await prisma.user.findUnique({
+      omit: {
+        ...baseModelOmitFields(),
+        ...userOmitFields(),
+      },
       where: {
         guid,
       },
     });
 
-    return ApiSuccessResponse({
+    if (!user) {
+      return ApiBadRequestResponse({ message: 'User not found' });
+    }
+
+    return ApiSuccessResponse<IGetUserDTO>({
       message: 'User fetched successfully',
       data: user,
     });
@@ -66,7 +76,11 @@ export const PATCH = withApiErrorWrapper(
       });
     }
 
-    const updatedUser = await prisma.user.update({
+    const updatedUser: IGetUserDTO = await prisma.user.update({
+      omit: {
+        ...baseModelOmitFields(),
+        ...userOmitFields(),
+      },
       where: {
         guid,
       },
@@ -75,7 +89,7 @@ export const PATCH = withApiErrorWrapper(
       },
     });
 
-    return ApiSuccessResponse({
+    return ApiSuccessResponse<IGetUserDTO>({
       message: 'User updated successfully',
       data: updatedUser,
     });
@@ -99,7 +113,11 @@ export const PUT = withApiErrorWrapper(
       });
     }
 
-    const updatedUser = await prisma.user.update({
+    const updatedUser: IGetUserDTO = await prisma.user.update({
+      omit: {
+        ...baseModelOmitFields(),
+        ...userOmitFields(),
+      },
       where: {
         guid,
       },
@@ -108,7 +126,7 @@ export const PUT = withApiErrorWrapper(
       },
     });
 
-    return ApiSuccessResponse({
+    return ApiSuccessResponse<IGetUserDTO>({
       message: 'User updated successfully',
       data: updatedUser,
     });

@@ -12,6 +12,7 @@ import {
   IPartialUpdateUserResponse,
 } from '@/api-clients/user/types';
 import { IApiSuccessResponse } from '@/utility/response/type';
+import { IGetUserDTO } from '@/app/api/v1/user/types';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -38,17 +39,21 @@ export class UserApiClient {
     return UserApiClient.#instance;
   }
 
-  public async getUsers(): Promise<any> {
+  public async getUsers(): Promise<IApiSuccessResponse<IGetUserDTO>[]> {
     const response = await this.axiosInstance.get('');
     return response.data;
   }
 
-  public async createUser(user: ICreateUserParams): Promise<any> {
+  public async createUser(
+    user: ICreateUserParams
+  ): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const response = await this.axiosInstance.post('', user);
     return response.data;
   }
 
-  public async getUser({ guid }: IGetUserParams): Promise<any> {
+  public async getUser({
+    guid,
+  }: IGetUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const response = await this.axiosInstance.get(`/${guid}`);
     return response.data;
   }
@@ -63,7 +68,10 @@ export class UserApiClient {
     return response.data;
   }
 
-  public async updateUser({ guid, user }: IUpdateUserParams): Promise<any> {
+  public async updateUser({
+    guid,
+    user,
+  }: IUpdateUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const response = await this.axiosInstance.put(`/${guid}`, user);
     return response.data;
   }
@@ -71,7 +79,7 @@ export class UserApiClient {
   public async updatePassword({
     guid,
     passwords,
-  }: IUpdatePasswordParams): Promise<any> {
+  }: IUpdatePasswordParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const response = await this.axiosInstance.patch(
       `/${guid}/update-password`,
       passwords

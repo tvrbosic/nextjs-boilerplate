@@ -10,10 +10,19 @@ import {
   ApiCreatedResponse,
   ApiBadRequestResponse,
 } from '@/utility/response/response';
+import { baseModelOmitFields, userOmitFields } from '@/prisma/utility';
+
+// TYPES
+import { IGetUserDTO } from '@/app/api/v1/user/types';
 
 export const GET = withApiErrorWrapper(async (req: Request) => {
-  const users = await prisma.user.findMany();
-  return ApiSuccessResponse({
+  const users: IGetUserDTO[] = await prisma.user.findMany({
+    omit: {
+      ...baseModelOmitFields(),
+      ...userOmitFields(),
+    },
+  });
+  return ApiSuccessResponse<IGetUserDTO[]>({
     message: 'Users fetched successfully',
     data: users,
   });
@@ -46,7 +55,7 @@ export const POST = withApiErrorWrapper(async (req: Request) => {
     },
   });
 
-  return ApiCreatedResponse({
+  return ApiCreatedResponse<IGetUserDTO>({
     message: 'User created successfully',
     data: newUser,
   });
