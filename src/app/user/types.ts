@@ -9,3 +9,12 @@ export type TSubmitUpdateProfileFormAction = {
     lastName?: string[];
   };
 };
+
+export type TSubmitUpdatePasswordFormAction = {
+  errors?: {
+    api?: string[];
+    newPassword?: string[];
+    newPasswordConfirm?: string[];
+    oldPassword?: string[];
+  };
+};

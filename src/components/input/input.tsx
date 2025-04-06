@@ -31,7 +31,7 @@ export default function Input({
       <input
         name={name}
         type={inputType}
-        className={`${INPUT} ${error ?? 'border-red-400'}`}
+        className={INPUT}
         placeholder={placeholder || undefined}
         value={value}
         defaultValue={defaultValue}

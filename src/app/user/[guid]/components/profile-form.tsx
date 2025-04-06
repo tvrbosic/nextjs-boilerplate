@@ -1,27 +1,36 @@
 'use client';
 // LIB
 import { use, useActionState } from 'react';
+import { useRouter } from 'next/navigation';
 
 // APP
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
-import { partialUpdateUserValidationSchema } from '@/app/user/validations';
+import {
+  partialUpdateUserValidationSchema,
+  updatePasswordValidationSchema,
+} from '@/app/user/validations';
 import { UserApiClient } from '@/api-clients/user/user-client';
 import processAxiosError from '@/utility/process-axios-error/process-axios-error';
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 
 // TYPES
-import { TSubmitUpdateProfileFormAction } from '@/app/user/types';
+import {
+  TSubmitUpdatePasswordFormAction,
+  TSubmitUpdateProfileFormAction,
+} from '@/app/user/types';
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
 // COMPONENTS
 import Input from '@/components/input/input';
 import Button from '@/components/button/button';
+import { AuthApiClient } from '@/api-clients/auth/auth-client';
 
 function ProfileForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
-  const { user, setUser } = use(AuthContext);
+  const { user, setUser, clearUser } = use(AuthContext);
   const { showToast } = use(ToastMessageContext);
+  const router = useRouter();
 
   // ============================| FUNCTIONS |============================ //
   const submitUpdateProfileForm = async (
@@ -76,11 +85,70 @@ function ProfileForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
     }
   };
 
+  const submitUpdatePasswordForm = async (
+    previous: TSubmitUpdatePasswordFormAction,
+    formData: FormData | null
+  ): Promise<TSubmitUpdatePasswordFormAction> => {
+    // Reset errors (by calling function with formData null and returning initial state / empty object)
+    if (!formData) {
+      return {};
+    }
+
+    const newPassword = formData.get('newPassword') as string;
+    const newPasswordConfirm = formData.get('newPasswordConfirm') as string;
+    const oldPassword = formData.get('oldPassword') as string;
+
+    // Validate form data
+    const validationResult = updatePasswordValidationSchema.safeParse({
+      newPassword,
+      newPasswordConfirm,
+      oldPassword,
+    });
+
+    // Return validation errors if any
+    if (!validationResult.success) {
+      return {
+        errors: validationResult.error.flatten().fieldErrors,
+      };
+    }
+
+    try {
+      // Call API to update user password
+      const response = await UserApiClient.instance.updatePassword({
+        guid: user?.guid!,
+        passwords: { oldPassword, newPassword, newPasswordConfirm },
+      });
+
+      // SUCCESS: Show toast message, logout user, clear user from context and redirect to login
+      showToast(
+        'User password updated successfully, please log in again',
+        'success'
+      );
+      await AuthApiClient.instance.logout();
+      clearUser();
+      router.push('/sign-in');
+      return { errors: undefined };
+    } catch (error) {
+      // FAIL: Show toast message and return API error
+      const errorMessage = processAxiosError({ error });
+      errorMessage === '500' && triggerGlobalError();
+      showToast(errorMessage, 'error');
+      return { errors: { api: [errorMessage] } };
+    }
+  };
+
   // ============================| ACTION |============================ //
-  const [state, updateProfileAction, isPending] = useActionState<
-    TSubmitUpdateProfileFormAction,
-    FormData | null
-  >(submitUpdateProfileForm, {});
+  const [profileFormState, updateProfileAction, updateProfileIsPending] =
+    useActionState<TSubmitUpdateProfileFormAction, FormData | null>(
+      submitUpdateProfileForm,
+      {}
+    );
+
+  const [passwordFormState, updatePasswordAction, updatePasswordIsPending] =
+    useActionState<TSubmitUpdatePasswordFormAction, FormData | null>(
+      submitUpdatePasswordForm,
+      {}
+    );
 
   // ============================| RENDER |============================ //
   return (
@@ -91,7 +159,7 @@ function ProfileForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
           name="firstName"
           inputLabel="First name"
           labelStyle="light"
-          error={state.errors?.firstName?.[0]}
+          error={profileFormState.errors?.firstName?.[0]}
         />
 
         <Input
@@ -99,7 +167,7 @@ function ProfileForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
           name="lastName"
           inputLabel="Last name"
           labelStyle="light"
-          error={state.errors?.lastName?.[0]}
+          error={profileFormState.errors?.lastName?.[0]}
         />
 
         <Input
@@ -108,41 +176,55 @@ function ProfileForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
           inputLabel="Email"
           inputType="email"
           labelStyle="light"
-          error={state.errors?.email?.[0]}
+          error={profileFormState.errors?.email?.[0]}
         />
 
         <div className="mt-6 flex justify-end">
-          <Button type="submit" variant="solidInverse" isLoading={isPending}>
+          <Button
+            type="submit"
+            variant="solidInverse"
+            isLoading={updateProfileIsPending}
+          >
             Save profile
           </Button>
         </div>
       </form>
 
-      <div className="flex-1 space-y-2">
+      <form className="flex-1 space-y-2" action={updatePasswordAction}>
         <Input
+          name="newPassword"
           inputLabel="New password"
           inputType="password"
           labelStyle="light"
+          error={passwordFormState.errors?.newPassword?.[0]}
         />
 
         <Input
+          name="newPasswordConfirm"
           inputLabel="New password confirm"
           inputType="password"
           labelStyle="light"
+          error={passwordFormState.errors?.newPasswordConfirm?.[0]}
         />
 
         <Input
+          name="oldPassword"
           inputLabel="Old password"
           inputType="password"
           labelStyle="light"
+          error={passwordFormState.errors?.oldPassword?.[0]}
         />
 
         <div className="mt-6 flex justify-end">
-          <Button onClick={() => {}} variant="solidInverse">
+          <Button
+            type="submit"
+            variant="solidInverse"
+            isLoading={updatePasswordIsPending}
+          >
             Update password
           </Button>
         </div>
-      </div>
+      </form>
     </div>
   );
 }

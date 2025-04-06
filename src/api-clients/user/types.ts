@@ -31,6 +31,7 @@ export interface IUpdatePasswordParams {
   passwords: {
     oldPassword: string;
     newPassword: string;
+    newPasswordConfirm: string;
   };
 }
 
