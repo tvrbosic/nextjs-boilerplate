@@ -7,6 +7,7 @@ import {
   IGetUserParams,
   IPartialUpdateUserParams,
   IUpdateUserParams,
+  IUploadAvatarParams,
   IUpdatePasswordParams,
   IDeleteUserParams,
   IPartialUpdateUserResponse,
@@ -65,6 +66,26 @@ export class UserApiClient {
     IApiSuccessResponse<IPartialUpdateUserResponse>
   > {
     const response = await this.axiosInstance.patch(`/${guid}`, user);
+    return response.data;
+  }
+
+  public async uploadAvatar({
+    guid,
+    file,
+  }: IUploadAvatarParams): Promise<IApiSuccessResponse> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await this.axiosInstance.post(
+      `/${guid}/upload-avatar`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
     return response.data;
   }
 

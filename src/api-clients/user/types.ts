@@ -26,6 +26,11 @@ export interface IUpdateUserParams {
   user: any;
 }
 
+export interface IUploadAvatarParams {
+  guid: string; // User GUID
+  file: File; // File to be uploaded
+}
+
 export interface IUpdatePasswordParams {
   guid: string;
   passwords: {
