@@ -17,7 +17,7 @@ import { baseModelOmitFields, userOmitFields } from '@/prisma/utility';
 import {
   IGetUserParams,
   IPatchUserParams,
-  IUpdateUserParams,
+  IPostUserParams,
   IDeleteUserParams,
   IGetUserDTO,
 } from '@/app/api/v1/user/types';
@@ -98,7 +98,7 @@ export const PATCH = withApiErrorWrapper(
 
 // NOTE: PUT does not update password but can update role (only admins should use this API). Password is updated using a different API.
 export const PUT = withApiErrorWrapper(
-  async (req: Request, { params }: IUpdateUserParams) => {
+  async (req: Request, { params }: IPostUserParams) => {
     const guid = (await params).guid;
     const body = await req.json();
 

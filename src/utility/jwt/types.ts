@@ -6,5 +6,7 @@ export interface IUserJwtClaims {
   firstName: string;
   lastName: string;
   role: Role;
+  avatarImageFilename?: string;
+  avatarImageUrl?: string;
   exp?: number;
 }

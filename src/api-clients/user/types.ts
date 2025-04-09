@@ -21,7 +21,7 @@ export interface IPartialUpdateUserResponse {
   lastName: string;
 }
 
-export interface IUpdateUserParams {
+export interface IPostUserParams {
   guid: string;
   user: any;
 }

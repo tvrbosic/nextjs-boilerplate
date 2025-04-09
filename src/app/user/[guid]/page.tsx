@@ -6,6 +6,12 @@ import { use, useRef } from 'react';
 import { withProtectedComponent } from '@/hoc/protected-component';
 import { UserApiClient } from '@/api-clients/user/user-client';
 import { AuthContext } from '@/context/auth/auth-context';
+import { ToastMessageContext } from '@/context/toast-message/toast-context';
+import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
+import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+
+// TYPES
+import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
 // COMPONENTS
 import Header from '@/components/layout/header';
@@ -13,10 +19,15 @@ import Footer from '@/components/layout/footer';
 import AvatarImage from '@/components/avatar-image/avatar-image';
 import ProfileForm from '@/app/user/[guid]/components/profile-form';
 
-function UserProfilePage() {
+function UserProfilePage({
+  triggerGlobalError,
+}: IWithErrorBoundaryTriggerProps) {
+  // ============================| UTILITY |============================ //
   const { user } = use(AuthContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const { showToast } = use(ToastMessageContext);
 
+  // ============================| FUNCTIONS |============================ //
   const handleFileChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -29,10 +40,13 @@ function UserProfilePage() {
           file,
         });
 
-        // Handle success (e.g., refresh avatar or show success message)
-        console.log('Avatar uploaded successfully');
+        // SUCCESS
+        showToast('Avatar uploaded successfully');
       } catch (error) {
-        console.error('Failed to upload avatar', error);
+        // FAIL
+        const errorMessage = processAxiosError({ error });
+        errorMessage === '500' && triggerGlobalError();
+        showToast(errorMessage, 'error');
       } finally {
         // Reset the file input value
         if (fileInputRef.current) {
@@ -42,6 +56,7 @@ function UserProfilePage() {
     }
   };
 
+  // ============================| RENDER |============================ //
   return (
     <div>
       <Header />
@@ -56,6 +71,7 @@ function UserProfilePage() {
             <div className="relative -top-28">
               <AvatarImage
                 size="3xl"
+                imageSrc={user?.avatarImageUrl}
                 onEdit={() => fileInputRef.current?.click()}
               />
               <input
@@ -80,4 +96,6 @@ function UserProfilePage() {
   );
 }
 
-export default withProtectedComponent(UserProfilePage);
+export default withProtectedComponent(
+  withErrorBoundaryTrigger(UserProfilePage)
+);

@@ -20,6 +20,8 @@ export default function AvatarImage({
   // Use the provided imageSrc or fallback to the placeholder
   const avatarSrc = imageSrc || AvatarPlaceholder;
 
+  console.log(imageSrc, avatarSrc);
+
   return (
     <div className="flex items-center">
       <div className="relative">

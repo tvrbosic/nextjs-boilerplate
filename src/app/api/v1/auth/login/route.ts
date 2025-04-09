@@ -43,6 +43,8 @@ export const POST = withApiErrorWrapper(async (req: Request) => {
     });
   }
 
+  console.log(user);
+
   // Create JWT token and user session
   const token = await createSession({
     guid: user.guid,
@@ -50,6 +52,8 @@ export const POST = withApiErrorWrapper(async (req: Request) => {
     firstName: user.firstName,
     lastName: user.lastName,
     role: user.role,
+    avatarImageUrl: user.avatarImageUrl ?? undefined,
+    avatarImageFilename: user.avatarImageFilename ?? undefined,
   });
 
   return ApiSuccessResponse<{ token: string }>({

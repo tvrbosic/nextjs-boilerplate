@@ -6,7 +6,7 @@ import {
   ICreateUserParams,
   IGetUserParams,
   IPartialUpdateUserParams,
-  IUpdateUserParams,
+  IPostUserParams,
   IUploadAvatarParams,
   IUpdatePasswordParams,
   IDeleteUserParams,
@@ -92,7 +92,7 @@ export class UserApiClient {
   public async updateUser({
     guid,
     user,
-  }: IUpdateUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
+  }: IPostUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const response = await this.axiosInstance.put(`/${guid}`, user);
     return response.data;
   }

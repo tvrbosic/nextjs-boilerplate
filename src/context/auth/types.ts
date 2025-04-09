@@ -5,6 +5,8 @@ export interface IAuthContextUser {
   email: string;
   firstName: string;
   lastName: string;
+  avatarImageFilename?: string;
+  avatarImageUrl?: string;
   role: Role;
   exp?: number;
 }

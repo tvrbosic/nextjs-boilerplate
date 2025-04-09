@@ -29,6 +29,7 @@ const AuthProvider = ({ children }: IChildrenProps) => {
         const decoded = (await verifyToken(
           token
         )) as unknown as IAuthContextUser;
+        console.log(decoded);
         setUser(decoded);
       } else {
         // NO TOKEN: Clear user and continue without user session
