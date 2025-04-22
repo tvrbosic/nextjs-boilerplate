@@ -25,7 +25,6 @@ import Button from '@/components/button/button';
 function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
   const { user, clearUser } = use(AuthContext);
-  console.log(user);
   const { showToast } = use(ToastMessageContext);
   const router = useRouter();
 

@@ -29,7 +29,6 @@ const AuthProvider = ({ children }: IChildrenProps) => {
         const decoded = (await verifyToken(
           token
         )) as unknown as IAuthContextUser;
-        console.log(decoded);
         setUser(decoded);
       } else {
         // NO TOKEN: Clear user and continue without user session
@@ -44,13 +43,19 @@ const AuthProvider = ({ children }: IChildrenProps) => {
     });
   }, []);
 
+  const updateUserAvatar = (avatarImageUrl: string) => {
+    setUser((prevUser) => (prevUser ? { ...prevUser, avatarImageUrl } : null));
+  };
+
   const clearUser = async () => {
     await AuthApiClient.instance.logout();
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, clearUser }}>
+    <AuthContext.Provider
+      value={{ user, setUser, clearUser, updateUserAvatar }}
+    >
       {children}
     </AuthContext.Provider>
   );

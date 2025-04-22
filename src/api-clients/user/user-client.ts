@@ -72,7 +72,7 @@ export class UserApiClient {
   public async uploadAvatar({
     guid,
     file,
-  }: IUploadAvatarParams): Promise<IApiSuccessResponse> {
+  }: IUploadAvatarParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const formData = new FormData();
     formData.append('file', file);
 

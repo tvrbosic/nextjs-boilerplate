@@ -23,7 +23,7 @@ function UserProfilePage({
   triggerGlobalError,
 }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
-  const { user } = use(AuthContext);
+  const { user, updateUserAvatar } = use(AuthContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { showToast } = use(ToastMessageContext);
 
@@ -35,12 +35,13 @@ function UserProfilePage({
       const file = event.target.files[0];
 
       try {
-        await UserApiClient.instance.uploadAvatar({
+        const response = await UserApiClient.instance.uploadAvatar({
           guid: user!.guid,
           file,
         });
 
-        // SUCCESS
+        // SUCCESS: Update avatar in AuthContext
+        updateUserAvatar(response.data!.avatarImageUrl as string);
         showToast('Avatar uploaded successfully');
       } catch (error) {
         // FAIL

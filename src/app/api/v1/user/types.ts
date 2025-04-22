@@ -27,4 +27,5 @@ export interface IGetUserDTO {
   firstName: string;
   lastName: string;
   role: Role;
+  avatarImageUrl?: string | null;
 }

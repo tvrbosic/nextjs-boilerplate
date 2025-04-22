@@ -10,7 +10,6 @@ import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
 } from '@/utility/response/response';
-import { getSession } from '@/utility/session/session';
 import { baseModelOmitFields, userOmitFields } from '@/prisma/utility';
 
 // TYPES
@@ -27,7 +26,15 @@ export const POST = withApiErrorWrapper(
     const formData = await req.formData();
     const file = formData.get('file') as File;
 
-    const activeUser = await getSession();
+    const activeUser = await prisma.user.findUnique({
+      omit: {
+        ...baseModelOmitFields(),
+        ...userOmitFields(),
+      },
+      where: {
+        guid,
+      },
+    });
 
     if (activeUser!.guid !== guid) {
       return ApiBadRequestResponse({

@@ -43,8 +43,6 @@ export const POST = withApiErrorWrapper(async (req: Request) => {
     });
   }
 
-  console.log(user);
-
   // Create JWT token and user session
   const token = await createSession({
     guid: user.guid,

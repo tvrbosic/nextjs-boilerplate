@@ -15,4 +15,5 @@ export interface IAuthContext {
   user: IAuthContextUser | null;
   setUser: (user: IAuthContextUser) => void;
   clearUser: () => void;
+  updateUserAvatar: (avatarImageUrl: string) => void;
 }
