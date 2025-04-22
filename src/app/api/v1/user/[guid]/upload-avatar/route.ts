@@ -18,6 +18,7 @@ import { IGetUserDTO, IPostUploadAvatarParams } from '@/app/api/v1/user/types';
 
 // ENV
 const MEDIA_UPLOADS_DIR = process.env.MEDIA_UPLOADS_PATH;
+const MEDIA_SERVE_PATH = process.env.MEDIA_SERVE_PATH;
 const APP_BASE_URL = process.env.APP_BASE_URL;
 
 export const POST = withApiErrorWrapper(
@@ -67,7 +68,7 @@ export const POST = withApiErrorWrapper(
       },
       data: {
         avatarImageFilename: filename,
-        avatarImageUrl: `${APP_BASE_URL}${MEDIA_UPLOADS_DIR}${filename}`,
+        avatarImageUrl: `${APP_BASE_URL}${MEDIA_SERVE_PATH}${filename}`,
       },
     });
 
