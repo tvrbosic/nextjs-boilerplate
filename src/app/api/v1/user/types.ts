@@ -5,7 +5,11 @@ export interface IGetUserParams {
   params: Promise<IHasGuid>;
 }
 
-export interface IUpdateUserParams {
+export interface IPostUserParams {
+  params: Promise<IHasGuid>;
+}
+
+export interface IPostUploadAvatarParams {
   params: Promise<IHasGuid>;
 }
 
@@ -23,4 +27,5 @@ export interface IGetUserDTO {
   firstName: string;
   lastName: string;
   role: Role;
+  avatarImageUrl?: string | null;
 }

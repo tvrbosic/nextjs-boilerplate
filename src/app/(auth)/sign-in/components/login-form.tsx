@@ -14,13 +14,13 @@ import processAxiosError from '@/utility/process-axios-error/process-axios-error
 // TYPES
 import { TSubmitLoginFormAction } from '@/app/(auth)/types';
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
+import { IUserJwtClaims } from '@/utility/jwt/types';
+import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 
 // COMPONENTS
-import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 import Button from '@/components/button/button';
 import Input from '@/components/input/input';
 import NavLink from '@/components/nav-link/nav-link';
-import { IUserJwtClaims } from '@/utility/jwt/types';
 
 function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
@@ -69,6 +69,8 @@ function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
         email: decoded.email,
         firstName: decoded.firstName,
         lastName: decoded.lastName,
+        avatarImageUrl: decoded.avatarImageUrl,
+        avatarImageFilename: decoded.avatarImageFilename,
         role: decoded.role,
         exp: decoded.exp,
       });

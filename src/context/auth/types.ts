@@ -5,6 +5,8 @@ export interface IAuthContextUser {
   email: string;
   firstName: string;
   lastName: string;
+  avatarImageFilename?: string;
+  avatarImageUrl?: string;
   role: Role;
   exp?: number;
 }
@@ -13,4 +15,5 @@ export interface IAuthContext {
   user: IAuthContextUser | null;
   setUser: (user: IAuthContextUser) => void;
   clearUser: () => void;
+  updateUserAvatar: (avatarImageUrl: string) => void;
 }

@@ -21,9 +21,14 @@ export interface IPartialUpdateUserResponse {
   lastName: string;
 }
 
-export interface IUpdateUserParams {
+export interface IPostUserParams {
   guid: string;
   user: any;
+}
+
+export interface IUploadAvatarParams {
+  guid: string; // User GUID
+  file: File; // File to be uploaded
 }
 
 export interface IUpdatePasswordParams {

@@ -1,6 +1,17 @@
 'use client';
+// LIBRARY
+import { use, useRef } from 'react';
+
 // APP
 import { withProtectedComponent } from '@/hoc/protected-component';
+import { UserApiClient } from '@/api-clients/user/user-client';
+import { AuthContext } from '@/context/auth/auth-context';
+import { ToastMessageContext } from '@/context/toast-message/toast-context';
+import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
+import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+
+// TYPES
+import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
 // COMPONENTS
 import Header from '@/components/layout/header';
@@ -8,7 +19,45 @@ import Footer from '@/components/layout/footer';
 import AvatarImage from '@/components/avatar-image/avatar-image';
 import ProfileForm from '@/app/user/[guid]/components/profile-form';
 
-function UserProfilePage() {
+function UserProfilePage({
+  triggerGlobalError,
+}: IWithErrorBoundaryTriggerProps) {
+  // ============================| UTILITY |============================ //
+  const { user, updateUserAvatar } = use(AuthContext);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { showToast } = use(ToastMessageContext);
+
+  // ============================| FUNCTIONS |============================ //
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      try {
+        const response = await UserApiClient.instance.uploadAvatar({
+          guid: user!.guid,
+          file,
+        });
+
+        // SUCCESS: Update avatar in AuthContext
+        updateUserAvatar(response.data!.avatarImageUrl as string);
+        showToast('Avatar uploaded successfully');
+      } catch (error) {
+        // FAIL
+        const errorMessage = processAxiosError({ error });
+        errorMessage === '500' && triggerGlobalError();
+        showToast(errorMessage, 'error');
+      } finally {
+        // Reset the file input value
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      }
+    }
+  };
+
+  // ============================| RENDER |============================ //
   return (
     <div>
       <Header />
@@ -21,7 +70,18 @@ function UserProfilePage() {
           <div className="w-1/5">
             {/* User image */}
             <div className="relative -top-28">
-              <AvatarImage size="3xl" onEdit={() => {}} />
+              <AvatarImage
+                size="3xl"
+                imageSrc={user?.avatarImageUrl}
+                onEdit={() => fileInputRef.current?.click()}
+              />
+              <input
+                type="file"
+                accept="image/*"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                style={{ display: 'none' }}
+              />
             </div>
           </div>
 
@@ -37,4 +97,6 @@ function UserProfilePage() {
   );
 }
 
-export default withProtectedComponent(UserProfilePage);
+export default withProtectedComponent(
+  withErrorBoundaryTrigger(UserProfilePage)
+);

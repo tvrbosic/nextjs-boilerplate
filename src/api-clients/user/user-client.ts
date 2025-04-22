@@ -6,7 +6,8 @@ import {
   ICreateUserParams,
   IGetUserParams,
   IPartialUpdateUserParams,
-  IUpdateUserParams,
+  IPostUserParams,
+  IUploadAvatarParams,
   IUpdatePasswordParams,
   IDeleteUserParams,
   IPartialUpdateUserResponse,
@@ -68,10 +69,30 @@ export class UserApiClient {
     return response.data;
   }
 
+  public async uploadAvatar({
+    guid,
+    file,
+  }: IUploadAvatarParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await this.axiosInstance.post(
+      `/${guid}/upload-avatar`,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    return response.data;
+  }
+
   public async updateUser({
     guid,
     user,
-  }: IUpdateUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
+  }: IPostUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const response = await this.axiosInstance.put(`/${guid}`, user);
     return response.data;
   }

@@ -24,9 +24,20 @@ export async function logRequest(req: Request) {
       req.method === 'PUT' ||
       req.method === 'PATCH'
     ) {
-      const payload = await req.json();
-      // Extract payload from body and mask sensitive fields like passwords (avoid logging them)
-      const maskedPayload = payload ? maskObjectSensitiveFields(payload) : null;
+      let payload = undefined;
+
+      if (req.headers.get('content-type')?.startsWith('multipart/form-data')) {
+        // Handle multipart/form-data (file uploads)
+        const formData = await req.formData();
+        const file = formData.get('file');
+
+        const fileName = file instanceof File ? file.name : 'unknown';
+        payload = `File named ${fileName} sent to server`;
+      } else {
+        // Extract payload from body and mask sensitive fields like passwords (avoid logging them)
+        payload = await req.json();
+        payload = payload ? maskObjectSensitiveFields(payload) : null;
+      }
 
       fetch(`${apiBaseUrl}/log-write`, {
         method: 'POST',
@@ -34,7 +45,7 @@ export async function logRequest(req: Request) {
           level: 'http',
           message: `${req.method} ${req.url}`,
           secret: logSecret,
-          payload: maskedPayload,
+          payload,
         }),
       });
     } else {

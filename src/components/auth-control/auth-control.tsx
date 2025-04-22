@@ -11,12 +11,12 @@ import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 
 // TYPES
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
 // COMPONENTS
-import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 import Dropdown from '@/components/dropdown/dropdown';
 import DropdownMenuItem from '@/components/dropdown/dropdown-menu-item';
 import AvatarImage from '@/components/avatar-image/avatar-image';
@@ -53,7 +53,10 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
           </div>
 
           <div>
-            <Dropdown menuAlignment="right" activateElement={<AvatarImage />}>
+            <Dropdown
+              menuAlignment="right"
+              activateElement={<AvatarImage imageSrc={user?.avatarImageUrl} />}
+            >
               <DropdownMenuItem
                 text="Profile"
                 icon={<FaUserCircle size={20} />}

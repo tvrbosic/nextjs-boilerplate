@@ -27,6 +27,8 @@ export default function AvatarImage({
           src={avatarSrc}
           className={`${SIZES[size]} rounded-full object-cover`}
           alt="Avatar"
+          width={128}
+          height={128}
         />
 
         {onEdit && (
