@@ -4,7 +4,9 @@
 2. [Getting Started](#getting-started)
    - [1. Clone the Repository and Install Dependencies](#1-clone-the-repository-and-install-dependencies)
    - [2. Setup PostgreSQL Database and Role](#2-setup-postgresql-database-and-role)
-   - [3. Prisma ORM Database Workflow Commands](#3-prisma-orm-database-workflow-commands)
+   - [3. Users for application testing](#3-users-for-application-testing)
+   - [4. Configure email](#4-configure-email)
+3. [Prisma ORM Database Workflow Commands](#prisma-orm-database-workflow-commands)
 
 ---
 
@@ -82,11 +84,56 @@ Make sure you have PostgreSQL installed. If you want to use different PostgreSQL
      ```
 
 8. Apply Prisma ORM migrations to the newly created database (inside project root):
+
    ```bash
    npx prisma migrate deploy
    ```
 
-### 3. Prisma ORM database workflow commands
+9. Runh database seed script:
+   ```bash
+   npx ts-node src/prisma/seed/main.ts
+   ```
+
+### 3. Users for application testing
+
+Database has been seeded with mock users for application testing.
+
+Application can be tested with following users:
+
+- john.smith@email.com
+
+  - **PASSWORD**: Password1234
+  - **ROLE**: Admin
+
+- mary.jones@email.com
+  - **PASSWORD**: Password1234
+  - **ROLE**: User
+
+All available user credentials can be found in seed: `src/prisma/seed/1-users.ts.`
+
+NOTE: All users have same password which is `Password1234`
+
+### 4. Configure Email
+
+Email configuration is done via environment variables defined in the `.env` file at the project root:
+
+```env
+# EMAIL
+APP_EMAIL_HOST='smtp.ethereal.email'
+APP_EMAIL_PORT='587'
+APP_EMAIL='casimir.lindgren35@ethereal.email'
+APP_EMAIL_PASSWORD='ApGtjAfrYTXm989det'
+```
+
+If you don’t have access to an official SMTP service, [Ethereal](https://ethereal.email/) provides free disposable SMTP accounts for development and testing. Emails sent through Ethereal won’t actually be delivered, but you can preview them in a web UI. Example credentials above are already valid for testing, but you can generate your own Ethereal account for personalized access.
+
+To create an Ethereal test account:
+
+1. Visit [Ethereal](https://ethereal.email/)
+2. Generate a test account.
+3. Replace the email credentials in your .env with the ones provided.
+
+## Prisma ORM database workflow commands
 
 Full documentation: [Prisma CLI](https://www.prisma.io/docs/orm/reference/prisma-cli-reference#prisma-migrate)
 
