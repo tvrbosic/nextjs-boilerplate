@@ -3,12 +3,12 @@
 import { use, useRef } from 'react';
 
 // APP
-import { withProtectedComponent } from '@/hoc/protected-component';
+import { withRoleProtectedComponent } from '@/hoc/role-protected-component';
 import { UserApiClient } from '@/api-clients/user/user-client';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
-import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+import processAxiosError from '@/utility/process-axios-error';
 
 // TYPES
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
@@ -97,6 +97,7 @@ function UserProfilePage({
   );
 }
 
-export default withProtectedComponent(
-  withErrorBoundaryTrigger(UserProfilePage)
+export default withRoleProtectedComponent(
+  withErrorBoundaryTrigger(UserProfilePage),
+  ['USER', 'ADMIN']
 );

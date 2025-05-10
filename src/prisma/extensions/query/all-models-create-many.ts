@@ -1,6 +1,6 @@
 // APP
 import { Prisma } from '@prisma/client';
-import { getSession } from '@/utility/session/session';
+import { getSession } from '@/utility/session';
 
 export const useAllModelsCreateMany = Prisma.defineExtension((prisma) =>
   prisma.$extends({

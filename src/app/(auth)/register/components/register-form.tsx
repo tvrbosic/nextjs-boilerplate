@@ -8,8 +8,8 @@ import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
 import { registerValidationSchema } from '@/app/(auth)/validations';
-import processAxiosError from '@/utility/process-axios-error/process-axios-error';
-import { formDataToObject } from '@/utility/object/object';
+import processAxiosError from '@/utility/process-axios-error';
+import { formDataToObject } from '@/utility/object';
 
 // TYPES
 import { IRegisterForm, TSubmitRegisterFormAction } from '@/app/(auth)/types';

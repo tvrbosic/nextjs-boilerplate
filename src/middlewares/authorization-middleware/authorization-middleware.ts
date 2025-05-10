@@ -1,5 +1,5 @@
 // APP
-import { getSession } from '@/utility/session/session';
+import { getSession } from '@/utility/session';
 import { restrictedRoutes } from '@/middlewares/authorization-middleware/route-config';
 
 // TYPES

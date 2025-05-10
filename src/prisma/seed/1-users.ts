@@ -14,7 +14,7 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
         email: 'john.smith@email.com',
         firstName: 'John',
         lastName: 'Smith',
-        role: 'USER',
+        role: 'ADMIN',
         createdById: superUser.guid,
         password: hashedMockPassword,
       },

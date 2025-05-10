@@ -3,14 +3,13 @@
 import { use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FaUserCircle } from 'react-icons/fa';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaUserCircle, FaSignOutAlt, FaWrench } from 'react-icons/fa';
 
 // APP
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
-import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+import processAxiosError from '@/utility/process-axios-error';
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 
 // TYPES
@@ -62,6 +61,14 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
                 icon={<FaUserCircle size={20} />}
                 onClick={() => router.push(`/user/${user?.guid}`)}
               />
+
+              {user.role === 'ADMIN' && (
+                <DropdownMenuItem
+                  text="Admin"
+                  icon={<FaWrench size={20} />}
+                  onClick={() => router.push('/admin/users')}
+                />
+              )}
 
               <DropdownMenuItem
                 text="Sign out"

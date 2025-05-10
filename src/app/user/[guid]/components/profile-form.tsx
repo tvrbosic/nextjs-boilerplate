@@ -11,7 +11,7 @@ import {
   updatePasswordValidationSchema,
 } from '@/app/user/validations';
 import { UserApiClient } from '@/api-clients/user/user-client';
-import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+import processAxiosError from '@/utility/process-axios-error';
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 
 // TYPES

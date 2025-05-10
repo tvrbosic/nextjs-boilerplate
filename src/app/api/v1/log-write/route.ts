@@ -1,5 +1,5 @@
 // APP
-import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import withApiErrorWrapper from '@/utility/api-error-wrapper';
 import logger from '@/logger';
 import {
   ApiSuccessResponse,

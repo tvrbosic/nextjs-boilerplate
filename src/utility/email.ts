@@ -3,7 +3,11 @@ import nodemailer from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 // TYPES
-import { ISendEmailProps } from '@/utility/email/types';
+interface ISendEmailProps {
+  destinationEmail: string;
+  subject: string;
+  text: string;
+}
 
 export async function sendEmail(options: ISendEmailProps) {
   const transporter = nodemailer.createTransport({

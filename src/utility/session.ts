@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { JWTPayload } from 'jose';
 
 // APP
-import { generateToken, verifyToken } from '@/utility/jwt/jwt';
+import { generateToken, verifyToken } from '@/utility/jwt';
 
 // TYPES
 import { IUserJwtClaims } from '@/utility/jwt/types';

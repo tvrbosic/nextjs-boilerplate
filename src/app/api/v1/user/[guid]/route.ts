@@ -1,6 +1,6 @@
 // APP
-import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
-import { getSession } from '@/utility/session/session';
+import withApiErrorWrapper from '@/utility/api-error-wrapper';
+import { getSession } from '@/utility/session';
 import {
   putUserValidationSchema,
   patchUserValidationSchema,

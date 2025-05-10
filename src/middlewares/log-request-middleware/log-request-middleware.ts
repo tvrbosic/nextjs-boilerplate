@@ -1,5 +1,5 @@
 // APP
-import { maskObjectSensitiveFields } from '@/utility/general-utils/general-utils';
+import { maskObjectSensitiveFields } from '@/utility/general-utils';
 import { ApiInternalServerErrorResponse } from '@/utility/response/response';
 
 // ENV

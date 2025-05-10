@@ -3,7 +3,7 @@
 import { createContext, useEffect, useState } from 'react';
 
 // APP
-import { verifyToken } from '@/utility/jwt/jwt';
+import { verifyToken } from '@/utility/jwt';
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 
 // TYPES
@@ -15,7 +15,7 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 const AuthProvider = ({ children }: IChildrenProps) => {
   const [user, setUser] = useState<IAuthContextUser | null>(null);
 
-  // Pre-load user session (send verify request which chekcs if session cookie is present)
+  // Pre-load user session if cookie exists (send verify request which checks if session cookie is present)
   useEffect(() => {
     const decodeTokenAndSetAuthUser = async () => {
       // Call API to verify session cookie

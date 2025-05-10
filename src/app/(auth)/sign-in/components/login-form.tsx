@@ -8,8 +8,8 @@ import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
 import { loginValidationSchema } from '@/app/(auth)/validations';
-import { verifyToken } from '@/utility/jwt/jwt';
-import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+import { verifyToken } from '@/utility/jwt';
+import processAxiosError from '@/utility/process-axios-error';
 
 // TYPES
 import { TSubmitLoginFormAction } from '@/app/(auth)/types';

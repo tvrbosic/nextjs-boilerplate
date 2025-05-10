@@ -2,7 +2,18 @@
 import { SignJWT, jwtVerify } from 'jose';
 
 // TYPES
-import { IUserJwtClaims } from '@/utility/jwt/types';
+import { Role } from '@prisma/client';
+
+export interface IUserJwtClaims {
+  guid: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: Role;
+  avatarImageFilename?: string;
+  avatarImageUrl?: string;
+  exp?: number;
+}
 
 // ENV
 const JWT_SECRET =
@@ -19,6 +30,11 @@ export async function generateToken(userJwtClaims: IUserJwtClaims) {
 }
 
 export async function verifyToken(token: string | undefined = '') {
+  if (!token) {
+    console.warn('No token provided for verification');
+    return null;
+  }
+
   try {
     const { payload } = await jwtVerify(token, secretKey, {
       algorithms: ['HS256'],

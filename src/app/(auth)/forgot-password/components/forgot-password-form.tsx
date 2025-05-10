@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
 import { forgotPasswordValidationSchema } from '@/app/(auth)/validations';
-import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+import processAxiosError from '@/utility/process-axios-error';
 
 // TYPES
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';

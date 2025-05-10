@@ -2,14 +2,14 @@
 import crypto from 'crypto';
 
 // APP
-import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import withApiErrorWrapper from '@/utility/api-error-wrapper';
 import { forgotPasswordValidationSchema } from '@/app/api/v1/auth/validations';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,
   ApiBadRequestResponse,
 } from '@/utility/response/response';
-import { sendEmail } from '@/utility/email/email';
+import { sendEmail } from '@/utility/email';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
   const body = await req.json();
