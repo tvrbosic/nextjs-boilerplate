@@ -18,17 +18,6 @@ const AuthProvider = ({ children }: IChildrenProps) => {
   // Pre-load user session if cookie exists (send verify request which checks if session cookie is present)
   useEffect(() => {
     const decodeTokenAndSetAuthUser = async () => {
-      // Check if session cookie is present
-      const sessionCookie = document.cookie
-        .split('; ')
-        .find((row) => row.startsWith('session='));
-
-      if (!sessionCookie) {
-        console.warn('No session cookie found!');
-        setUser(null);
-        return;
-      }
-
       // Call API to verify session cookie
       const response = await AuthApiClient.instance.verify();
 

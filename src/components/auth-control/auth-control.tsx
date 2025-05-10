@@ -3,8 +3,7 @@
 import { use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { FaUserCircle } from 'react-icons/fa';
-import { FaSignOutAlt } from 'react-icons/fa';
+import { FaUserCircle, FaSignOutAlt, FaWrench } from 'react-icons/fa';
 
 // APP
 import { AuthContext } from '@/context/auth/auth-context';
@@ -62,6 +61,14 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
                 icon={<FaUserCircle size={20} />}
                 onClick={() => router.push(`/user/${user?.guid}`)}
               />
+
+              {user.role === 'ADMIN' && (
+                <DropdownMenuItem
+                  text="Admin"
+                  icon={<FaWrench size={20} />}
+                  onClick={() => router.push('/admin')}
+                />
+              )}
 
               <DropdownMenuItem
                 text="Sign out"

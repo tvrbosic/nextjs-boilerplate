@@ -19,6 +19,11 @@ export async function generateToken(userJwtClaims: IUserJwtClaims) {
 }
 
 export async function verifyToken(token: string | undefined = '') {
+  if (!token) {
+    console.warn('No token provided for verification');
+    return null;
+  }
+
   try {
     const { payload } = await jwtVerify(token, secretKey, {
       algorithms: ['HS256'],
