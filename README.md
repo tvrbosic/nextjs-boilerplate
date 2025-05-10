@@ -91,7 +91,7 @@ Make sure you have PostgreSQL installed. If you want to use different PostgreSQL
 
 9. Runh database seed script:
    ```bash
-   npx ts-node src/prisma/seed/main.ts
+   npx ts-node --require tsconfig-paths/register src/prisma/seed/main.ts
    ```
 
 ### 3. Users for application testing
