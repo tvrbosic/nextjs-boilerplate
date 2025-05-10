@@ -66,7 +66,7 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
                 <DropdownMenuItem
                   text="Admin"
                   icon={<FaWrench size={20} />}
-                  onClick={() => router.push('/admin')}
+                  onClick={() => router.push('/admin/users')}
                 />
               )}
 
