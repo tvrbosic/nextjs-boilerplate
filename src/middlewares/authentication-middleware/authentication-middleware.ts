@@ -1,5 +1,5 @@
 // APP
-import { getSession, updateSession } from '@/utility/session/session';
+import { getSession, updateSession } from '@/utility/session';
 import { protectedRoutes } from '@/middlewares/authentication-middleware/route-config';
 import {
   ApiInternalServerErrorResponse,

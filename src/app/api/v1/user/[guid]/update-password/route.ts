@@ -2,7 +2,7 @@
 import bcrypt from 'bcryptjs';
 
 // APP
-import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import withApiErrorWrapper from '@/utility/api-error-wrapper';
 import { updatePasswordValidationSchema } from '@/app/api/v1/user/validations';
 import { prisma } from '@/prisma/prisma';
 import {
@@ -10,7 +10,7 @@ import {
   ApiBadRequestResponse,
   ApiUnauthorizedResponse,
 } from '@/utility/response/response';
-import { getSession } from '@/utility/session/session';
+import { getSession } from '@/utility/session';
 import { baseModelOmitFields, userOmitFields } from '@/prisma/utility';
 
 // TYPES

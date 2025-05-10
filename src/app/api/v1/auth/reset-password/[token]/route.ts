@@ -3,14 +3,14 @@ import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 
 // APP
-import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import withApiErrorWrapper from '@/utility/api-error-wrapper';
 import { resetPasswordValidationSchema } from '@/app/api/v1/auth/validations';
 import { prisma } from '@/prisma/prisma';
 import {
   ApiSuccessResponse,
   ApiBadRequestResponse,
 } from '@/utility/response/response';
-import { deleteSession } from '@/utility/session/session';
+import { deleteSession } from '@/utility/session';
 
 // TYPES
 import { IPatchResetPasswordParams } from '@/app/api/v1/auth/types';

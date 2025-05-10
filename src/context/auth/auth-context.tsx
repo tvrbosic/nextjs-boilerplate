@@ -3,7 +3,7 @@
 import { createContext, useEffect, useState } from 'react';
 
 // APP
-import { verifyToken } from '@/utility/jwt/jwt';
+import { verifyToken } from '@/utility/jwt';
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
 
 // TYPES

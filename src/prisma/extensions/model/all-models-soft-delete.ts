@@ -2,7 +2,7 @@
 import { Prisma } from '@prisma/client';
 
 // APP
-import { getSession } from '@/utility/session/session';
+import { getSession } from '@/utility/session';
 
 // TYPES
 import { BatchPayload } from '@/prisma/types';

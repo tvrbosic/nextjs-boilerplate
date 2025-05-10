@@ -1,4 +1,7 @@
-export default function AdminPage() {
+'use client';
+import { withRoleProtectedComponent } from '@/hoc/role-protected-component';
+
+function AdminPage() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-center">
       <h1 className="text-2xl font-bold">Admin Page</h1>
@@ -6,3 +9,5 @@ export default function AdminPage() {
     </div>
   );
 }
+
+export default withRoleProtectedComponent(AdminPage, ['ADMIN']);

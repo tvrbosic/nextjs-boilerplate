@@ -2,8 +2,11 @@
 import { AxiosError } from 'axios';
 
 // TYPES
-import { IprocessAxiosErrorProps } from '@/utility/process-axios-error/types';
 import { IApiErrorResponse } from '@/utility/response/type';
+
+interface IprocessAxiosErrorProps {
+  error: unknown;
+}
 
 export default function processAxiosError({
   error,

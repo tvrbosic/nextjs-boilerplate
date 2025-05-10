@@ -5,7 +5,7 @@ import { prisma } from '@/prisma/prisma';
 import { writeFile, rm } from 'fs/promises';
 
 // APP
-import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
+import withApiErrorWrapper from '@/utility/api-error-wrapper';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,

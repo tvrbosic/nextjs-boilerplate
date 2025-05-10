@@ -2,8 +2,8 @@
 import { cookies } from 'next/headers';
 
 // APP
-import withApiErrorWrapper from '@/utility/api-error-wrapper/api-error-wrapper';
-import { verifyToken } from '@/utility/jwt/jwt';
+import withApiErrorWrapper from '@/utility/api-error-wrapper';
+import { verifyToken } from '@/utility/jwt';
 import { ApiSuccessResponse } from '@/utility/response/response';
 
 export const GET = withApiErrorWrapper(async (req: Request) => {

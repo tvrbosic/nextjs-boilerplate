@@ -9,7 +9,7 @@ import { FaUserCircle, FaSignOutAlt, FaWrench } from 'react-icons/fa';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
 import { AuthApiClient } from '@/api-clients/auth/auth-client';
-import processAxiosError from '@/utility/process-axios-error/process-axios-error';
+import processAxiosError from '@/utility/process-axios-error';
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 
 // TYPES
