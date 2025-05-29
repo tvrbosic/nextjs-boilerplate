@@ -2,7 +2,18 @@
 import { SignJWT, jwtVerify } from 'jose';
 
 // TYPES
-import { IUserJwtClaims } from '@/utility/jwt/types';
+import { Role } from '@prisma/client';
+
+export interface IUserJwtClaims {
+  guid: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: Role;
+  avatarImageFilename?: string;
+  avatarImageUrl?: string;
+  exp?: number;
+}
 
 // ENV
 const JWT_SECRET = process.env.JWT_SECRET || 'nextjs-boilerplate-project-jwt-secret-string';
