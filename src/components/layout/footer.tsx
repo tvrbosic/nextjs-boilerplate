@@ -17,8 +17,7 @@ export default function Footer() {
           <LogoIpsum />
 
           <span className="text-main text-center text-xl">
-            Full-stack app starter built on Next.js 15, React 19, and Tailwind
-            CSS 4.
+            Full-stack app starter built on Next.js 15, React 19, and Tailwind CSS 4.
           </span>
 
           <div className="flex gap-5">
@@ -33,9 +32,7 @@ export default function Footer() {
         <div className="flex w-lg flex-col items-center gap-5">
           <h2 className="text-title text-2xl">Newsletter</h2>
 
-          <span className="text-main text-center">
-            Subscribe to newsletter for latest project updates.
-          </span>
+          <span className="text-main text-center">Subscribe to newsletter for latest project updates.</span>
 
           <div className="w-full">
             <ActionInput

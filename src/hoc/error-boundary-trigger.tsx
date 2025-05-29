@@ -1,12 +1,10 @@
-// LIB
+// LIBRARY
 import React, { useState, useEffect, ComponentType } from 'react';
 
 // TYPES
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
-export function withErrorBoundaryTrigger<
-  T extends IWithErrorBoundaryTriggerProps,
->(WrappedComponent: ComponentType<T>) {
+export function withErrorBoundaryTrigger<T extends IWithErrorBoundaryTriggerProps>(WrappedComponent: ComponentType<T>) {
   return (props: Omit<T, keyof IWithErrorBoundaryTriggerProps>) => {
     const [errorTriggerCount, setErrorTriggerCount] = useState(0);
 
@@ -22,8 +20,6 @@ export function withErrorBoundaryTrigger<
       setErrorTriggerCount((prev) => prev + 1);
     };
 
-    return (
-      <WrappedComponent {...(props as T)} triggerGlobalError={triggerError} />
-    );
+    return <WrappedComponent {...(props as T)} triggerGlobalError={triggerError} />;
   };
 }

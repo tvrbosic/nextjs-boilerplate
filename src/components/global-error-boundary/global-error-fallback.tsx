@@ -1,11 +1,6 @@
 'use client';
-// LIB
-import {
-  FaSyncAlt,
-  FaClock,
-  FaEnvelope,
-  FaExclamationTriangle,
-} from 'react-icons/fa';
+// LIBRARY
+import { FaSyncAlt, FaClock, FaEnvelope, FaExclamationTriangle } from 'react-icons/fa';
 
 // COMPONENTS
 import Button from '@/components/button/button';
@@ -22,22 +17,17 @@ export default function GlobalErrorFallback() {
           <div className="mt-2 flex w-full flex-grow items-center justify-around px-8">
             <FaExclamationTriangle className="h-16 w-16 text-red-300" />
 
-            <h1 className="text-2xl text-stone-100 underline underline-offset-4">
-              Oops! Server encountered error.
-            </h1>
+            <h1 className="text-2xl text-stone-100 underline underline-offset-4">Oops! Server encountered error.</h1>
           </div>
 
           <div className="flex w-full flex-grow items-center justify-center px-8">
             <p className="text-lg text-teal-100">
-              We are sorry for the inconvenience. We are actively working to fix
-              this problem.
+              We are sorry for the inconvenience. We are actively working to fix this problem.
             </p>
           </div>
 
           <div className="bg-secondary flex w-full flex-grow flex-col items-center justify-center px-8 pt-2 pb-4">
-            <p className="mb-4 w-full text-left text-stone-100">
-              Here is what you can do:
-            </p>
+            <p className="mb-4 w-full text-left text-stone-100">Here is what you can do:</p>
 
             <ul className="space-y-1 text-stone-100">
               <li className="flex items-center">

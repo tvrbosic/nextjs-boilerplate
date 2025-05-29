@@ -1,24 +1,19 @@
-// LIB
+// LIBRARY
 import { cookies } from 'next/headers';
 import { JWTPayload } from 'jose';
 
 // APP
-import { generateToken, verifyToken } from '@/utility/jwt';
+import { generateToken, verifyToken } from '@/utility/jwt/jwt';
 
 // TYPES
 import { IUserJwtClaims } from '@/utility/jwt/types';
 import { Role } from '@prisma/client';
 
 // ENV
-const JWT_COOKIE_EXPIRATION: number =
-  parseInt(process.env.JWT_COOKIE_EXPIRATION!) || 15;
+const JWT_COOKIE_EXPIRATION: number = parseInt(process.env.JWT_COOKIE_EXPIRATION!) || 15;
 
-export async function createSession(
-  userJwtClaims: IUserJwtClaims
-): Promise<string> {
-  const expiresAt = new Date(
-    Date.now() + JWT_COOKIE_EXPIRATION * 24 * 60 * 60 * 1000
-  );
+export async function createSession(userJwtClaims: IUserJwtClaims): Promise<string> {
+  const expiresAt = new Date(Date.now() + JWT_COOKIE_EXPIRATION * 24 * 60 * 60 * 1000);
   const token = await generateToken(userJwtClaims);
   const cookieStore = await cookies();
 

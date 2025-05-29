@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import bcrypt from 'bcryptjs';
 import { PrismaClient, User } from '@prisma/client';
 
@@ -95,12 +95,8 @@ const seedUsers = async (prisma: PrismaClient, superUser: User) => {
   });
 
   const end = Date.now();
-  console.log(
-    `User seed completed: seeded ${createManyUsers.count} users in ${end - start} ms`
-  );
-  console.log(
-    '-------------------------------------------------------------------------------'
-  );
+  console.log(`User seed completed: seeded ${createManyUsers.count} users in ${end - start} ms`);
+  console.log('-------------------------------------------------------------------------------');
 };
 
 export default seedUsers;

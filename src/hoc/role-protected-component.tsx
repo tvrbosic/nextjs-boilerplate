@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -11,9 +11,11 @@ export function withRoleProtectedComponent<P extends object>(
 ) {
   const RoleProtectedComponentWrapper = (props: P) => {
     const router = useRouter();
-    const { user } = useContext(AuthContext);
+    const { user, isVerifying } = useContext(AuthContext);
 
     useEffect(() => {
+      if (isVerifying) return; // 👈 wait for auth check to complete
+
       if (!user) {
         router.replace('/sign-in');
         return;

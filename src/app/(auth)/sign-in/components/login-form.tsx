@@ -1,5 +1,5 @@
 'use client';
-// LIB
+// LIBRARY
 import { use, useActionState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -8,7 +8,7 @@ import { AuthApiClient } from '@/api-clients/auth/auth-client';
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
 import { loginValidationSchema } from '@/app/(auth)/validations';
-import { verifyToken } from '@/utility/jwt';
+import { verifyToken } from '@/utility/jwt/jwt';
 import processAxiosError from '@/utility/process-axios-error';
 
 // TYPES
@@ -87,31 +87,14 @@ function LoginForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   };
 
   // ============================| ACTION |============================ //
-  const [state, loginAction, isPending] = useActionState<
-    TSubmitLoginFormAction,
-    FormData | null
-  >(submitLoginForm, {});
+  const [state, loginAction, isPending] = useActionState<TSubmitLoginFormAction, FormData | null>(submitLoginForm, {});
 
   // ============================| RENDER |============================ //
   return (
-    <form
-      action={loginAction}
-      className="flex w-full flex-col justify-center space-y-4"
-      noValidate
-    >
-      <Input
-        inputType="email"
-        inputLabel="E-mail"
-        name="email"
-        error={state.errors?.email?.[0]}
-      />
+    <form action={loginAction} className="flex w-full flex-col justify-center space-y-4" noValidate>
+      <Input inputType="email" inputLabel="E-mail" name="email" error={state.errors?.email?.[0]} />
 
-      <Input
-        inputType="password"
-        inputLabel="Password"
-        name="password"
-        error={state.errors?.password?.[0]}
-      />
+      <Input inputType="password" inputLabel="Password" name="password" error={state.errors?.password?.[0]} />
 
       <div className="text-end">
         <NavLink href={'/forgot-password'} size="sm">

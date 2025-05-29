@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import Image from 'next/image';
 import { FaEdit } from 'react-icons/fa';
 
@@ -11,12 +11,7 @@ import { IAvatarImageProps } from '@/components/avatar-image/types';
 // STYLES
 import { EDIT_BUTTON, SIZES } from '@/components/avatar-image/styles';
 
-export default function AvatarImage({
-  size = 'md',
-  imageSrc,
-  editIconStyle = 'default',
-  onEdit,
-}: IAvatarImageProps) {
+export default function AvatarImage({ size = 'md', imageSrc, editIconStyle = 'default', onEdit }: IAvatarImageProps) {
   // Use the provided imageSrc or fallback to the placeholder
   const avatarSrc = imageSrc || AvatarPlaceholder;
 

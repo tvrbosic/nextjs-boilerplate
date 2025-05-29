@@ -1,13 +1,9 @@
-// LIB
+// LIBRARY
 import nodemailer from 'nodemailer';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 // TYPES
-interface ISendEmailProps {
-  destinationEmail: string;
-  subject: string;
-  text: string;
-}
+import { ISendEmailProps } from '@/utility/email/types';
 
 export async function sendEmail(options: ISendEmailProps) {
   const transporter = nodemailer.createTransport({

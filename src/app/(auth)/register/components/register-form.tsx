@@ -1,5 +1,5 @@
 'use client';
-// LIB
+// LIBRARY
 import { use, useActionState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -23,7 +23,6 @@ import NavLink from '@/components/nav-link/nav-link';
 
 function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
-  const { user, setUser } = use(AuthContext);
   const { showToast } = use(ToastMessageContext);
   const router = useRouter();
 
@@ -37,8 +36,7 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
       return {};
     }
 
-    const { email, password, passwordConfirm, firstName, lastName } =
-      formDataToObject<IRegisterForm>(formData);
+    const { email, password, passwordConfirm, firstName, lastName } = formDataToObject<IRegisterForm>(formData);
 
     // Validate form data
     const validationResult = registerValidationSchema.safeParse({
@@ -84,18 +82,14 @@ function RegisterForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   };
 
   // ============================| ACTION |============================ //
-  const [state, registerAction, isPending] = useActionState<
-    TSubmitRegisterFormAction,
-    FormData | null
-  >(submitRegisterForm, {});
+  const [state, registerAction, isPending] = useActionState<TSubmitRegisterFormAction, FormData | null>(
+    submitRegisterForm,
+    {}
+  );
 
   // ============================| RENDER |============================ //
   return (
-    <form
-      action={registerAction}
-      className="flex w-full flex-col justify-center space-y-4"
-      noValidate
-    >
+    <form action={registerAction} className="flex w-full flex-col justify-center space-y-4" noValidate>
       <Input
         inputType="text"
         inputLabel="First name"

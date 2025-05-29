@@ -1,5 +1,5 @@
 'use client';
-// LIB
+// LIBRARY
 import { createContext, useEffect, useState } from 'react';
 
 // TYPES
@@ -40,11 +40,7 @@ const ThemeProvider = ({ children }: IChildrenProps) => {
     return null;
   }
 
-  return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>;
 };
 
 export { ThemeContext, ThemeProvider };

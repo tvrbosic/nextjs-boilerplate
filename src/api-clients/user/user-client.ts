@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import axios, { AxiosInstance } from 'axios';
 
 // TYPES
@@ -40,21 +40,17 @@ export class UserApiClient {
     return UserApiClient.#instance;
   }
 
-  public async getUsers(): Promise<IApiSuccessResponse<IGetUserDTO>[]> {
+  public async getUsers(): Promise<IApiSuccessResponse<IGetUserDTO[]>> {
     const response = await this.axiosInstance.get('');
     return response.data;
   }
 
-  public async createUser(
-    user: ICreateUserParams
-  ): Promise<IApiSuccessResponse<IGetUserDTO>> {
+  public async createUser(user: ICreateUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const response = await this.axiosInstance.post('', user);
     return response.data;
   }
 
-  public async getUser({
-    guid,
-  }: IGetUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
+  public async getUser({ guid }: IGetUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const response = await this.axiosInstance.get(`/${guid}`);
     return response.data;
   }
@@ -62,49 +58,31 @@ export class UserApiClient {
   public async partialUpdateUser({
     guid,
     user,
-  }: IPartialUpdateUserParams): Promise<
-    IApiSuccessResponse<IPartialUpdateUserResponse>
-  > {
+  }: IPartialUpdateUserParams): Promise<IApiSuccessResponse<IPartialUpdateUserResponse>> {
     const response = await this.axiosInstance.patch(`/${guid}`, user);
     return response.data;
   }
 
-  public async uploadAvatar({
-    guid,
-    file,
-  }: IUploadAvatarParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
+  public async uploadAvatar({ guid, file }: IUploadAvatarParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const formData = new FormData();
     formData.append('file', file);
 
-    const response = await this.axiosInstance.post(
-      `/${guid}/upload-avatar`,
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
-    );
+    const response = await this.axiosInstance.post(`/${guid}/upload-avatar`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
 
     return response.data;
   }
 
-  public async updateUser({
-    guid,
-    user,
-  }: IPostUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
+  public async updateUser({ guid, user }: IPostUserParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
     const response = await this.axiosInstance.put(`/${guid}`, user);
     return response.data;
   }
 
-  public async updatePassword({
-    guid,
-    passwords,
-  }: IUpdatePasswordParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
-    const response = await this.axiosInstance.patch(
-      `/${guid}/update-password`,
-      passwords
-    );
+  public async updatePassword({ guid, passwords }: IUpdatePasswordParams): Promise<IApiSuccessResponse<IGetUserDTO>> {
+    const response = await this.axiosInstance.patch(`/${guid}/update-password`, passwords);
     return response.data;
   }
 

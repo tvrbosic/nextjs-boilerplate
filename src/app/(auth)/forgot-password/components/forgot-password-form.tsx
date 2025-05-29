@@ -1,5 +1,5 @@
 'use client';
-// LIB
+// LIBRARY
 import { use, useActionState } from 'react';
 import { useRouter } from 'next/navigation';
 
@@ -19,9 +19,7 @@ import Button from '@/components/button/button';
 import Input from '@/components/input/input';
 import NavLink from '@/components/nav-link/nav-link';
 
-function ForgotPasswordForm({
-  triggerGlobalError,
-}: IWithErrorBoundaryTriggerProps) {
+function ForgotPasswordForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
   const { showToast } = use(ToastMessageContext);
   const router = useRouter();
@@ -69,24 +67,15 @@ function ForgotPasswordForm({
   };
 
   // ============================| ACTION |============================ //
-  const [state, forgotPasswordAction, isPending] = useActionState<
-    TSubmitForgotPasswordFormAction,
-    FormData | null
-  >(submitForgotPasswordForm, {});
+  const [state, forgotPasswordAction, isPending] = useActionState<TSubmitForgotPasswordFormAction, FormData | null>(
+    submitForgotPasswordForm,
+    {}
+  );
 
   // ============================| RENDER |============================ //
   return (
-    <form
-      action={forgotPasswordAction}
-      className="flex w-full flex-col justify-center gap-4"
-      noValidate
-    >
-      <Input
-        inputType="email"
-        inputLabel="E-mail"
-        name="email"
-        error={state.errors?.email?.[0]}
-      />
+    <form action={forgotPasswordAction} className="flex w-full flex-col justify-center gap-4" noValidate>
+      <Input inputType="email" inputLabel="E-mail" name="email" error={state.errors?.email?.[0]} />
 
       <Button fullWidth size="lg" type="submit" isLoading={isPending}>
         Reset my password

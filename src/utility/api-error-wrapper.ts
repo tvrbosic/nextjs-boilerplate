@@ -1,11 +1,8 @@
-// LIB
+// LIBRARY
 import { Prisma } from '@prisma/client';
 
 // APP
-import {
-  ApiBadRequestResponse,
-  ApiInternalServerErrorResponse,
-} from '@/utility/response/response';
+import { ApiBadRequestResponse, ApiInternalServerErrorResponse } from '@/utility/response/response';
 import logger from '@/logger';
 
 export default function withApiErrorWrapper(fn: Function) {
@@ -31,14 +28,12 @@ export default function withApiErrorWrapper(fn: Function) {
           case 'P2002':
             logger.error('❗ PRISMA ERROR ❗', logErrorObject);
             return ApiBadRequestResponse({
-              message:
-                'There was an unique constraint violation in your request. Check request data and try again.',
+              message: 'There was an unique constraint violation in your request. Check request data and try again.',
             });
           case 'P2025':
             logger.error('❗ PRISMA ERROR ❗', logErrorObject);
             return ApiBadRequestResponse({
-              message:
-                'Targeted entity was not found. Check request data and try again.',
+              message: 'Targeted entity was not found. Check request data and try again.',
             });
           default:
             logger.error('❗ PRISMA ERROR ❗', logErrorObject);

@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import { PrismaClient } from '@prisma/client';
 
 // TYPES

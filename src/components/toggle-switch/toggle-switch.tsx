@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import { useState } from 'react';
 
 // TYPES
@@ -15,10 +15,7 @@ import {
   TOGGLE_HANDLE_CHECKED,
 } from '@/components/toggle-switch/styles';
 
-export default function ToggleSwitch({
-  initialCheckedValue,
-  onChange,
-}: IToggleSwitchProps) {
+export default function ToggleSwitch({ initialCheckedValue, onChange }: IToggleSwitchProps) {
   const [isChecked, setIsChecked] = useState<boolean>(initialCheckedValue);
 
   const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,12 +29,7 @@ export default function ToggleSwitch({
 
   return (
     <label className={TOGGLE_LABEL_CONTAINER}>
-      <input
-        type="checkbox"
-        className={TOGGLE_INPUT_HIDDEN}
-        checked={isChecked}
-        onChange={handleToggle}
-      />
+      <input type="checkbox" className={TOGGLE_INPUT_HIDDEN} checked={isChecked} onChange={handleToggle} />
 
       <span className={trackClasses}>
         <span className={handleClasses} />

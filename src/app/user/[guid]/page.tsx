@@ -19,18 +19,14 @@ import Footer from '@/components/layout/footer';
 import AvatarImage from '@/components/avatar-image/avatar-image';
 import ProfileForm from '@/app/user/[guid]/components/profile-form';
 
-function UserProfilePage({
-  triggerGlobalError,
-}: IWithErrorBoundaryTriggerProps) {
+function UserProfilePage({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| UTILITY |============================ //
   const { user, updateUserAvatar } = use(AuthContext);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { showToast } = use(ToastMessageContext);
 
   // ============================| FUNCTIONS |============================ //
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
 
@@ -70,11 +66,7 @@ function UserProfilePage({
           <div className="w-1/5">
             {/* User image */}
             <div className="relative -top-28">
-              <AvatarImage
-                size="3xl"
-                imageSrc={user?.avatarImageUrl}
-                onEdit={() => fileInputRef.current?.click()}
-              />
+              <AvatarImage size="3xl" imageSrc={user?.avatarImageUrl} onEdit={() => fileInputRef.current?.click()} />
               <input
                 type="file"
                 accept="image/*"
@@ -97,7 +89,4 @@ function UserProfilePage({
   );
 }
 
-export default withRoleProtectedComponent(
-  withErrorBoundaryTrigger(UserProfilePage),
-  ['USER', 'ADMIN']
-);
+export default withRoleProtectedComponent(withErrorBoundaryTrigger(UserProfilePage), ['USER', 'ADMIN']);

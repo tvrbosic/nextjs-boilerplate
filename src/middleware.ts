@@ -1,16 +1,10 @@
-// LIB
+// LIBRARY
 import { NextResponse } from 'next/server';
 
 // APP
-import {
-  isProtectedRoute,
-  authenticatedUser,
-} from '@/middlewares/authentication-middleware/authentication-middleware';
+import { isProtectedRoute, authenticatedUser } from '@/middlewares/authentication-middleware/authentication-middleware';
 
-import {
-  isRestrictedRoute,
-  restrictToRoles,
-} from '@/middlewares/authorization-middleware/authorization-middleware';
+import { isRestrictedRoute, restrictToRoles } from '@/middlewares/authorization-middleware/authorization-middleware';
 import { logRequest } from '@/middlewares/log-request-middleware/log-request-middleware';
 
 // TYPES
@@ -54,10 +48,7 @@ export async function middleware(req: Request) {
   }
 
   // Check if request pathname includes any of the defined restricted routes
-  const { isRestricted, allowedRoles } = isRestrictedRoute(
-    pathname,
-    req.method as THttpMethod
-  );
+  const { isRestricted, allowedRoles } = isRestrictedRoute(pathname, req.method as THttpMethod);
   if (isRestricted) {
     middlewares.push(restrictToRoles(allowedRoles));
   }
