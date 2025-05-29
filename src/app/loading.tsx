@@ -1,10 +1,10 @@
 // COMPONENTS
-import Spinner from '@/components/spinner/spinner';
+import OverlayLoaderSpinner from '@/components/loaders/overlay-loader-spinner';
 
 export default function Loading() {
   return (
     <div className="bg-secondary/70 flex h-screen items-center justify-center">
-      <Spinner size="lg" variant="light" />
+      <OverlayLoaderSpinner />
     </div>
   );
 }

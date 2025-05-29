@@ -3,13 +3,15 @@
 import { useEffect, useState } from 'react';
 
 // APPLICATION
-import { UserApiClient } from '@/api-clients/user/user-client';
+import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 import { useGlobalLoaderContext } from '@/context/global-loader/global-loader-context';
+import { UserApiClient } from '@/api-clients/user/user-client';
 
 // TYPES
 import { IGetUserDTO } from '@/app/api/v1/user/types';
+import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
-const UsersTable = () => {
+function UsersTable({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   const [users, setUsers] = useState<IGetUserDTO[]>([]);
 
   // ================================| UTILITY |================================ //
@@ -23,7 +25,7 @@ const UsersTable = () => {
         const response = await UserApiClient.instance.getUsers();
         setUsers(response.data!);
       } catch (error) {
-        setUsers([]);
+        triggerGlobalError();
       } finally {
         stopLoader();
       }
@@ -33,27 +35,32 @@ const UsersTable = () => {
 
   // =================================| RENDER |================================ //
   return (
-    <table>
-      <thead>
+    <table className="spacing-y-2 w-full table-auto border-separate overflow-hidden rounded-md">
+      <thead className="bg-secondary text-main h-[48px]">
         <tr>
           <th>GUID</th>
           <th>First name</th>
           <th>Last name</th>
           <th>Email</th>
+          <th />
         </tr>
       </thead>
-      <tbody>
+      <tbody className="bg-tertiary/30 text-main">
         {users.map((user) => (
-          <tr key={user.guid}>
-            <td>{user.guid}</td>
-            <td>{user.firstName}</td>
-            <td>{user.lastName}</td>
-            <td>{user.email}</td>
+          <tr
+            key={user.guid}
+            className="border-tertiary/70 hover:bg-tertiary/20 border-b transition-colors duration-200"
+          >
+            <td className="px-6 py-4">{user.guid}</td>
+            <td className="px-6 py-4">{user.firstName}</td>
+            <td className="px-6 py-4">{user.lastName}</td>
+            <td className="px-6 py-4">{user.email}</td>
+            <td className="px-6 py-4">CTRLS</td>
           </tr>
         ))}
       </tbody>
     </table>
   );
-};
+}
 
-export default UsersTable;
+export default withErrorBoundaryTrigger(UsersTable);

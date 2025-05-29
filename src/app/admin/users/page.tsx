@@ -11,7 +11,9 @@ function AdminPage() {
     <div>
       <AdminHeader title="Adminstrate users" />
 
-      <UsersTable />
+      <div className="mx-auto px-8 pt-4">
+        <UsersTable />
+      </div>
     </div>
   );
 }
