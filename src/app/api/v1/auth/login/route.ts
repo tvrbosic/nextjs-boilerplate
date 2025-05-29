@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import bcrypt from 'bcryptjs';
 
 // APP
@@ -6,11 +6,7 @@ import withApiErrorWrapper from '@/utility/api-error-wrapper';
 import { loginValidationSchema } from '@/app/api/v1/auth/validations';
 import { prisma } from '@/prisma/prisma';
 import { createSession } from '@/utility/session';
-import {
-  ApiSuccessResponse,
-  ApiBadRequestResponse,
-  ApiUnauthorizedResponse,
-} from '@/utility/response/response';
+import { ApiSuccessResponse, ApiBadRequestResponse, ApiUnauthorizedResponse } from '@/utility/response/response';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
   const body = await req.json();

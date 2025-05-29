@@ -1,5 +1,5 @@
 'use client';
-// LIB
+// LIBRARY
 import { use, useActionState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 
@@ -20,9 +20,7 @@ import Button from '@/components/button/button';
 import Input from '@/components/input/input';
 import NavLink from '@/components/nav-link/nav-link';
 
-function ResetPasswordForm({
-  triggerGlobalError,
-}: IWithErrorBoundaryTriggerProps) {
+function ResetPasswordForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   // ============================| STATE |============================ //
   const { token } = useParams<{ token: string }>();
 
@@ -81,24 +79,15 @@ function ResetPasswordForm({
   };
 
   // ============================| ACTION |============================ //
-  const [state, loginAction, isPending] = useActionState<
-    TSubmitResetPasswordFormAction,
-    FormData | null
-  >(submitLoginForm, {});
+  const [state, loginAction, isPending] = useActionState<TSubmitResetPasswordFormAction, FormData | null>(
+    submitLoginForm,
+    {}
+  );
 
   // ============================| RENDER |============================ //
   return (
-    <form
-      action={loginAction}
-      className="flex w-full flex-col justify-center gap-4"
-      noValidate
-    >
-      <Input
-        inputType="password"
-        inputLabel="New password"
-        name="newPassword"
-        error={state.errors?.newPassword?.[0]}
-      />
+    <form action={loginAction} className="flex w-full flex-col justify-center gap-4" noValidate>
+      <Input inputType="password" inputLabel="New password" name="newPassword" error={state.errors?.newPassword?.[0]} />
       <Input
         inputType="password"
         inputLabel="Confirm password"

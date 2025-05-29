@@ -11,7 +11,7 @@ import { TThemeVariant } from '@/context/theme/types';
 
 // STYLES
 // These styles apply to every route in the application
-import '@/styles/globals.css';
+import '@/styles/tailwind.css';
 
 // EXTEND METADATA: https://nextjs.org/docs/app/api-reference/functions/generate-metadata
 export const metadata: Metadata = {
@@ -26,11 +26,7 @@ const aldrich = Aldrich({
 
 const defaultTheme = process.env.NEXT_PUBLIC_DEFAULT_THEME as TThemeVariant;
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${aldrich.className} ${defaultTheme}`}>
       <body>

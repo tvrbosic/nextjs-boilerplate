@@ -5,11 +5,7 @@ import bcrypt from 'bcryptjs';
 import withApiErrorWrapper from '@/utility/api-error-wrapper';
 import { postUserValidationSchema } from '@/app/api/v1/user/validations';
 import { prisma } from '@/prisma/prisma';
-import {
-  ApiSuccessResponse,
-  ApiCreatedResponse,
-  ApiBadRequestResponse,
-} from '@/utility/response/response';
+import { ApiSuccessResponse, ApiCreatedResponse, ApiBadRequestResponse } from '@/utility/response/response';
 import { baseModelOmitFields, userOmitFields } from '@/prisma/utility';
 
 // TYPES

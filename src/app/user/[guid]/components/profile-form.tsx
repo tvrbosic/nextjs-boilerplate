@@ -1,24 +1,18 @@
 'use client';
-// LIB
+// LIBRARY
 import { use, useActionState } from 'react';
 import { useRouter } from 'next/navigation';
 
 // APP
 import { AuthContext } from '@/context/auth/auth-context';
 import { ToastMessageContext } from '@/context/toast-message/toast-context';
-import {
-  partialUpdateUserValidationSchema,
-  updatePasswordValidationSchema,
-} from '@/app/user/validations';
+import { partialUpdateUserValidationSchema, updatePasswordValidationSchema } from '@/app/user/validations';
 import { UserApiClient } from '@/api-clients/user/user-client';
 import processAxiosError from '@/utility/process-axios-error';
 import { withErrorBoundaryTrigger } from '@/hoc/error-boundary-trigger';
 
 // TYPES
-import {
-  TSubmitUpdatePasswordFormAction,
-  TSubmitUpdateProfileFormAction,
-} from '@/app/user/types';
+import { TSubmitUpdatePasswordFormAction, TSubmitUpdateProfileFormAction } from '@/app/user/types';
 import { IWithErrorBoundaryTriggerProps } from '@/hoc/types';
 
 // COMPONENTS
@@ -120,10 +114,7 @@ function ProfileForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
       });
 
       // SUCCESS: Show toast message, logout user, clear user from context and redirect to login
-      showToast(
-        'User password updated successfully, please log in again',
-        'success'
-      );
+      showToast('User password updated successfully, please log in again', 'success');
       await AuthApiClient.instance.logout();
       clearUser();
       router.push('/sign-in');
@@ -138,17 +129,15 @@ function ProfileForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
   };
 
   // ============================| ACTION |============================ //
-  const [profileFormState, updateProfileAction, updateProfileIsPending] =
-    useActionState<TSubmitUpdateProfileFormAction, FormData | null>(
-      submitUpdateProfileForm,
-      {}
-    );
+  const [profileFormState, updateProfileAction, updateProfileIsPending] = useActionState<
+    TSubmitUpdateProfileFormAction,
+    FormData | null
+  >(submitUpdateProfileForm, {});
 
-  const [passwordFormState, updatePasswordAction, updatePasswordIsPending] =
-    useActionState<TSubmitUpdatePasswordFormAction, FormData | null>(
-      submitUpdatePasswordForm,
-      {}
-    );
+  const [passwordFormState, updatePasswordAction, updatePasswordIsPending] = useActionState<
+    TSubmitUpdatePasswordFormAction,
+    FormData | null
+  >(submitUpdatePasswordForm, {});
 
   // ============================| RENDER |============================ //
   return (
@@ -180,11 +169,7 @@ function ProfileForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
         />
 
         <div className="mt-6 flex justify-end">
-          <Button
-            type="submit"
-            variant="solidInverse"
-            isLoading={updateProfileIsPending}
-          >
+          <Button type="submit" variant="solidInverse" isLoading={updateProfileIsPending}>
             Save profile
           </Button>
         </div>
@@ -216,11 +201,7 @@ function ProfileForm({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
         />
 
         <div className="mt-6 flex justify-end">
-          <Button
-            type="submit"
-            variant="solidInverse"
-            isLoading={updatePasswordIsPending}
-          >
+          <Button type="submit" variant="solidInverse" isLoading={updatePasswordIsPending}>
             Update password
           </Button>
         </div>

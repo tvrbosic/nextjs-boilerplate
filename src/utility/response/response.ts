@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import { NextResponse } from 'next/server';
 
 // TYPES
@@ -16,11 +16,7 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 const logSecret = process.env.LOG_SECRET;
 
 // ====================================| SUCCESS |==================================== //
-export function ApiSuccessResponse<T>({
-  status = 200,
-  message,
-  data,
-}: IApiSuccessResponseProps<T>) {
+export function ApiSuccessResponse<T>({ status = 200, message, data }: IApiSuccessResponseProps<T>) {
   return NextResponse.json(
     {
       success: true,
@@ -57,9 +53,7 @@ export function ApiErrorResponse({ status, message }: IApiErrorResponseProps) {
 }
 
 export function ApiBadRequestResponse(props?: IOptionalMessageProps) {
-  const message =
-    props?.message ??
-    'There was an error with your request. Check request data and try again.';
+  const message = props?.message ?? 'There was an error with your request. Check request data and try again.';
 
   return NextResponse.json(
     {
@@ -71,9 +65,7 @@ export function ApiBadRequestResponse(props?: IOptionalMessageProps) {
 }
 
 export function ApiUnauthorizedResponse(props?: IOptionalMessageProps) {
-  const message =
-    props?.message ??
-    'Access denied. Please provide valid authentication credentials to proceed.';
+  const message = props?.message ?? 'Access denied. Please provide valid authentication credentials to proceed.';
 
   return NextResponse.json(
     {
@@ -85,8 +77,7 @@ export function ApiUnauthorizedResponse(props?: IOptionalMessageProps) {
 }
 
 export function ApiForbiddenResponse(props?: IOptionalMessageProps) {
-  const message =
-    props?.message ?? 'You do not have permission to access this resource.';
+  const message = props?.message ?? 'You do not have permission to access this resource.';
 
   return NextResponse.json(
     {
@@ -101,8 +92,7 @@ export function ApiInternalServerErrorResponse() {
   return NextResponse.json(
     {
       success: false,
-      message:
-        'The server encountered an internal error and could not complete your request.',
+      message: 'The server encountered an internal error and could not complete your request.',
     } as IApiErrorResponse,
     { status: 500 }
   );

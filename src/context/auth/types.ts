@@ -13,6 +13,7 @@ export interface IAuthContextUser {
 
 export interface IAuthContext {
   user: IAuthContextUser | null;
+  isVerifying: boolean;
   setUser: (user: IAuthContextUser) => void;
   clearUser: () => void;
   updateUserAvatar: (avatarImageUrl: string) => void;

@@ -1,13 +1,8 @@
-// LIB
+// LIBRARY
 import axios, { AxiosInstance } from 'axios';
 
 // TYPES
-import {
-  ILoginParams,
-  IRegisterParams,
-  IForgotPasswordParams,
-  IResetPasswordParams,
-} from '@/api-clients/auth/types';
+import { ILoginParams, IRegisterParams, IForgotPasswordParams, IResetPasswordParams } from '@/api-clients/auth/types';
 import { IApiSuccessResponse } from '@/utility/response/type';
 import { User } from '@prisma/client';
 
@@ -37,20 +32,13 @@ export class AuthApiClient {
     return AuthApiClient.#instance;
   }
 
-  public async login(
-    params: ILoginParams
-  ): Promise<IApiSuccessResponse<{ token: string }>> {
-    const response = await this.axiosInstance.post<
-      IApiSuccessResponse<{ token: string }>
-    >('/login', params);
+  public async login(params: ILoginParams): Promise<IApiSuccessResponse<{ token: string }>> {
+    const response = await this.axiosInstance.post<IApiSuccessResponse<{ token: string }>>('/login', params);
     return response.data;
   }
 
   public async verify(): Promise<IApiSuccessResponse<{ token: string }>> {
-    const response =
-      await this.axiosInstance.get<IApiSuccessResponse<{ token: string }>>(
-        '/verify'
-      );
+    const response = await this.axiosInstance.get<IApiSuccessResponse<{ token: string }>>('/verify');
     return response.data;
   }
 
@@ -73,10 +61,7 @@ export class AuthApiClient {
   public async resetPassword(params: IResetPasswordParams) {
     const { token, newPassword, newPasswordConfirm } = params;
 
-    const response = await this.axiosInstance.patch(
-      `/reset-password/${token}`,
-      { newPassword, newPasswordConfirm }
-    );
+    const response = await this.axiosInstance.patch(`/reset-password/${token}`, { newPassword, newPasswordConfirm });
 
     return response.data;
   }

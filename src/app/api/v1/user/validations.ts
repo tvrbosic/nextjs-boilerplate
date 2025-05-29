@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import { z } from 'zod';
 
 // TYPES

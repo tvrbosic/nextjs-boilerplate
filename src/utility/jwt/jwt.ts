@@ -1,23 +1,11 @@
-// LIB
+// LIBRARY
 import { SignJWT, jwtVerify } from 'jose';
 
 // TYPES
-import { Role } from '@prisma/client';
-
-export interface IUserJwtClaims {
-  guid: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  role: Role;
-  avatarImageFilename?: string;
-  avatarImageUrl?: string;
-  exp?: number;
-}
+import { IUserJwtClaims } from '@/utility/jwt/types';
 
 // ENV
-const JWT_SECRET =
-  process.env.JWT_SECRET || 'nextjs-boilerplate-project-jwt-secret-string';
+const JWT_SECRET = process.env.JWT_SECRET || 'nextjs-boilerplate-project-jwt-secret-string';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '15d';
 
 const secretKey = new TextEncoder().encode(JWT_SECRET);

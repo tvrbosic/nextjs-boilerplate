@@ -5,11 +5,8 @@ import crypto from 'crypto';
 import withApiErrorWrapper from '@/utility/api-error-wrapper';
 import { forgotPasswordValidationSchema } from '@/app/api/v1/auth/validations';
 import { prisma } from '@/prisma/prisma';
-import {
-  ApiSuccessResponse,
-  ApiBadRequestResponse,
-} from '@/utility/response/response';
-import { sendEmail } from '@/utility/email';
+import { ApiSuccessResponse, ApiBadRequestResponse } from '@/utility/response/response';
+import { sendEmail } from '@/utility/email/email';
 
 export const POST = withApiErrorWrapper(async (req: Request) => {
   const body = await req.json();
@@ -40,10 +37,7 @@ export const POST = withApiErrorWrapper(async (req: Request) => {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
   // Hash the token before storing it in the database.
-  const hashedResetToken = crypto
-    .createHash('sha256')
-    .update(resetToken)
-    .digest('hex');
+  const hashedResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
   /**
    * REASON FOR TOKEN HASHING:
    * - Storing plain-text reset tokens in the database is risky. If a database is compromised, attackers could use the tokens to reset passwords.

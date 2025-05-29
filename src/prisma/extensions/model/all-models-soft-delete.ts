@@ -1,4 +1,4 @@
-// LIB
+// LIBRARY
 import { Prisma } from '@prisma/client';
 
 // APP
@@ -11,10 +11,7 @@ export const useSoftDelete = Prisma.defineExtension({
   model: {
     $allModels: {
       // ============================| DELETE |============================ //
-      async softDelete<M>(
-        this: M,
-        args: Prisma.Args<M, 'delete'>['where']
-      ): Promise<M> {
+      async softDelete<M>(this: M, args: Prisma.Args<M, 'delete'>['where']): Promise<M> {
         // Get the current model at runtime
         const context = Prisma.getExtensionContext(this);
         const decodedToken = await getSession();
@@ -32,10 +29,7 @@ export const useSoftDelete = Prisma.defineExtension({
       },
 
       // ============================| DELETE MANY |============================ //
-      async softDeleteMany<M, A>(
-        this: M,
-        where: Prisma.Args<M, 'deleteMany'>['where']
-      ): Promise<BatchPayload> {
+      async softDeleteMany<M, A>(this: M, where: Prisma.Args<M, 'deleteMany'>['where']): Promise<BatchPayload> {
         const context = Prisma.getExtensionContext(this);
         const decodedToken = await getSession();
 

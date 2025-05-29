@@ -1,5 +1,5 @@
 'use client';
-// LIB
+// LIBRARY
 import { use } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -52,10 +52,7 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
           </div>
 
           <div>
-            <Dropdown
-              menuAlignment="right"
-              activateElement={<AvatarImage imageSrc={user?.avatarImageUrl} />}
-            >
+            <Dropdown menuAlignment="right" activateElement={<AvatarImage imageSrc={user?.avatarImageUrl} />}>
               <DropdownMenuItem
                 text="Profile"
                 icon={<FaUserCircle size={20} />}
@@ -70,11 +67,7 @@ function AuthControl({ triggerGlobalError }: IWithErrorBoundaryTriggerProps) {
                 />
               )}
 
-              <DropdownMenuItem
-                text="Sign out"
-                icon={<FaSignOutAlt size={20} />}
-                onClick={logoutHandler}
-              />
+              <DropdownMenuItem text="Sign out" icon={<FaSignOutAlt size={20} />} onClick={logoutHandler} />
             </Dropdown>
           </div>
         </>

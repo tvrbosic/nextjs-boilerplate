@@ -1,5 +1,5 @@
 'use client';
-// LIB
+// LIBRARY
 import { use } from 'react';
 import { FiSun, FiMoon } from 'react-icons/fi';
 
@@ -18,10 +18,7 @@ export default function ThemeToggle() {
         <FiSun />
       </span>
 
-      <ToggleSwitch
-        initialCheckedValue={theme === 'dark'}
-        onChange={toggleTheme}
-      />
+      <ToggleSwitch initialCheckedValue={theme === 'dark'} onChange={toggleTheme} />
 
       <span className="text-xl text-blue-900 dark:text-gray-400">
         <FiMoon />

@@ -1,3 +1,9 @@
+// ============================| GET |============================ //
+export interface IGetUserParams {
+  guid: string;
+}
+
+// ============================| POST |============================ //
 export interface ICreateUserParams {
   email: string;
   firstName: string;
@@ -6,10 +12,7 @@ export interface ICreateUserParams {
   password: string;
 }
 
-export interface IGetUserParams {
-  guid: string;
-}
-
+// ============================| PACH |============================ //
 export interface IPartialUpdateUserParams {
   guid: string;
   user: any;
